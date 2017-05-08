@@ -1,0 +1,66 @@
+<div class="header">
+  <div class="text-center">
+    <a href="/">
+      <img class="logo" src="/assets/images/icons/android-chrome-192x192.png" title="MeuML.com">
+    </a>
+  </div>
+</div>
+
+<md-content flex role="navigation">
+  <div ng-show="protectedCtrl.store" class="store-name" md-colors="{color: 'primary'}">
+    {{protectedCtrl.store.trade_name}}
+  </div>
+
+  <md-list>
+    <md-divider></md-divider>
+
+    <md-list-item class="md-2-line" ui-sref="protected.my-account"
+                  ng-class="{ active: $state.includes('protected.my-account') }">
+      <div gorillas-gravatar="protectedCtrl.user.photo.url"
+           gorillas-gravatar-email="protectedCtrl.user.email" class="md-avatar"></div>
+
+      <div class="md-list-item-text">
+        <h3>{{protectedCtrl.user.name.split(' ')[0]}}</h3>
+        <p md-truncate>{{protectedCtrl.user.email}}</p>
+      </div>
+    </md-list-item>
+
+    <md-divider></md-divider>
+
+    <md-list-item ui-sref="protected.home" ng-class="{ active: $state.includes('protected.home') }">
+      <md-icon md-font-icon="material-icons" md-colors="{color: 'primary'}" aria-label="Início">
+        home
+      </md-icon>
+      <p>Início</p>
+    </md-list-item>
+
+    <md-divider></md-divider>
+
+    <md-list-item ng-href="mailto:milton@meuml.com" target="_blank">
+      <md-icon md-font-icon="material-icons" md-colors="{color: 'primary'}"
+               aria-label="Entrar em contato">
+        message
+      </md-icon>
+      <p>Entrar em contato</p>
+    </md-list-item>
+
+    <md-list-item
+            href="https://docs.google.com/a/gorillascode.com/forms/d/e/1FAIpQLSe8f4-qlmQeGUbQ0mxQJYgpR_25mZ3NkJHr3qeo_3DFP1jQLg/viewform"
+            target="_blank">
+      <md-icon md-font-icon="material-icons" md-colors="{color: 'primary'}"
+               aria-label="Relatar problema">
+        feedback
+      </md-icon>
+      <p>Relatar problema</p>
+    </md-list-item>
+
+    <md-divider></md-divider>
+
+    <md-list-item ng-click="protectedCtrl.logout()">
+      <md-icon md-font-icon="material-icons" md-colors="{color: 'primary'}" aria-label="Sair">
+        power_settings_new
+      </md-icon>
+      <p>Sair</p>
+    </md-list-item>
+  </md-list>
+</md-content>

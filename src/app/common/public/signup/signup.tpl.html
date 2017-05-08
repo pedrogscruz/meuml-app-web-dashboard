@@ -1,0 +1,53 @@
+<div class="gorillascode-content gorillascode-signup">
+  <h2>Cadastro</h2>
+
+  <form name="managerForm" ng-submit="signupCtrl.signUp()">
+    <md-input-container class="md-block">
+      <label>Nome completo</label>
+      <input type="text" ng-model="signupCtrl.user.name" name="userName" maxlength="256"
+             autocomplete="name" required autofocus>
+
+      <div ng-messages="managerForm.userName.$error">
+        <div ng-message="required">Campo obrigatório</div>
+      </div>
+    </md-input-container>
+
+    <md-input-container class="md-block">
+      <label>E-mail</label>
+      <input type="email" ng-model="signupCtrl.user.email" name="userEmail" maxlength="256"
+             autocomplete="email" required>
+
+      <div ng-messages="managerForm.userEmail.$error">
+        <div ng-message="required">Campo obrigatório</div>
+        <div ng-message="email">E-mail inválido</div>
+        <div ng-message="emailExists">O e-mail já está sendo usado. Escolha outro.</div>
+      </div>
+
+      <md-progress-circular ng-show="managerForm.userEmail.$pending.emailExists"
+                            md-mode="indeterminate" md-diameter="40"></md-progress-circular>
+    </md-input-container>
+
+    <md-input-container class="md-block">
+      <label>Senha</label>
+      <input type="password" ng-model="signupCtrl.user.password" name="userPassword" minlength="4"
+             maxlength="256" required>
+
+      <div ng-messages="managerForm.userPassword.$error">
+        <div ng-message="required">Campo obrigatório</div>
+        <div ng-message="minlength">A senha deve ter no mínimo 4 caracteres</div>
+      </div>
+    </md-input-container>
+
+    <p ng-if="false">
+      Ao pressionar Registrar declaro que li e aceito os <strong>
+      <a ui-sref="public.terms" target="_blank">Termos de Uso</a></strong>
+    </p>
+
+    <div layout="row" layout-xs="column">
+      <div flex></div>
+      <md-button type="submit" class="md-raised md-primary"
+                 ng-disabled="managerForm.$invalid || signupCtrl.waitForSubmit">Registrar
+      </md-button>
+    </div>
+  </form>
+</div>
