@@ -72,6 +72,7 @@ module.exports = {
       'vendor/angular-loading-bar/build/loading-bar.js',
       'vendor/angular-material/angular-material.js',
       'vendor/angular-material-data-table/dist/md-data-table.js',
+      'vendor/angular-md5/angular-md5.js',
       'vendor/angular-messages/angular-messages.js',
       'vendor/angular-message-format/angular-message-format.js',
       'vendor/angular-resource/angular-resource.js',

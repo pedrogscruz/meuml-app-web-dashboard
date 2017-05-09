@@ -682,7 +682,6 @@ module.exports = function ( grunt ) {
     });
 
     grunt.file.copy('src/robots.txt', this.data.dir + '/robots.txt');
-    grunt.file.copy('src/app/service-worker.js', this.data.dir + '/service-worker.js');
   });
 
   /**

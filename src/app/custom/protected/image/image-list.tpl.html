@@ -1,0 +1,32 @@
+<div class="gorillascode-content gorillascode-content-no-background">
+  <div layout="column" layout-gt-xs="row">
+    <div flex class="gorillascode-results-count">
+      <div ng-show="imageListCtrl.images.result.length">
+        Exibindo
+        <ng-pluralize count="imageListCtrl.images.limit"
+                      when="{'0': 'Nenhuma imagem', 'one': '1 imagem', 'other': '{{imageListCtrl.images.limit | number}} imagens'}"></ng-pluralize>
+      </div>
+    </div>
+  </div>
+
+  <div class="images">
+    <div ng-show="!imageListCtrl.loading && !imageListCtrl.images.result.length">
+      <div class="gorillascode-no-results">Nenhuma imagem</div>
+    </div>
+
+    <div ng-show="imageListCtrl.images.result.length">
+      <div ng-repeat="image in imageListCtrl.images.result track by image.id">
+        <div class="image">{{image.id}}</div>
+      </div>
+
+      <div style="clear: both;"></div>
+    </div>
+
+    <gorillascode-pagination gorillascode-controller="imageListCtrl"></gorillascode-pagination>
+  </div>
+</div>
+
+<md-button class="md-fab md-fab-bottom-right md-fab-fixed md-primary">
+  <md-icon md-font-icon="material-icons" aria-label="Adicionar imagens">add_a_photo</md-icon>
+  <md-tooltip md-direction="left">Adicionar imagens</md-tooltip>
+</md-button>

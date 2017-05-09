@@ -96,7 +96,5 @@
 <div ng-show="loginCtrl.selectedBox == 0" layout-xs="column"
      class="text-center gorillascode-animate action-buttons">
   <md-button ng-click="loginCtrl.selectedBox = 1">Esqueceu sua senha?</md-button>
-  <md-button ng-if="false" ui-sref="public.signup({ continue: loginCtrl.continue })">
-    Crie sua conta
-  </md-button>
+  <md-button ui-sref="public.signup">Crie sua conta</md-button>
 </div>

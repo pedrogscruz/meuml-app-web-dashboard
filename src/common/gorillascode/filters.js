@@ -1,4 +1,6 @@
-angular.module('gorillascode.filters', [])
+angular.module('gorillascode.filters', [
+  'angular-md5',
+])
 
 /**
  * Exibe o tempo relativo de uma data no fuso horário UTC.

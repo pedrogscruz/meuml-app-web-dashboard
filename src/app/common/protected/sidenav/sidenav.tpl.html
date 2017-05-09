@@ -7,7 +7,7 @@
 </div>
 
 <md-content flex role="navigation">
-  <div ng-show="protectedCtrl.store" class="store-name" md-colors="{color: 'primary'}">
+  <div ng-show="protectedCtrl.store" class="store-name">
     {{protectedCtrl.store.trade_name}}
   </div>
 
@@ -28,38 +28,34 @@
     <md-divider></md-divider>
 
     <md-list-item ui-sref="protected.home" ng-class="{ active: $state.includes('protected.home') }">
-      <md-icon md-font-icon="material-icons" md-colors="{color: 'primary'}" aria-label="Início">
-        home
-      </md-icon>
+      <md-icon md-font-icon="material-icons" aria-label="Início">home</md-icon>
       <p>Início</p>
+    </md-list-item>
+
+    <md-list-item ui-sref="protected.image.list"
+                  ng-class="{ active: $state.includes('protected.image') }">
+      <md-icon md-font-icon="material-icons" aria-label="Imagens">photo</md-icon>
+      <p>Imagens</p>
     </md-list-item>
 
     <md-divider></md-divider>
 
-    <md-list-item ng-href="mailto:milton@meuml.com" target="_blank">
-      <md-icon md-font-icon="material-icons" md-colors="{color: 'primary'}"
-               aria-label="Entrar em contato">
-        message
-      </md-icon>
+    <md-list-item ng-href="mailto:contato@meuml.com" target="_blank">
+      <md-icon md-font-icon="material-icons" aria-label="Entrar em contato">message</md-icon>
       <p>Entrar em contato</p>
     </md-list-item>
 
     <md-list-item
-            href="https://docs.google.com/a/gorillascode.com/forms/d/e/1FAIpQLSe8f4-qlmQeGUbQ0mxQJYgpR_25mZ3NkJHr3qeo_3DFP1jQLg/viewform"
-            target="_blank">
-      <md-icon md-font-icon="material-icons" md-colors="{color: 'primary'}"
-               aria-label="Relatar problema">
-        feedback
-      </md-icon>
+        href="https://docs.google.com/a/gorillascode.com/forms/d/e/1FAIpQLSfFCfqILJcjhP2ezOU0IwP-7DMtxw_fdz4LkqTARQJl7qxDlA/viewform"
+        target="_blank">
+      <md-icon md-font-icon="material-icons" aria-label="Relatar problema">feedback</md-icon>
       <p>Relatar problema</p>
     </md-list-item>
 
     <md-divider></md-divider>
 
     <md-list-item ng-click="protectedCtrl.logout()">
-      <md-icon md-font-icon="material-icons" md-colors="{color: 'primary'}" aria-label="Sair">
-        power_settings_new
-      </md-icon>
+      <md-icon md-font-icon="material-icons" aria-label="Sair">power_settings_new</md-icon>
       <p>Sair</p>
     </md-list-item>
   </md-list>

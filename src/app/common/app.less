@@ -8,6 +8,12 @@ a {
   text-decoration: none;
 }
 
+hr {
+  display: block;
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
+  margin: 0;
+}
+
 // Texto para indicar uma quantidade de itens
 .gorillascode-results-count {
   color: rgba(0, 0, 0, 0.54);
@@ -90,7 +96,7 @@ a {
   position: relative;
   z-index: 2;
 
-  &:not(:last-child) {
+  &:not(:last-of-type) {
     border-bottom: 1px solid rgba(0, 0, 0, 0.12);
   }
 
@@ -245,4 +251,8 @@ form {
     max-height: 100px;
     max-width: 100px;
   }
+}
+
+.md-fab-fixed {
+  position: fixed !important;
 }

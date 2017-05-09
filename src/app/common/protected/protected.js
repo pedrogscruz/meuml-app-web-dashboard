@@ -24,17 +24,6 @@ angular.module('gorillascode.protected', [
             });
           }
         ],
-        store: ['LocalUserService', 'ManagerStoreService', 'user',
-          function(LocalUserService, ManagerStoreService, user) {
-            // Retorna o estabelecimento gerenciado pelo usuário autenticado
-
-            if (!LocalUserService.isUserInRole('manager', user)) {
-              return null;
-            }
-
-            return ManagerStoreService.get('my');
-          }
-        ],
       }
     })
     ;

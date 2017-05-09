@@ -6,7 +6,7 @@ angular.module('meuml.protected.home', [
   function ($stateProvider) {
     $stateProvider.state('protected.home', {
       url: '/',
-      template: 'custom/protected/home/home.tpl.html',
+      templateUrl: 'custom/protected/home/home.tpl.html',
       data: {
         pageTitle: ''
       }

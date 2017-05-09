@@ -1,5 +1,15 @@
-<div class="gorillascode-content gorillascode-signup">
-  <h2>Cadastro</h2>
+<div class="gorillascode-login-logo" md-colors="{background: 'default-primary'}">
+  <img src="/assets/images/icons/android-chrome-192x192.png" title="Logo">
+</div>
+
+<div class="gorillascode-content">
+  <md-toolbar>
+    <div class="md-toolbar-tools">
+      <div flex class="text-center">
+        <h1>Cadastro</h1>
+      </div>
+    </div>
+  </md-toolbar>
 
   <form name="managerForm" ng-submit="signupCtrl.signUp()">
     <md-input-container class="md-block">
@@ -38,11 +48,6 @@
       </div>
     </md-input-container>
 
-    <p ng-if="false">
-      Ao pressionar Registrar declaro que li e aceito os <strong>
-      <a ui-sref="public.terms" target="_blank">Termos de Uso</a></strong>
-    </p>
-
     <div layout="row" layout-xs="column">
       <div flex></div>
       <md-button type="submit" class="md-raised md-primary"
@@ -50,4 +55,8 @@
       </md-button>
     </div>
   </form>
+</div>
+
+<div layout-xs="column" class="text-center action-buttons">
+  <md-button ui-sref="public.login">Já tenho uma conta</md-button>
 </div>

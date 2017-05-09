@@ -57,15 +57,6 @@ angular.module('meuml', [
 .run(['$window', 'configuration', function ($window, configuration) {
   // Configuração do Google Analytics
   $window.ga('create', configuration.googleAnalyticsTrackingId, 'auto');
-
-  // Registra o Service Worker
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/service-worker.js').then(function() {
-      // Service Worker registrado
-    }).catch(function(error) {
-      console.error('Não foi possível registrar o Service Worker', error);
-    });
-  }
 }])
 
 .controller('AppController', ['$rootScope', '$log', '$scope', '$state', '$timeout', '$window',

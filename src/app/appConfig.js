@@ -9,14 +9,14 @@ angular.module('meuml')
         environment: 'development',
         hostnames: ['localhost'],
         apiUrl: 'http://localhost:5000/api',
-        googleAnalyticsTrackingId: 'UA-93340830-1',
+        googleAnalyticsTrackingId: 'UA-93340830-2',
         html5Mode: false,
       },
       staging: {
         environment: 'staging',
         hostnames: ['app.meuml.staging.gorillascode.com'],
         apiUrl: 'https://api.meuml.staging.gorillascode.com/api',
-        googleAnalyticsTrackingId: 'UA-93340830-1',
+        googleAnalyticsTrackingId: 'UA-93340830-2',
         html5Mode: true,
       }
     };
