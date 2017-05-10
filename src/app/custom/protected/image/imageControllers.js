@@ -76,6 +76,15 @@ angular.module('meuml.protected.image')
       $state.go('.', { order: order });
     };
 
+    self.upload = function(files, file, newFiles, duplicateFiles, invalidFiles, ev) {
+      if (files.length === 0) {
+        return;
+      }
+
+      self.files = files;
+      self.invalidFiles = invalidFiles;
+    };
+
     self.loadMore();
   }
 ])

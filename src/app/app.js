@@ -14,6 +14,7 @@ angular.module('meuml', [
   'gorillascode.validators',
   'md.data.table',
   'ngCookies',
+  'ngFileUpload',
   'ngMaterial',
   'ngMessages',
   'ngSanitize',

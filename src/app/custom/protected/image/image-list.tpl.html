@@ -1,4 +1,11 @@
 <div class="gorillascode-content gorillascode-content-no-background">
+  <div ng-show="imageListCtrl.files.length">
+    <div ng-repeat="file in imageListCtrl.files">
+      <pre>{{file}}</pre>
+      <hr>
+    </div>
+  </div>
+
   <div layout="column" layout-gt-xs="row">
     <div flex class="gorillascode-results-count">
       <div ng-show="imageListCtrl.images.result.length">
@@ -26,7 +33,19 @@
   </div>
 </div>
 
-<md-button class="md-fab md-fab-bottom-right md-fab-fixed md-primary">
-  <md-icon md-font-icon="material-icons" aria-label="Adicionar imagens">add_a_photo</md-icon>
+<md-button class="md-fab md-fab-bottom-right md-fab-fixed md-primary"
+           ngf-select
+           ngf-drop
+           ngf-change="imageListCtrl.upload($files, $file, $newFiles, $duplicateFiles, $invalidFiles, $event)"
+           ngf-multiple="true"
+           ngf-fix-orientation="true"
+           ngf-capture="'camera'"
+           ngf-accept="'image/*'"
+           ngf-pattern="'image/*'"
+           ngf-allow-dir="true"
+           ngf-drag-over-class="{accept:'acceptClass', reject:'rejectClass'}"
+           ngf-resize="{width: 900, type: 'image/png'}"
+           ngf-resize-if="$width > 900">
+  <md-icon md-font-icon=" material-icons" aria-label="Adicionar imagens">add_a_photo</md-icon>
   <md-tooltip md-direction="left">Adicionar imagens</md-tooltip>
 </md-button>
