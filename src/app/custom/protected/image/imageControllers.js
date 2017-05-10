@@ -1,16 +1,15 @@
 angular.module('meuml.protected.image')
 
-.controller('ImageListController', ['$scope', '$controller', '$state', '$stateParams',
-  'NotificationService', 'FileService', 'SellerImageService', 'SellerImageSearchService',
+.controller('ImageListController', ['$log', '$scope', '$controller', '$state', '$stateParams',
+  'Upload', 'NotificationService', 'SellerFileService', 'UploadService', 'SellerImageService',
+  'SellerImageSearchService',
 
-  function($scope, $controller, $state, $stateParams, NotificationService, FileService,
-           SellerImageService, SellerImageSearchService) {
+  function($log, $scope, $controller, $state, $stateParams, Upload, NotificationService,
+           SellerFileService, UploadService, SellerImageService, SellerImageSearchService) {
 
     var self = this;
 
-    // Filtros passados como parâmetros na URL
-    self.filters = {};
-
+    self.selectedFiles = [];
     self.images = {};
     self.order = $stateParams.order;
 
@@ -60,29 +59,96 @@ angular.module('meuml.protected.image')
       return searchParameters;
     }
 
-    /**
-     * Altera os parâmetros da URL usando os valores informados nos filtros.
-     */
-    self.changeFilters = function() {
-      $state.go('.', {});
-    };
-
-    /**
-     * Altera o parâmetro de ordenação da URL.
-     *
-     * @param order o parãmetro usado para ordenação.
-     */
-    self.changeOrder = function(order) {
-      $state.go('.', { order: order });
-    };
-
-    self.upload = function(files, file, newFiles, duplicateFiles, invalidFiles, ev) {
+    self.selectFiles = function(files) {
       if (files.length === 0) {
         return;
       }
 
-      self.files = files;
-      self.invalidFiles = invalidFiles;
+      $log.debug(files.length + ' arquivo(s) selecionado(s)');
+
+      self.selectedFiles = self.selectedFiles.concat(files);
+    };
+
+    self.removeFileFromUpload = function(index) {
+      self.selectedFiles.splice(index, 1);
+    };
+
+    self.startFilesUpload = function() {
+      if (self.selectedFiles.length === 0) {
+        return;
+      }
+
+      var file = self.selectedFiles[0];
+      self.startFileUpload(file);
+    };
+
+    self.startFileUpload = function(file) {
+      var IMAGE_MAX_WIDTH = 900;
+
+      var filename = file.name || file.$ngfName;
+      var resizedFile = null;
+      var savedFile = null;
+
+      $log.debug('Iniciando o processamento do arquivo ' + filename);
+
+      // Redimensiona a imagem
+      Upload.resize(file, {
+        width: IMAGE_MAX_WIDTH,
+        type: 'image/png',
+        resizeIf: function(width) {
+          return width > IMAGE_MAX_WIDTH;
+        },
+      }).then(function(response) {
+        // Redimensionou a imagem então retorna as dimensões dela
+
+        $log.debug('Arquivo ' + filename + ' redimensionado');
+
+        resizedFile = response;
+        return Upload.imageDimensions(resizedFile);
+      }).then(function(dimensions) {
+        // Retornou as dimensões da imagem então cria o File na API
+
+        var fileToSave = {
+          content_type: 'image/png',
+          height: dimensions.height,
+          original_name: filename,
+          size: file.size,
+          width: dimensions.width,
+        };
+
+        return SellerFileService.save({ type: 'image' }, fileToSave);
+      }).then(function(response) {
+        // Criou o File na API então faz o upload do arquivo
+
+        $log.debug('File(' + response.id + ') criado para ' + filename);
+
+        savedFile = response;
+        return UploadService.upload(resizedFile, savedFile._storage);
+      }).then(function() {
+        // Fez o upload do arquivo então cria o Image na API
+        var imageToSave = {
+          file_id: savedFile.id,
+        };
+
+        return SellerImageService.save(imageToSave);
+      }).then(function(response) {
+        // Criou o Image na API
+        $log.debug('Image(' + response.id + ') criado para ' + filename);
+        file.image = response;
+      }, function(error) {
+        $log.error('Não foi possível enviar a imagem', error);
+        file.error = 'Não foi possível enviar a imagem';
+      }).finally(function() {
+        // Busca o próximo arquivo para fazer o upload
+        for (var i in self.selectedFiles) {
+          var nextFile = self.selectedFiles[i];
+
+          if (!nextFile.image && !nextFile.error) {
+            self.startFileUpload(nextFile);
+            return;
+          }
+        }
+      });
     };
 
     self.loadMore();

@@ -1,8 +1,39 @@
 <div class="gorillascode-content gorillascode-content-no-background">
-  <div ng-show="imageListCtrl.files.length">
-    <div ng-repeat="file in imageListCtrl.files">
-      <pre>{{file}}</pre>
-      <hr>
+  <div ng-show="imageListCtrl.selectedFiles.length">
+    <div class="text-right">
+      <md-button ng-click="imageListCtrl.startFilesUpload()" class="md-raised md-primary">
+        Enviar todas
+      </md-button>
+    </div>
+
+    <div ng-repeat="file in imageListCtrl.selectedFiles">
+      <div layout="row" layout-align="center center">
+        <div>
+          <div ngf-thumbnail="file" ngf-as-background="true"
+               class="upload-thumbnail" style=""></div>
+        </div>
+
+        <div>{{file.name || file.$ngfName}}</div>
+
+        <div flex style="padding: 8px;">
+          <strong ng-show="file.image.key">{{file.image.key}}</strong>
+          <span ng-show="file.error">{{file.error}}</span>
+
+          <md-progress-linear ng-show="file.uploadProgress > 0 && file.uploadProgress < 100"
+                              md-mode="determinate"
+                              value="{{file.uploadProgress}}"></md-progress-linear>
+        </div>
+
+        <div>
+          <md-button ng-click="imageListCtrl.startFileUpload(file)">Enviar</md-button>
+        </div>
+
+        <div>
+          <md-button ng-click="imageListCtrl.removeFileFromUpload($index)">Remover</md-button>
+        </div>
+      </div>
+
+      <hr ng-show="!$last">
     </div>
   </div>
 
@@ -23,7 +54,7 @@
 
     <div ng-show="imageListCtrl.images.result.length">
       <div ng-repeat="image in imageListCtrl.images.result track by image.id">
-        <div class="image">{{image.id}}</div>
+        <div class="image" ng-style="{ backgroundImage: 'url(' + image.file.url + ')' }"></div>
       </div>
 
       <div style="clear: both;"></div>
@@ -34,18 +65,15 @@
 </div>
 
 <md-button class="md-fab md-fab-bottom-right md-fab-fixed md-primary"
-           ngf-select
-           ngf-drop
-           ngf-change="imageListCtrl.upload($files, $file, $newFiles, $duplicateFiles, $invalidFiles, $event)"
-           ngf-multiple="true"
-           ngf-fix-orientation="true"
-           ngf-capture="'camera'"
-           ngf-accept="'image/*'"
-           ngf-pattern="'image/*'"
+           ngf-select ngf-drop
            ngf-allow-dir="true"
+           ngf-accept="'image/*'"
+           ngf-capture="'camera'"
+           ngf-change="imageListCtrl.selectFiles($files)"
            ngf-drag-over-class="{accept:'acceptClass', reject:'rejectClass'}"
-           ngf-resize="{width: 900, type: 'image/png'}"
-           ngf-resize-if="$width > 900">
+           ngf-fix-orientation="true"
+           ngf-multiple="true"
+           ngf-pattern="'image/*'">
   <md-icon md-font-icon=" material-icons" aria-label="Adicionar imagens">add_a_photo</md-icon>
   <md-tooltip md-direction="left">Adicionar imagens</md-tooltip>
 </md-button>

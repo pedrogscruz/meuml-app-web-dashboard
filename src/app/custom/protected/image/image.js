@@ -1,6 +1,6 @@
 angular.module('meuml.protected.image', [
-  'gorillascode.services.file',
   'meuml.services.image',
+  'meuml.services.file',
   'ui.router',
 ])
 
