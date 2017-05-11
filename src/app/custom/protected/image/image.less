@@ -7,26 +7,65 @@
     display: none;
   }
 
+  .filters {
+    margin-bottom: 48px;
+
+    .tags {
+      .icon {
+        margin-right: 16px;
+      }
+    }
+  }
+
   .upload-thumbnail {
     background-color: #000;
     background-position: center;
     background-repeat: no-repeat;
     background-size: contain;
     height: 100px;
+    margin-bottom: 16px;
     margin-right: 16px;
     width: 100px;
   }
 
   .image {
-    background-color: #000;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: contain;
-    float: left;
-    height: 100px;
-    margin: 0 16px 16px 0;
-    overflow: hidden;
-    padding: 8px;
-    width: 100px;
+    .image-file {
+      background-color: #000;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: contain;
+      height: 100px;
+      margin: 8px 16px 8px 8px;
+      overflow: hidden;
+      width: 100px;
+    }
+
+    .tags {
+      margin-top: 8px;
+
+      .tag {
+        display: inline-block;
+        border-radius: 6px;
+        font-size: 14px;
+        margin-right: 8px;
+        padding: 2px 0 2px 8px;
+
+        .value {
+          display: inline-block;
+
+          a {
+            color: inherit;
+          }
+        }
+
+        .delete {
+          border-left: 1px solid;
+          display: inline-block;
+          margin-left: 2px;
+          padding: 0 8px;
+          cursor: pointer;
+        }
+      }
+    }
   }
 }

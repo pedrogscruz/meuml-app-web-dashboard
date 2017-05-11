@@ -1,6 +1,7 @@
 angular.module('meuml.protected.image', [
-  'meuml.services.image',
   'meuml.services.file',
+  'meuml.services.image-tag',
+  'meuml.services.image',
   'ui.router',
 ])
 
@@ -11,7 +12,7 @@ angular.module('meuml.protected.image', [
       abstract: true,
       template: '<ui-view/>'
     }).state('protected.image.list', {
-      url: '?order',
+      url: '?order&tag',
       controller: 'ImageListController as imageListCtrl',
       templateUrl: 'custom/protected/image/image-list.tpl.html',
       data: {
@@ -21,6 +22,9 @@ angular.module('meuml.protected.image', [
         order: {
           squash: true,
           value: '-created_at',
+        },
+        tag: {
+          array: true
         },
       },
     });

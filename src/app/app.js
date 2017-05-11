@@ -1,5 +1,7 @@
 angular.module('meuml', [
+  'angular-clipboard',
   'angular-loading-bar',
+  'checklist-model',
   'meuml.protected',
   'meuml.public',
   'gorillascode',

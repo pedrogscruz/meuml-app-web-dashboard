@@ -1,17 +1,25 @@
 angular.module('meuml.protected.image')
 
 .controller('ImageListController', ['$log', '$scope', '$controller', '$state', '$stateParams',
-  'Upload', 'NotificationService', 'SellerFileService', 'UploadService', 'SellerImageService',
-  'SellerImageSearchService',
+  '$mdDialog', 'Upload', 'NotificationService', 'SellerFileService', 'UploadService',
+  'SellerImageService', 'SellerImageTagService', 'SellerImageSearchService',
 
-  function($log, $scope, $controller, $state, $stateParams, Upload, NotificationService,
-           SellerFileService, UploadService, SellerImageService, SellerImageSearchService) {
+  function($log, $scope, $controller, $state, $stateParams, $mdDialog, Upload, NotificationService,
+           SellerFileService, UploadService, SellerImageService, SellerImageTagService,
+           SellerImageSearchService) {
 
     var self = this;
 
+    // Filtros passados como parâmetros na URL
+    self.filters = {
+      tag: $stateParams.tag,
+    };
+
     self.selectedFiles = [];
+    self.selectedFilesTags = [];
     self.images = {};
     self.order = $stateParams.order;
+    self.imageTags = ['celular', 'motorola'];
 
     $controller('PaginationController', {
       $scope: $scope,
@@ -46,6 +54,24 @@ angular.module('meuml.protected.image')
         },
       };
 
+      if (self.filters.tag && self.filters.tag.length) {
+        var tagsFilter = self.filters.tag.map(function(tag) {
+          return {
+            name: 'tags',
+            op: 'any',
+            val: {
+              name: 'tag',
+              op: '==',
+              val: tag,
+            }
+          };
+        });
+
+        searchParameters.q.filters.push({
+          and: tagsFilter
+        });
+      }
+
       if ($stateParams.order) {
         var fieldName = self.order.replace('-', '');
         var fieldDirection = (self.order[0] == '-') ? 'desc' : 'asc';
@@ -54,10 +80,58 @@ angular.module('meuml.protected.image')
           field: fieldName,
           direction: fieldDirection
         });
+
+        // Como vários objetos são criados ao mesmo tempo (com o mesmo "created_at") é necessário um
+        // segundo campo para fazer a ordenação correta
+        searchParameters.q.order_by.push({
+          field: 'id',
+          direction: 'asc'
+        });
       }
 
       return searchParameters;
     }
+
+    self.getSelectedImages = function() {
+      if (self.images.result.length === 0) {
+        return [];
+      }
+
+      return self.images.result.filter(function(image) {
+        return image.selected;
+      });
+    };
+
+    self.deleteImages = function(images, ev) {
+      if (images.length === 0) {
+        return;
+      }
+
+      var title = (images.length > 1) ? 'Excluir as imagens?' : 'Excluir a imagem?';
+      var confirm = $mdDialog.confirm()
+        .title(title)
+        .textContent('Não é possível desfazer a exclusão')
+        .ariaLabel(title)
+        .targetEvent(ev)
+        .ok('Excluir')
+        .cancel('Cancelar');
+
+      $mdDialog.show(confirm).then(function() {
+        var ids = images.map(function(image) {
+          return image.id;
+        });
+
+        SellerImageService.deleteMultiple(ids).then(function() {
+          var message = (images.length > 1) ? 'Imagens excluídas' : 'Imagem excluída';
+          NotificationService.success(message);
+
+          $state.go('.', {}, { reload: true });
+        }, function(error) {
+          NotificationService.error('Não foi possível excluir as imagens. Tente novamente ' +
+              'mais tarde.', error);
+        });
+      });
+    };
 
     self.selectFiles = function(files) {
       if (files.length === 0) {
@@ -125,9 +199,14 @@ angular.module('meuml.protected.image')
         savedFile = response;
         return UploadService.upload(resizedFile, savedFile._storage);
       }).then(function() {
+        var tags = self.selectedFilesTags.map(function(tag) {
+          return { tag: tag };
+        });
+
         // Fez o upload do arquivo então cria o Image na API
         var imageToSave = {
           file_id: savedFile.id,
+          tags: tags,
         };
 
         return SellerImageService.save(imageToSave);
@@ -148,7 +227,45 @@ angular.module('meuml.protected.image')
             return;
           }
         }
+
+
       });
+    };
+
+    self.deleteImageTag = function(tag, image, $index) {
+      SellerImageTagService.delete(tag.id).then(function() {
+        NotificationService.success('Tag removida');
+        image.tags.splice($index, 1);
+      }, function(error) {
+        NotificationService.error('Não foi possível remover a tag. Tente novamente ' +
+            'mais tarde.', error);
+      });
+    };
+
+    self.imageUrlCopied = function() {
+      NotificationService.success('Link copiado');
+    };
+
+    self.imageUrlCopyError = function(error) {
+      NotificationService.error('Não foi possível copiar o link', error);
+    };
+
+    /**
+     * Altera os parâmetros da URL usando os valores informados nos filtros.
+     */
+    self.changeFilters = function() {
+      $state.go('.', {
+        tag: self.filters.tag,
+      });
+    };
+
+    /**
+     * Altera o parâmetro de ordenação da URL.
+     *
+     * @param order o parãmetro usado para ordenação.
+     */
+    self.changeOrder = function(order) {
+      $state.go('.', { order: order });
     };
 
     self.loadMore();
