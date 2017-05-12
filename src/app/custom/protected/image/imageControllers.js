@@ -1,10 +1,10 @@
 angular.module('meuml.protected.image')
 
-.controller('ImageListController', ['$log', '$scope', '$controller', '$state', '$stateParams',
+.controller('ImageListController', ['$log', '$q', '$scope', '$controller', '$state', '$stateParams',
   '$mdDialog', '$mdMedia', 'Upload', 'NotificationService', 'SellerFileService', 'UploadService',
   'SellerImageService', 'SellerImageTagService', 'SellerImageSearchService',
 
-  function($log, $scope, $controller, $state, $stateParams, $mdDialog, $mdMedia, Upload,
+  function($log, $q, $scope, $controller, $state, $stateParams, $mdDialog, $mdMedia, Upload,
            NotificationService, SellerFileService, UploadService, SellerImageService,
            SellerImageTagService, SellerImageSearchService) {
 
@@ -117,11 +117,13 @@ angular.module('meuml.protected.image')
         .cancel('Cancelar');
 
       $mdDialog.show(confirm).then(function() {
-        var ids = images.map(function(image) {
-          return image.id;
+        var promises = [];
+
+        angular.forEach(images, function(image) {
+          promises.push(SellerImageService.delete(image.id));
         });
 
-        SellerImageService.deleteMultiple(ids).then(function() {
+        $q.all(promises).then(function() {
           var message = (images.length > 1) ? 'Imagens excluídas' : 'Imagem excluída';
           NotificationService.success(message);
 

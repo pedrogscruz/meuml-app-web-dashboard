@@ -12,18 +12,8 @@ angular.module('meuml.services.image', [
           return SellerImage.save(image).$promise;
         }
       },
-      deleteMultiple: function(ids) {
-        var parameters = {
-          q: {
-            filters: [{
-              name: 'id',
-              op: 'in',
-              val: ids,
-            }],
-          }
-        };
-
-        return SellerImage.delete(parameters).$promise;
+      delete: function(id) {
+        return SellerImage.delete({ id: id }).$promise;
       },
     };
 
