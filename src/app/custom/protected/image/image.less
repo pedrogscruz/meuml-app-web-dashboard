@@ -29,41 +29,61 @@
   }
 
   .image {
+    display: inline-block;
+    width: 400px;
+
+    .select {
+      padding: 12px;
+      position: absolute;
+    }
+
     .image-file {
       background-color: #000;
       background-position: center;
       background-repeat: no-repeat;
-      background-size: contain;
+      background-size: cover;
       height: 100px;
-      margin: 8px 16px 8px 8px;
       overflow: hidden;
-      width: 100px;
+      padding-bottom: 50%;
+      width: 100%;
     }
 
-    .tags {
-      margin-top: 8px;
+    md-card-content {
+      .tags-list {
+        .tags {
+          .tag {
+            display: inline-block;
+            border-radius: 6px;
+            font-size: 14px;
+            margin-right: 8px;
+            padding: 2px 0 2px 8px;
 
-      .tag {
-        display: inline-block;
-        border-radius: 6px;
-        font-size: 14px;
-        margin-right: 8px;
-        padding: 2px 0 2px 8px;
+            .value {
+              display: inline-block;
 
-        .value {
-          display: inline-block;
+              a {
+                color: inherit;
+              }
+            }
 
-          a {
-            color: inherit;
+            .delete {
+              border-left: 1px solid;
+              display: inline-block;
+              margin-left: 2px;
+              padding: 0 8px;
+              cursor: pointer;
+            }
           }
         }
+      }
+    }
 
-        .delete {
-          border-left: 1px solid;
-          display: inline-block;
-          margin-left: 2px;
-          padding: 0 8px;
-          cursor: pointer;
+    md-card-actions {
+      .image-url {
+        margin: 0;
+
+        .md-errors-spacer {
+          display: none;
         }
       }
     }

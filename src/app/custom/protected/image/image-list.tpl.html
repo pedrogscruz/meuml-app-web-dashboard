@@ -32,8 +32,6 @@
                class="upload-thumbnail" style=""></div>
         </div>
 
-        <div>{{file.name || file.$ngfName}}</div>
-
         <div flex style="padding: 8px;">
           <span ng-bind-html="file.image.url | linky:'_blank'"></span>
           <span ng-show="file.error">{{file.error}}</span>
@@ -100,19 +98,17 @@
     </div>
 
     <div ng-show="imageListCtrl.images.result.length">
-      <div ng-repeat="image in imageListCtrl.images.result track by image.id"
-           class="gorillascode-animate image">
-        <div layout="row" layout-align="center center">
-          <div>
-            <md-checkbox ng-model="image.selected" aria-label="Selecionar imagem"></md-checkbox>
-          </div>
+      <md-card ng-repeat="image in imageListCtrl.images.result track by image.id"
+               class="gorillascode-animate image">
+        <div class="select">
+          <md-checkbox ng-model="image.selected" aria-label="Selecionar imagem"></md-checkbox>
+        </div>
 
-          <div class="image-file"
-               ng-style="{ backgroundImage: 'url(' + image.file.url + ')' }"></div>
+        <div class="image-file"
+             ng-style="{ backgroundImage: 'url(' + image.file.url + ')' }"></div>
 
-          <div flex>
-            <span ng-bind-html="image.url | linky:'_blank'"></span>
-
+        <md-card-content>
+          <div layout="row" class="tags-list">
             <div ng-show="image.tags.length" class="tags">
               <div ng-repeat="tag in image.tags track by tag.id" class="gorillascode-animate tag"
                    md-colors="{background: 'primary'}">
@@ -127,28 +123,33 @@
               </div>
             </div>
 
-            <div>
+            <div class="edit-button">
               <a href="" ng-click="imageListCtrl.editTags([image], $event)">Editar tags</a>
             </div>
           </div>
+        </md-card-content>
 
-          <div>
-            <md-button clipboard text="image.url" on-copied="imageListCtrl.imageUrlCopied()"
-                       on-error="imageListCtrl.imageUrlCopyError(err)" class="md-icon-button">
-              <md-icon md-font-icon="material-icons" aria-label="Copiar link">content_copy</md-icon>
-              <md-tooltip>Copiar o link</md-tooltip>
-            </md-button>
+        <md-card-actions layout="row" layout-align="center center">
+          <div flex>
+            <md-input-container class="md-block image-url">
+              <input type="text" ng-model="image.url" ng-readonly="true" md-select-on-focus
+                     aria-label="URL da imagem">
+            </md-input-container>
           </div>
 
-          <div>
-            <md-button ng-click="imageListCtrl.deleteImages([image], $event)"
-                       class="md-icon-button">
-              <md-icon md-font-icon="material-icons" aria-label="Excluir">delete</md-icon>
-              <md-tooltip>Excluir</md-tooltip>
-            </md-button>
-          </div>
-        </div>
-      </div>
+          <md-button clipboard text="image.url" on-copied="imageListCtrl.imageUrlCopied()"
+                     on-error="imageListCtrl.imageUrlCopyError(err)" class="md-icon-button">
+            <md-icon md-font-icon="material-icons" aria-label="Copiar link">content_copy</md-icon>
+            <md-tooltip>Copiar o link</md-tooltip>
+          </md-button>
+
+          <md-button ng-click="imageListCtrl.deleteImages([image], $event)"
+                     class="md-icon-button">
+            <md-icon md-font-icon="material-icons" aria-label="Excluir">delete</md-icon>
+            <md-tooltip>Excluir</md-tooltip>
+          </md-button>
+        </md-card-actions>
+      </md-card>
     </div>
 
     <gorillascode-pagination gorillascode-controller="imageListCtrl"></gorillascode-pagination>
