@@ -1,12 +1,12 @@
 angular.module('meuml.protected.image')
 
 .controller('ImageListController', ['$log', '$scope', '$controller', '$state', '$stateParams',
-  '$mdDialog', 'Upload', 'NotificationService', 'SellerFileService', 'UploadService',
+  '$mdDialog', '$mdMedia', 'Upload', 'NotificationService', 'SellerFileService', 'UploadService',
   'SellerImageService', 'SellerImageTagService', 'SellerImageSearchService',
 
-  function($log, $scope, $controller, $state, $stateParams, $mdDialog, Upload, NotificationService,
-           SellerFileService, UploadService, SellerImageService, SellerImageTagService,
-           SellerImageSearchService) {
+  function($log, $scope, $controller, $state, $stateParams, $mdDialog, $mdMedia, Upload,
+           NotificationService, SellerFileService, UploadService, SellerImageService,
+           SellerImageTagService, SellerImageSearchService) {
 
     var self = this;
 
@@ -129,6 +129,36 @@ angular.module('meuml.protected.image')
         }, function(error) {
           NotificationService.error('Não foi possível excluir as imagens. Tente novamente ' +
               'mais tarde.', error);
+        });
+      });
+    };
+
+    self.editTags = function(images, ev) {
+      if (images.length === 0) {
+        return;
+      }
+
+      $mdDialog.show({
+        controller: 'TagDialogController as tagDialogCtrl',
+        fullscreen: $mdMedia('xs'),
+        locals: {
+          images: images,
+        },
+        parent: angular.element(document.body),
+        targetEvent: ev,
+        templateUrl: 'custom/protected/image/tag-dialog.tpl.html',
+      }).then(function(savedImages) {
+        if (!savedImages) {
+          return;
+        }
+
+        // Atualiza as tags das imagens selecionadas com as novas tags
+        angular.forEach(images, function(image) {
+          angular.forEach(savedImages, function(savedImage) {
+            if (image.id == savedImage.id) {
+              image.tags = savedImage.tags;
+            }
+          });
         });
       });
     };
@@ -269,6 +299,73 @@ angular.module('meuml.protected.image')
     };
 
     self.loadMore();
+  }
+])
+
+.controller('TagDialogController', ['$q', '$mdDialog', 'NotificationService', 'SellerImageService',
+  'images',
+
+  function($q, $mdDialog, NotificationService, SellerImageService, images) {
+    var self = this;
+
+    self.tags = [];
+
+    if (images.length === 1) {
+      // Está sendo editado as tags de uma imagem apenas
+      self.tags = images[0].tags.map(function(imageTag) {
+        return imageTag.tag;
+      });
+    }
+
+    self.cancel = function() {
+      $mdDialog.cancel();
+    };
+
+    self.save = function() {
+      var promises = [];
+
+      // Para cada imagem verifica se as tags já existem
+      // Caso a imagem não tenha a nova tag então cria ela
+      angular.forEach(images, function(image) {
+        var newTags = [];
+
+        angular.forEach(self.tags, function(tag) {
+          var tagExists = image.tags.some(function(imageTag) {
+            return imageTag.tag == tag;
+          });
+
+          if (tagExists) {
+            return;
+          }
+
+          newTags.push({
+            tag: tag
+          });
+        });
+
+        if (newTags.length === 0) {
+          return;
+        }
+
+        var imageToSave = {
+          id: image.id,
+          tags: {
+            add: newTags,
+          },
+        };
+
+        promises.push(SellerImageService.save(imageToSave));
+      });
+
+      // Se todas as imagens foram atualizadas então fecha a modal e atualiza as informações na tela
+      $q.all(promises).then(function(response) {
+        NotificationService.success('Tags atualizadas');
+        $mdDialog.hide(response);
+      }, function(error) {
+        NotificationService.error('Não foi possível atualizar as tags. Tente novamente mais ' +
+            'tarde.', error);
+      });
+    };
   }
 ])
 

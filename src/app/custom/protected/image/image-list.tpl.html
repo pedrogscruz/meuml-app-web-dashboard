@@ -2,7 +2,10 @@
   <div class="filters">
     <div layout="row" layout-align="center center" class="tags">
       <div class="icon">
-        <md-icon md-font-icon="material-icons" aria-label="Pesquisar">search</md-icon>
+        <md-button ng-click="imageListCtrl.changeFilters()" class="md-icon-button">
+          <md-icon md-font-icon="material-icons" aria-label="Pesquisar">search</md-icon>
+          <md-tooltip>Pesquisar</md-tooltip>
+        </md-button>
       </div>
       <div flex>
         <md-chips ng-model="imageListCtrl.filters.tag"
@@ -21,28 +24,8 @@
     </div>
   </div>
 
-  <div ng-show="imageListCtrl.selectedFiles.length" style="margin-bottom: 48px;">
-    <div layout="row">
-      <div flex style="margin-right: 16px;">
-        <md-chips ng-model="imageListCtrl.selectedFilesTags">
-          <md-autocomplete
-              md-search-text="searchText"
-              md-items="tag in imageListCtrl.imageTags"
-              md-item-text="tag"
-              md-autofocus
-              placeholder="Adicione uma ou mais tags. Por exemplo: celular">
-            <span md-highlight-text="searchText">{{tag}}</span>
-          </md-autocomplete>
-        </md-chips>
-      </div>
-      <div>
-        <md-button ng-click="imageListCtrl.startFilesUpload()" class="md-raised md-primary">
-          Enviar
-        </md-button>
-      </div>
-    </div>
-
-    <div ng-repeat="file in imageListCtrl.selectedFiles">
+  <md-card ng-show="imageListCtrl.selectedFiles.length" style="margin: 0 0 48px 0; padding: 16px;">
+    <div ng-repeat="file in imageListCtrl.selectedFiles" class="gorillascode-animate">
       <div layout="row" layout-align="center center">
         <div>
           <div ngf-thumbnail="file" ngf-as-background="true"
@@ -61,11 +44,34 @@
         </div>
 
         <div>
-          <md-button ng-click="imageListCtrl.removeFileFromUpload($index)">Excluir</md-button>
+          <md-button ng-click="imageListCtrl.removeFileFromUpload($index)" class="md-icon-button">
+            <md-icon md-font-icon="material-icons" aria-label="Excluir">delete</md-icon>
+            <md-tooltip>Excluir</md-tooltip>
+          </md-button>
         </div>
       </div>
     </div>
-  </div>
+
+    <div layout="row">
+      <div flex style="margin-right: 16px;">
+        <md-chips ng-model="imageListCtrl.selectedFilesTags">
+          <md-autocomplete
+              md-search-text="searchText"
+              md-items="tag in imageListCtrl.imageTags"
+              md-item-text="tag"
+              md-autofocus
+              placeholder="Adicione uma ou mais tags">
+            <span md-highlight-text="searchText">{{tag}}</span>
+          </md-autocomplete>
+        </md-chips>
+      </div>
+      <div>
+        <md-button ng-click="imageListCtrl.startFilesUpload()" class="md-raised md-primary">
+          Enviar
+        </md-button>
+      </div>
+    </div>
+  </md-card>
 
   <div layout="column" layout-gt-xs="row">
     <div flex class="gorillascode-results-count">
@@ -80,6 +86,10 @@
       {{imageListCtrl.getSelectedImages().length | number}} imagen(s) selecionada(s)
       <md-button ng-click="imageListCtrl.deleteImages(imageListCtrl.getSelectedImages(), $event)">
         Excluir selecionadas
+      </md-button>
+
+      <md-button ng-click="imageListCtrl.editTags(imageListCtrl.getSelectedImages(), $event)">
+        Adicionar tags
       </md-button>
     </div>
   </div>
@@ -115,6 +125,10 @@
                   <md-tooltip>Remover tag</md-tooltip>
                 </div>
               </div>
+            </div>
+
+            <div>
+              <a href="" ng-click="imageListCtrl.editTags([image], $event)">Editar tags</a>
             </div>
           </div>
 
