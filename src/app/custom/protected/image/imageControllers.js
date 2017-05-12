@@ -185,10 +185,10 @@ angular.module('meuml.protected.image')
       }
 
       var file = self.selectedFiles[0];
-      self.startFileUpload(file);
+      self.startFileUpload(file, 0);
     };
 
-    self.startFileUpload = function(file) {
+    self.startFileUpload = function(file, index) {
       var IMAGE_MAX_WIDTH = 900;
 
       var filename = file.name || file.$ngfName;
@@ -245,7 +245,11 @@ angular.module('meuml.protected.image')
       }).then(function(response) {
         // Criou o Image na API
         $log.debug('Image(' + response.id + ') criado para ' + filename);
-        file.image = response;
+
+        self.selectedFiles.splice(index, 1);
+
+        self.images.result.unshift(response);
+        self.images.limit++;
       }, function(error) {
         $log.error('Não foi possível enviar a imagem', error);
         file.error = 'Não foi possível enviar a imagem';
@@ -255,7 +259,7 @@ angular.module('meuml.protected.image')
           var nextFile = self.selectedFiles[i];
 
           if (!nextFile.image && !nextFile.error) {
-            self.startFileUpload(nextFile);
+            self.startFileUpload(nextFile, i);
             return;
           }
         }
