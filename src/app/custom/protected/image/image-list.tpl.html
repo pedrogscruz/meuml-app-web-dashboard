@@ -18,7 +18,7 @@
                              md-items="tag in imageListCtrl.searchImageTag(searchText)"
                              md-item-text="tag"
                              md-autofocus
-                             placeholder="Pesquise por tags">
+                             placeholder="Pesquise por tags ou nome do arquivo">
               <span md-highlight-text="searchText">{{tag}}</span>
             </md-autocomplete>
           </md-chips>
@@ -26,7 +26,7 @@
       </div>
 
       <div class="upload-button">
-        <md-button class="md-raised"
+        <md-button class="md-raised md-primary"
                    ngf-select ngf-drop
                    ngf-allow-dir="true"
                    ngf-accept="'image/*'"
@@ -89,22 +89,29 @@
     </div>
   </md-card>
 
-  <div layout="column" layout-gt-xs="row">
+  <div class="gorillascode-results-count"
+       ng-show="imageListCtrl.images.result.length && !imageListCtrl.getSelectedImages().length">
+    Exibindo
+    <ng-pluralize count="imageListCtrl.images.limit"
+                  when="{'0': 'Nenhuma imagem', 'one': '1 imagem', 'other': '{{imageListCtrl.images.limit | number}} imagens'}"></ng-pluralize>
+  </div>
+
+  <div ng-show="imageListCtrl.getSelectedImages().length" layout="row">
     <div flex class="gorillascode-results-count">
-      <div ng-show="imageListCtrl.images.result.length">
-        Exibindo
-        <ng-pluralize count="imageListCtrl.images.limit"
-                      when="{'0': 'Nenhuma imagem', 'one': '1 imagem', 'other': '{{imageListCtrl.images.limit | number}} imagens'}"></ng-pluralize>
-      </div>
+      <ng-pluralize count="imageListCtrl.getSelectedImages().length"
+                    when="{'0': 'Nenhuma imagem selecionada', 'one': '1 imagem selecionada', 'other': '{{imageListCtrl.getSelectedImages().length | number}} imagens selecionadas'}"></ng-pluralize>
     </div>
 
-    <div ng-show="imageListCtrl.getSelectedImages().length">
-      {{imageListCtrl.getSelectedImages().length | number}} imagen(s) selecionada(s)
-      <md-button ng-click="imageListCtrl.deleteImages(imageListCtrl.getSelectedImages(), $event)">
-        Excluir selecionadas
+    <div>
+      <md-button ng-click="imageListCtrl.deleteImages(imageListCtrl.getSelectedImages(), $event)"
+                 class="md-raised">
+        Excluir
       </md-button>
+    </div>
 
-      <md-button ng-click="imageListCtrl.editTags(imageListCtrl.getSelectedImages(), $event)">
+    <div>
+      <md-button ng-click="imageListCtrl.editTags(imageListCtrl.getSelectedImages(), $event)"
+                 class="md-raised">
         Adicionar tags
       </md-button>
     </div>
