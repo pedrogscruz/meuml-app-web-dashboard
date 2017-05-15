@@ -378,6 +378,16 @@ angular.module('meuml.protected.image')
       });
     };
 
+    self.appendTagToFilters = function(tag) {
+      if (self.filters.tag.indexOf(tag) != -1) {
+        // Tag já está adicionada
+        return;
+      }
+
+      self.filters.tag.push(tag);
+      self.changeFilters();
+    };
+
     /**
      * Altera os parâmetros da URL usando os valores informados nos filtros.
      */
