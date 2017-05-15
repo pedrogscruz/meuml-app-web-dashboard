@@ -21,4 +21,29 @@ angular.module('meuml.services.image-tag', [
   }
 ])
 
+.factory('SellerImageTagSearchService', ['$q', 'SellerImageTagSearch',
+  function($q, SellerImageTagSearch) {
+    // Cache com as tags das imagens
+    var tags = {};
+
+    var service = {
+      /**
+       * Faz a pesquisa de todas as tags das imagens e armazena o resultado em cache.
+       */
+      search: function() {
+        // Se a pesquisa já foi feita retorna o resultado em cache.
+        if (tags.result) {
+          return $q.resolve(tags);
+        }
+
+        return SellerImageTagSearch.query(function(response) {
+          tags = response;
+        }).$promise;
+      },
+    };
+
+    return service;
+  }
+])
+
 ;
