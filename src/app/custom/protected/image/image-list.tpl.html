@@ -118,6 +118,11 @@
     <div ng-show="imageListCtrl.images.result.length">
       <md-card ng-repeat="image in imageListCtrl.images.result track by image.id"
                class="gorillascode-animate image" ng-class="{ selected: image.selected }">
+        <div ng-show="image.file.uploading" class="file-upload-progress">
+          <md-progress-linear md-mode="determinate"
+                              value="{{image.file.uploadProgress}}"></md-progress-linear>
+        </div>
+
         <div layout="row" class="actions">
           <div class="select">
             <md-checkbox ng-model="image.selected" aria-label="Selecionar imagem"></md-checkbox>
@@ -154,15 +159,14 @@
                       ngf-allow-dir="false"
                       ngf-accept="'image/*'"
                       ngf-capture="'camera'"
-                      ngf-change="imageListCtrl.replaceImage(image, $index, $file)"
+                      ngf-change="imageListCtrl.replaceImage(image, $file)"
                       ngf-drag-over-class="{accept:'acceptClass', reject:'rejectClass'}"
                       ngf-fix-orientation="true"
                       ngf-multiple="false"
                       ngf-pattern="'image/*'">
-                    <md-icon md-font-icon="material-icons" aria-label="Substituir imagem">
-                      file_upload
+                    <md-icon md-font-icon="material-icons" aria-label="Substituir">add_a_photo
                     </md-icon>
-                    Substituir imagem
+                    Substituir
                   </md-button>
                 </md-menu-item>
 

@@ -11,6 +11,9 @@ angular.module('meuml.protected.image')
 
     var self = this;
 
+    // Largura máxima das imagens
+    var IMAGE_MAX_WIDTH = 900;
+
     var imageTags = {
       result: [],
     };
@@ -214,8 +217,6 @@ angular.module('meuml.protected.image')
     };
 
     self.startFileUpload = function(file, index) {
-      var IMAGE_MAX_WIDTH = 900;
-
       var filename = file.name || file.$ngfName;
       var resizedFile = null;
       var savedFile = null;
@@ -288,8 +289,6 @@ angular.module('meuml.protected.image')
             return;
           }
         }
-
-
       });
     };
 
@@ -311,7 +310,73 @@ angular.module('meuml.protected.image')
       NotificationService.error('Não foi possível copiar o link', error);
     };
 
-    self.replaceImage = function(image, file) {};
+    self.replaceImage = function(image, file) {
+      if (!file) {
+        return;
+      }
+
+      var filename = file.name || file.$ngfName;
+      var resizedFile = null;
+      var savedFile = null;
+
+      $log.debug('Iniciando o processamento do arquivo ' + filename);
+
+      image.file.uploading = true;
+
+      // Redimensiona a imagem
+      Upload.resize(file, {
+        width: IMAGE_MAX_WIDTH,
+        type: 'image/png',
+        resizeIf: function(width) {
+          return width > IMAGE_MAX_WIDTH;
+        },
+      }).then(function(response) {
+        // Redimensionou a imagem então retorna as dimensões dela
+
+        $log.debug('Arquivo ' + filename + ' redimensionado');
+
+        resizedFile = response;
+        return Upload.imageDimensions(resizedFile);
+      }).then(function(dimensions) {
+        // Retornou as dimensões da imagem então cria o File na API
+
+        var fileToSave = {
+          content_type: 'image/png',
+          height: dimensions.height,
+          original_name: filename,
+          size: file.size,
+          width: dimensions.width,
+        };
+
+        return SellerFileService.save({ type: 'image' }, fileToSave);
+      }).then(function(response) {
+        // Criou o File na API então faz o upload do arquivo
+
+        $log.debug('File(' + response.id + ') criado para ' + filename);
+
+        savedFile = response;
+        return UploadService.upload(resizedFile, savedFile._storage);
+      }).then(function() {
+        // Fez o upload do arquivo então atualiza o arquivo da imagem
+        var imageToSave = {
+          file_id: savedFile.id,
+          id: image.id,
+        };
+
+        return SellerImageService.save(imageToSave);
+      }).then(function(response) {
+        // Atualizou o Image na API
+        $log.debug('Image(' + response.id + ') atualizado para ' + filename);
+
+        NotificationService.success('Imagem atualizada');
+        image.file = savedFile;
+      }, function(error) {
+        NotificationService.error('Não foi possível enviar a imagem. Tente novamente mais ' +
+            'tarde.', error);
+      }).finally(function() {
+        image.file.uploading = false;
+      });
+    };
 
     /**
      * Altera os parâmetros da URL usando os valores informados nos filtros.
