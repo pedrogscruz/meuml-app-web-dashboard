@@ -108,15 +108,17 @@
 
     <div>
       <md-button ng-click="imageListCtrl.deleteImages(imageListCtrl.getSelectedImages(), $event)"
-                 class="md-raised">
-        Excluir
+                 class="md-icon-button">
+        <md-icon md-font-icon="material-icons" aria-label="Excluir">delete</md-icon>
+        <md-tooltip>Excluir</md-tooltip>
       </md-button>
     </div>
 
     <div>
       <md-button ng-click="imageListCtrl.editTags(imageListCtrl.getSelectedImages(), $event)"
-                 class="md-raised">
-        Adicionar tags
+                 class="md-icon-button">
+        <md-icon md-font-icon="material-icons" aria-label="Alterar tags">label</md-icon>
+        <md-tooltip>Alterar tags</md-tooltip>
       </md-button>
     </div>
   </div>
@@ -127,103 +129,108 @@
     </div>
 
     <div ng-show="imageListCtrl.images.result.length">
-      <md-card ng-repeat="image in imageListCtrl.images.result track by image.id"
-               class="gorillascode-animate image" ng-class="{ selected: image.selected }">
-        <div ng-show="image.file.uploading" class="file-upload-progress">
-          <md-progress-linear md-mode="determinate"
-                              value="{{image.file.uploadProgress}}"></md-progress-linear>
-        </div>
-
-        <div layout="row" class="actions">
-          <div class="select">
-            <md-checkbox ng-model="image.selected" aria-label="Selecionar imagem"></md-checkbox>
+      <div class="image-wrapper" ng-repeat="image in imageListCtrl.images.result track by image.id"
+           class="gorillascode-animate">
+        <md-card class="image" ng-class="{ selected: image.selected }">
+          <div ng-show="image.file.uploading" class="file-upload-progress">
+            <md-progress-linear md-mode="determinate"
+                                value="{{image.file.uploadProgress}}"></md-progress-linear>
           </div>
 
-          <div flex></div>
+          <div layout="row" class="actions">
+            <div class="select">
+              <md-checkbox ng-model="image.selected" aria-label="Selecionar imagem"></md-checkbox>
+            </div>
 
-          <div class="menu">
-            <md-menu>
-              <md-button aria-label="Exibir menu" class="md-icon-button"
-                         ng-click="$mdMenu.open($event)">
-                <md-icon md-font-icon="material-icons" aria-label="Exibir menu">more_vert</md-icon>
-              </md-button>
-              <md-menu-content>
-                <md-menu-item>
-                  <md-button clipboard text="image.url" on-copied="imageListCtrl.imageUrlCopied()"
-                             on-error="imageListCtrl.imageUrlCopyError(err)">
-                    <md-icon md-font-icon="material-icons" aria-label="Copiar link">content_copy
-                    </md-icon>
-                    Copiar link
-                  </md-button>
-                </md-menu-item>
+            <div flex></div>
 
-                <md-menu-item>
-                  <md-button ng-click="imageListCtrl.editTags([image], $event)">
-                    <md-icon md-font-icon="material-icons" aria-label="Editar tags">label</md-icon>
-                    Editar tags
-                  </md-button>
-                </md-menu-item>
+            <div class="menu">
+              <md-menu>
+                <md-button aria-label="Exibir menu" class="md-icon-button"
+                           ng-click="$mdMenu.open($event)">
+                  <md-icon md-font-icon="material-icons" aria-label="Exibir menu">more_vert
+                  </md-icon>
+                </md-button>
+                <md-menu-content>
+                  <md-menu-item>
+                    <md-button clipboard text="image.url" on-copied="imageListCtrl.imageUrlCopied()"
+                               on-error="imageListCtrl.imageUrlCopyError(err)">
+                      <md-icon md-font-icon="material-icons" aria-label="Copiar link">content_copy
+                      </md-icon>
+                      Copiar link
+                    </md-button>
+                  </md-menu-item>
 
-                <md-menu-item>
-                  <md-button
-                      ngf-select
-                      ngf-allow-dir="false"
-                      ngf-accept="'image/*'"
-                      ngf-capture="'camera'"
-                      ngf-change="imageListCtrl.replaceImage(image, $file)"
-                      ngf-drag-over-class="{accept:'acceptClass', reject:'rejectClass'}"
-                      ngf-fix-orientation="true"
-                      ngf-multiple="false"
-                      ngf-pattern="'image/*'">
-                    <md-icon md-font-icon="material-icons" aria-label="Substituir">add_a_photo
-                    </md-icon>
-                    Substituir
-                  </md-button>
-                </md-menu-item>
+                  <md-menu-item>
+                    <md-button ng-click="imageListCtrl.editTags([image], $event)">
+                      <md-icon md-font-icon="material-icons" aria-label="Alterar tags">label
+                      </md-icon>
+                      Alterar tags
+                    </md-button>
+                  </md-menu-item>
 
-                <md-menu-item>
-                  <md-button ng-click="imageListCtrl.deleteImages([image], $event)">
-                    <md-icon md-font-icon="material-icons" aria-label="Excluir">delete</md-icon>
-                    Excluir
-                  </md-button>
-                </md-menu-item>
-              </md-menu-content>
-            </md-menu>
+                  <md-menu-item>
+                    <md-button
+                        ngf-select
+                        ngf-allow-dir="false"
+                        ngf-accept="'image/*'"
+                        ngf-capture="'camera'"
+                        ngf-change="imageListCtrl.replaceImage(image, $file)"
+                        ngf-drag-over-class="{accept:'acceptClass', reject:'rejectClass'}"
+                        ngf-fix-orientation="true"
+                        ngf-multiple="false"
+                        ngf-pattern="'image/*'">
+                      <md-icon md-font-icon="material-icons" aria-label="Substituir">add_a_photo
+                      </md-icon>
+                      Substituir
+                    </md-button>
+                  </md-menu-item>
+
+                  <md-menu-item>
+                    <md-button ng-click="imageListCtrl.deleteImages([image], $event)">
+                      <md-icon md-font-icon="material-icons" aria-label="Excluir">delete</md-icon>
+                      Excluir
+                    </md-button>
+                  </md-menu-item>
+                </md-menu-content>
+              </md-menu>
+            </div>
           </div>
-        </div>
 
-        <a href="{{image.url}}" class="image-file"
-           ng-style="{ backgroundImage: 'url(' + image.file.url + ')' }" target="_blank"
-           title="Abrir a imagem"></a>
+          <a href="{{image.url}}" class="image-file"
+             ng-style="{ backgroundImage: 'url(' + image.file.url + ')' }" target="_blank"
+             title="Abrir a imagem"></a>
 
-        <md-card-content>
-          <div layout="row" class="tags-list">
-            <div ng-show="image.tags.length" class="tags">
-              <div ng-repeat="tag in image.tags track by tag.id" class="gorillascode-animate tag"
-                   md-colors="{background: 'primary'}">
-                <a href="" ng-click="imageListCtrl.appendTagToFilters(tag.tag)"
-                   title="Pesquisar por {{tag.tag}}">{{tag.tag}}</a>
+          <md-card-content>
+            <div layout="row" class="tags-list">
+              <div ng-show="image.tags.length" class="tags">
+                <div ng-repeat="tag in image.tags track by tag.id" class="gorillascode-animate tag"
+                     md-colors="{background: 'primary'}">
+                  <a href="" ng-click="imageListCtrl.appendTagToFilters(tag.tag)"
+                     title="Pesquisar por {{tag.tag}}">{{tag.tag}}</a>
+                </div>
+              </div>
+
+              <div ng-show="!image.tags.length" class="add-button">
+                <a href="" ng-click="imageListCtrl.editTags([image], $event)">Adicionar tags</a>
+              </div>
+
+              <div ng-show="image.tags.length" class="edit-button">
+                <md-button ng-click="imageListCtrl.editTags([image], $event)"
+                           class="md-icon-button">
+                  <md-icon md-font-icon="material-icons" aria-label="Alterar tags">edit</md-icon>
+                  <md-tooltip>Alterar tags</md-tooltip>
+                </md-button>
               </div>
             </div>
 
-            <div ng-show="!image.tags.length" class="add-button">
-              <a href="" ng-click="imageListCtrl.editTags([image], $event)">Adicionar tags</a>
-            </div>
-
-            <div ng-show="image.tags.length" class="edit-button">
-              <md-button ng-click="imageListCtrl.editTags([image], $event)" class="md-icon-button">
-                <md-icon md-font-icon="material-icons" aria-label="Editar tags">edit</md-icon>
-                <md-tooltip>Editar tags</md-tooltip>
-              </md-button>
-            </div>
-          </div>
-
-          <md-input-container class="md-block image-url">
-            <input type="text" ng-model="image.url" ng-readonly="true" md-select-on-focus
-                   aria-label="URL da imagem">
-          </md-input-container>
-        </md-card-content>
-      </md-card>
+            <md-input-container class="md-block image-url">
+              <input type="text" ng-model="image.url" ng-readonly="true" md-select-on-focus
+                     aria-label="URL da imagem">
+            </md-input-container>
+          </md-card-content>
+        </md-card>
+      </div>
     </div>
 
     <gorillascode-pagination gorillascode-controller="imageListCtrl"></gorillascode-pagination>

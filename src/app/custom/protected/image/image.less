@@ -36,111 +36,124 @@
     width: 100px;
   }
 
-  .image {
+  .image-wrapper {
     display: inline-block;
-    position: relative;
-    width: 400px;
+    width: 100%;
 
-    .file-upload-progress {
-      background-color: rgba(255, 255, 255, 0.8);
-      bottom: 0;
-      left: 0;
-      padding: 140px 20px 0 20px;
-      position: absolute;
-      right: 0;
-      top: 0;
-      z-index: 1;
+    @media (min-width: 600px) {
+      width: 50%;
     }
 
-    .actions {
-      background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.54), transparent);
-      display: none;
-      height: 65px;
-      left: 0;
-      position: absolute;
-      right: 0;
-      top: 0;
+    @media (min-width: 1280px) {
+      width: 33.3%;
+    }
 
-      .select {
-        padding: 12px 0 0 12px;
+    .image {
+      position: relative;
 
-        .md-icon {
-          border-color: rgba(255, 255, 255, 0.87);
-        }
+      .file-upload-progress {
+        background-color: rgba(255, 255, 255, 0.8);
+        bottom: 0;
+        left: 0;
+        padding: 140px 20px 0 20px;
+        position: absolute;
+        right: 0;
+        top: 0;
+        z-index: 1;
       }
 
-      md-icon {
-        color: rgba(255, 255, 255, 0.87);
-      }
-    }
+      .actions {
+        background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.54), transparent);
+        display: none;
+        height: 65px;
+        left: 0;
+        position: absolute;
+        right: 0;
+        top: 0;
 
-    .image-file {
-      background-color: #000;
-      background-position: center;
-      background-repeat: no-repeat;
-      background-size: cover;
-      cursor: pointer;
-      display: block;
-      height: 100px;
-      overflow: hidden;
-      padding-bottom: 50%;
-      width: 100%;
-    }
+        .select {
+          padding: 12px 0 0 12px;
 
-    md-card-content {
-      padding-bottom: 0;
-
-      .tags-list {
-        .tags {
-          .tag {
-            display: inline-block;
-            border-radius: 6px;
-            font-size: 14px;
-            margin-right: 8px;
-            padding: 6px 10px;
-
-            a {
-              color: inherit;
-            }
+          .md-icon {
+            border-color: rgba(255, 255, 255, 0.87);
           }
         }
 
-        .add-button {
-          padding: 7px 0;
-        }
-
-        .edit-button {
-          margin-top: -6px;
+        md-icon {
+          color: rgba(255, 255, 255, 0.87);
         }
       }
 
-      .image-url {
-        margin: 8px 0 16px 0;
+      .image-file {
+        background-color: #000;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        cursor: pointer;
+        display: block;
+        height: 100px;
+        overflow: hidden;
+        padding-bottom: 50%;
+        width: 100%;
+      }
 
-        input {
-          font-size: 14px;
-          height: 24px;
+      md-card-content {
+        padding-bottom: 0;
+
+        .tags-list {
+          .tags {
+            overflow: hidden;
+            white-space: nowrap;
+
+            .tag {
+              display: inline-block;
+              border-radius: 6px;
+              font-size: 14px;
+              margin-right: 8px;
+              padding: 6px 10px;
+
+              a {
+                color: inherit;
+              }
+            }
+          }
+
+          .add-button {
+            padding: 7px 0;
+          }
+
+          .edit-button {
+            margin-top: -6px;
+          }
         }
 
-        .md-errors-spacer {
-          display: none;
+        .image-url {
+          margin: 8px 0 16px 0;
+
+          input {
+            font-size: 13px;
+            height: 24px;
+          }
+
+          .md-errors-spacer {
+            display: none;
+          }
         }
       }
     }
-  }
 
-  .image:hover {
-    .actions {
-      display: flex;
+    .image:hover {
+      .actions {
+        display: flex;
+      }
     }
-  }
 
-  .image.selected {
-    border: 4px solid #4285f4;
-    box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12), 0 3px 5px -1px rgba(0, 0, 0, 0.2);
+    .image.selected {
+      box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12), 0 3px 5px -1px rgba(0, 0, 0, 0.2);
 
-    .actions {
-      display: flex;
+      .actions {
+        display: flex;
+      }
     }
   }
 }
