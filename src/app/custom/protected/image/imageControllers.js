@@ -2,24 +2,28 @@ angular.module('meuml.protected.image')
 
 .controller('ImageListController', ['$log', '$q', '$scope', '$controller', '$state', '$stateParams',
   '$mdDialog', '$mdMedia', 'Upload', 'NotificationService', 'SellerFileService', 'UploadService',
-  'SellerImageService', 'SellerImageTagService', 'SellerImageSearchService',
+  'SellerImageService', 'SellerImageTagService', 'SellerImageTagSearchService',
+  'SellerImageSearchService',
 
   function($log, $q, $scope, $controller, $state, $stateParams, $mdDialog, $mdMedia, Upload,
            NotificationService, SellerFileService, UploadService, SellerImageService,
-           SellerImageTagService, SellerImageSearchService) {
+           SellerImageTagService, SellerImageTagSearchService, SellerImageSearchService) {
 
     var self = this;
 
+    var imageTags = {
+      result: [],
+    };
+
     // Filtros passados como parâmetros na URL
     self.filters = {
-      tag: $stateParams.tag,
+      tag: $stateParams.tag || [],
     };
 
     self.selectedFiles = [];
     self.selectedFilesTags = [];
     self.images = {};
     self.order = $stateParams.order;
-    self.imageTags = ['celular', 'motorola'];
 
     $controller('PaginationController', {
       $scope: $scope,
@@ -91,6 +95,27 @@ angular.module('meuml.protected.image')
 
       return searchParameters;
     }
+
+    function searchTags() {
+      $log.debug('Listando todas as tags');
+
+      SellerImageTagSearchService.search().then(function(response) {
+        $log.debug('Tags listadas');
+        imageTags = response;
+      }, function(error) {
+        NotificationService.error('Não foi possível listar as tags', error);
+      });
+    }
+
+    self.searchImageTag = function(searchText) {
+      if (!searchText) {
+        return [];
+      }
+
+      return imageTags.result.filter(function(tag) {
+        return (tag.indexOf(angular.lowercase(searchText)) > -1);
+      });
+    };
 
     self.getSelectedImages = function() {
       if (self.images.result.length === 0) {
@@ -286,6 +311,8 @@ angular.module('meuml.protected.image')
       NotificationService.error('Não foi possível copiar o link', error);
     };
 
+    self.replaceImage = function(image, file) {};
+
     /**
      * Altera os parâmetros da URL usando os valores informados nos filtros.
      */
@@ -304,17 +331,23 @@ angular.module('meuml.protected.image')
       $state.go('.', { order: order });
     };
 
+    searchTags();
+
     self.loadMore();
   }
 ])
 
-.controller('TagDialogController', ['$q', '$mdDialog', 'NotificationService', 'SellerImageService',
-  'images',
+.controller('TagDialogController', ['$log', '$q', '$mdDialog', 'NotificationService',
+  'SellerImageService', 'SellerImageTagSearchService', 'images',
 
-  function($q, $mdDialog, NotificationService, SellerImageService, images) {
+  function($log, $q, $mdDialog, NotificationService, SellerImageService,
+           SellerImageTagSearchService, images) {
+
     var self = this;
 
-    self.tags = [];
+    var imageTags = {
+      result: [],
+    };
 
     if (images.length === 1) {
       // Está sendo editado as tags de uma imagem apenas
@@ -322,6 +355,27 @@ angular.module('meuml.protected.image')
         return imageTag.tag;
       });
     }
+
+    function searchTags() {
+      $log.debug('Listando todas as tags');
+
+      SellerImageTagSearchService.search().then(function(response) {
+        $log.debug('Tags listadas');
+        imageTags = response;
+      }, function(error) {
+        NotificationService.error('Não foi possível listar as tags', error);
+      });
+    }
+
+    self.searchImageTag = function(searchText) {
+      if (!searchText) {
+        return [];
+      }
+
+      return imageTags.result.filter(function(tag) {
+        return (tag.indexOf(angular.lowercase(searchText)) > -1);
+      });
+    };
 
     self.cancel = function() {
       $mdDialog.cancel();
@@ -372,6 +426,8 @@ angular.module('meuml.protected.image')
             'tarde.', error);
       });
     };
+
+    searchTags();
   }
 ])
 

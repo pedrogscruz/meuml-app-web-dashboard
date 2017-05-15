@@ -11,6 +11,8 @@
     margin-bottom: 48px;
 
     .tags {
+      margin-right: 16px;
+
       .icon {
         margin-right: 16px;
       }
@@ -30,11 +32,29 @@
 
   .image {
     display: inline-block;
+    position: relative;
     width: 400px;
 
-    .select {
-      padding: 12px;
+    .actions {
+      background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.54), transparent);
+      display: none;
+      height: 65px;
+      left: 0;
       position: absolute;
+      right: 0;
+      top: 0;
+
+      .select {
+        padding: 12px 0 0 12px;
+
+        .md-icon {
+          border-color: rgba(255, 255, 255, 0.87);
+        }
+      }
+
+      md-icon {
+        color: rgba(255, 255, 255, 0.87);
+      }
     }
 
     .image-file {
@@ -42,6 +62,8 @@
       background-position: center;
       background-repeat: no-repeat;
       background-size: cover;
+      cursor: pointer;
+      display: block;
       height: 100px;
       overflow: hidden;
       padding-bottom: 50%;
@@ -49,6 +71,8 @@
     }
 
     md-card-content {
+      padding-bottom: 0;
+
       .tags-list {
         .tags {
           .tag {
@@ -56,36 +80,50 @@
             border-radius: 6px;
             font-size: 14px;
             margin-right: 8px;
-            padding: 2px 0 2px 8px;
+            padding: 6px 10px;
 
-            .value {
-              display: inline-block;
-
-              a {
-                color: inherit;
-              }
-            }
-
-            .delete {
-              border-left: 1px solid;
-              display: inline-block;
-              margin-left: 2px;
-              padding: 0 8px;
-              cursor: pointer;
+            a {
+              color: inherit;
             }
           }
         }
-      }
-    }
 
-    md-card-actions {
+        .add-button {
+          padding: 7px 0;
+        }
+
+        .edit-button {
+          margin-top: -6px;
+        }
+      }
+
       .image-url {
-        margin: 0;
+        margin: 8px 0 16px 0;
+
+        input {
+          font-size: 14px;
+          height: 24px;
+        }
 
         .md-errors-spacer {
           display: none;
         }
       }
+    }
+  }
+
+  .image:hover {
+    .actions {
+      display: flex;
+    }
+  }
+
+  .image.selected {
+    border: 4px solid #4285f4;
+    box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12), 0 3px 5px -1px rgba(0, 0, 0, 0.2);
+
+    .actions {
+      display: flex;
     }
   }
 }

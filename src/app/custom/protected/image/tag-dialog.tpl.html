@@ -7,7 +7,7 @@
     <md-chips ng-model="tagDialogCtrl.tags">
       <md-autocomplete
           md-search-text="searchText"
-          md-items="tag in tagDialogCtrl.tags"
+          md-items="tag in tagDialogCtrl.searchImageTag(searchText)"
           md-item-text="tag"
           md-autofocus
           placeholder="Adicione uma tag">
