@@ -464,26 +464,38 @@ angular.module('meuml.protected.image')
     self.save = function() {
       var promises = [];
 
-      // Para cada imagem verifica se as tags já existem
-      // Caso a imagem não tenha a nova tag então cria ela
+      // Para cada imagem verifica as tags que foram adicionadas ou removidas
       angular.forEach(images, function(image) {
         var newTags = [];
+        var removedTags = [];
 
+        // Busca as tags que foram adicionadas
         angular.forEach(self.tags, function(tag) {
           var tagExists = image.tags.some(function(imageTag) {
             return imageTag.tag == tag;
           });
 
-          if (tagExists) {
-            return;
+          if (!tagExists) {
+            newTags.push({
+              tag: tag,
+            });
           }
-
-          newTags.push({
-            tag: tag
-          });
         });
 
-        if (newTags.length === 0) {
+        // Busca as tags que foram removidas
+        angular.forEach(image.tags, function(imageTag) {
+          var tagExists = self.tags.some(function(tag) {
+            return imageTag.tag == tag;
+          });
+
+          if (!tagExists) {
+            removedTags.push({
+              id: imageTag.id,
+            });
+          }
+        });
+
+        if (newTags.length === 0 && removedTags.length === 0) {
           return;
         }
 
@@ -491,6 +503,7 @@ angular.module('meuml.protected.image')
           id: image.id,
           tags: {
             add: newTags,
+            remove: removedTags,
           },
         };
 
