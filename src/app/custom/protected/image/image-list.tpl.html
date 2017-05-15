@@ -96,7 +96,11 @@
                   when="{'0': 'Nenhuma imagem', 'one': '1 imagem', 'other': '{{imageListCtrl.images.limit | number}} imagens'}"></ng-pluralize>
   </div>
 
-  <div ng-show="imageListCtrl.getSelectedImages().length" layout="row">
+  <div ng-show="imageListCtrl.getSelectedImages().length" layout="row" layout-align="center center">
+    <md-button ng-click="imageListCtrl.deselectImages()" class="md-icon-button">
+      <md-icon md-font-icon="material-icons" aria-label="Desselecionar imagens">close</md-icon>
+    </md-button>
+
     <div flex class="gorillascode-results-count">
       <ng-pluralize count="imageListCtrl.getSelectedImages().length"
                     when="{'0': 'Nenhuma imagem selecionada', 'one': '1 imagem selecionada', 'other': '{{imageListCtrl.getSelectedImages().length | number}} imagens selecionadas'}"></ng-pluralize>

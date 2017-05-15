@@ -378,6 +378,21 @@ angular.module('meuml.protected.image')
       });
     };
 
+    /**
+     * Desseleciona todas as imagens.
+     */
+    self.deselectImages = function() {
+      angular.forEach(self.images.result, function(image) {
+        image.selected = false;
+      });
+    };
+
+    /**
+     * Adiciona a tag junto das tags atuais do filtro de pesquisa e sem seguida faz uma nova
+     * pesquisa.
+     *
+     * @param tag a tag que será adicionada no filtro.
+     */
     self.appendTagToFilters = function(tag) {
       if (self.filters.tag.indexOf(tag) != -1) {
         // Tag já está adicionada
