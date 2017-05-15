@@ -429,6 +429,8 @@ angular.module('meuml.protected.image')
       result: [],
     };
 
+    self.tags = [];
+
     if (images.length === 1) {
       // Está sendo editado as tags de uma imagem apenas
       self.tags = images[0].tags.map(function(imageTag) {
@@ -482,18 +484,21 @@ angular.module('meuml.protected.image')
           }
         });
 
-        // Busca as tags que foram removidas
-        angular.forEach(image.tags, function(imageTag) {
-          var tagExists = self.tags.some(function(tag) {
-            return imageTag.tag == tag;
-          });
-
-          if (!tagExists) {
-            removedTags.push({
-              id: imageTag.id,
+        // Se estão sendo editadas as tags de apenas uma imagem então busca as tags que foram
+        // removidas
+        if (images.length === 1) {
+          angular.forEach(image.tags, function (imageTag) {
+            var tagExists = self.tags.some(function (tag) {
+              return imageTag.tag == tag;
             });
-          }
-        });
+
+            if (!tagExists) {
+              removedTags.push({
+                id: imageTag.id,
+              });
+            }
+          });
+        }
 
         if (newTags.length === 0 && removedTags.length === 0) {
           return;
