@@ -292,16 +292,6 @@ angular.module('meuml.protected.image')
       });
     };
 
-    self.deleteImageTag = function(tag, image, $index) {
-      SellerImageTagService.delete(tag.id).then(function() {
-        NotificationService.success('Tag removida');
-        image.tags.splice($index, 1);
-      }, function(error) {
-        NotificationService.error('Não foi possível remover a tag. Tente novamente ' +
-            'mais tarde.', error);
-      });
-    };
-
     self.imageUrlCopied = function() {
       NotificationService.success('Link copiado');
     };
