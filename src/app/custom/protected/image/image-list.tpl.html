@@ -1,4 +1,19 @@
-<div class="gorillascode-content gorillascode-content-no-background">
+<div class="gorillascode-content gorillascode-content-no-background"
+     ngf-drop
+     ngf-allow-dir="true"
+     ngf-accept="'image/*'"
+     ngf-capture="'camera'"
+     ngf-change="imageListCtrl.selectFiles($files)"
+     ngf-drag-over-class="{accept:'acceptClass', reject:'rejectClass'}"
+     ngf-fix-orientation="true"
+     ngf-multiple="true"
+     ngf-pattern="'image/*'">
+
+  <div class="upload-drop-info">
+    <md-icon md-font-icon="material-icons" aria-label="Upload de arquivos">cloud_upload</md-icon>
+    <div>Solte os arquivos para fazer o upload</div>
+  </div>
+
   <div class="filters">
     <div layout="column" layout-gt-xs="row">
       <div flex layout="row" layout-align="center center" class="tags">
@@ -126,7 +141,10 @@
 
   <div class="images">
     <div ng-show="!imageListCtrl.loading && !imageListCtrl.images.result.length">
-      <div class="gorillascode-no-results">Nenhuma imagem</div>
+      <div class="gorillascode-no-results">
+        <p class="md-title">Nenhuma imagem</p>
+        <p>Clique no botão <strong>FAZER UPLOAD</strong> ou arraste as imagens aqui</p>
+      </div>
     </div>
 
     <div ng-show="imageListCtrl.images.result.length">
