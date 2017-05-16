@@ -1,8 +1,8 @@
 <div class="gorillascode-content gorillascode-content-no-background">
   <div class="filters">
-    <div layout="row">
+    <div layout="column" layout-gt-xs="row">
       <div flex layout="row" layout-align="center center" class="tags">
-        <div class="icon">
+        <div hide show-gt-xs class="icon">
           <md-button ng-click="imageListCtrl.changeFilters()" class="md-icon-button">
             <md-icon md-font-icon="material-icons" aria-label="Pesquisar">search</md-icon>
             <md-tooltip>Pesquisar</md-tooltip>
@@ -25,7 +25,7 @@
         </div>
       </div>
 
-      <div class="upload-button">
+      <div hide show-gt-xs class="upload-button">
         <md-button class="md-raised md-primary"
                    ngf-select ngf-drop
                    ngf-allow-dir="true"
@@ -102,16 +102,9 @@
     </md-button>
 
     <div flex class="gorillascode-results-count">
-      <ng-pluralize count="imageListCtrl.getSelectedImages().length"
+      <span hide-gt-xs>{{imageListCtrl.getSelectedImages().length | number}}</span>
+      <ng-pluralize hide show-gt-xs count="imageListCtrl.getSelectedImages().length"
                     when="{'0': 'Nenhuma imagem selecionada', 'one': '1 imagem selecionada', 'other': '{{imageListCtrl.getSelectedImages().length | number}} imagens selecionadas'}"></ng-pluralize>
-    </div>
-
-    <div>
-      <md-button ng-click="imageListCtrl.deleteImages(imageListCtrl.getSelectedImages(), $event)"
-                 class="md-icon-button">
-        <md-icon md-font-icon="material-icons" aria-label="Excluir">delete</md-icon>
-        <md-tooltip>Excluir</md-tooltip>
-      </md-button>
     </div>
 
     <div>
@@ -119,6 +112,14 @@
                  class="md-icon-button">
         <md-icon md-font-icon="material-icons" aria-label="Alterar tags">label</md-icon>
         <md-tooltip>Alterar tags</md-tooltip>
+      </md-button>
+    </div>
+
+    <div>
+      <md-button ng-click="imageListCtrl.deleteImages(imageListCtrl.getSelectedImages(), $event)"
+                 class="md-icon-button">
+        <md-icon md-font-icon="material-icons" aria-label="Excluir">delete</md-icon>
+        <md-tooltip>Excluir</md-tooltip>
       </md-button>
     </div>
   </div>
