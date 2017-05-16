@@ -38,6 +38,12 @@
       <p>Imagens</p>
     </md-list-item>
 
+    <md-list-item ng-repeat="tag in protectedCtrl.imageTags.result"
+                  ui-sref="protected.image.list({ tag: tag })"
+                  ng-class="{ active: $state.includes('protected.image') }">
+      <p style="margin-left: 56px;">{{tag}}</p>
+    </md-list-item>
+
     <md-divider></md-divider>
 
     <md-list-item ng-href="mailto:contato@meuml.com" target="_blank">
