@@ -435,10 +435,10 @@ angular.module('meuml.protected.image')
   }
 ])
 
-.controller('TagDialogController', ['$log', '$q', '$mdDialog', 'NotificationService',
+.controller('TagDialogController', ['$log', '$q', '$filter', '$mdDialog', 'NotificationService',
   'SellerImageService', 'SellerImageTagSearchService', 'images',
 
-  function($log, $q, $mdDialog, NotificationService, SellerImageService,
+  function($log, $q, $filter, $mdDialog, NotificationService, SellerImageService,
            SellerImageTagSearchService, images) {
 
     var self = this;
@@ -451,7 +451,9 @@ angular.module('meuml.protected.image')
 
     if (images.length === 1) {
       // Está sendo editado as tags de uma imagem apenas
-      self.tags = images[0].tags.map(function(imageTag) {
+      var tags = $filter('orderBy')(images[0].tags, '-created_at');
+
+      self.tags = tags.map(function(imageTag) {
         return imageTag.tag;
       });
     }
