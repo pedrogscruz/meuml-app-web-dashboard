@@ -62,20 +62,36 @@ angular.module('meuml.protected.image')
       };
 
       if (self.filters.tag && self.filters.tag.length) {
-        var tagsFilter = self.filters.tag.map(function(tag) {
-          return {
+        // Usa o filtro de tags para pesquisar tanto nas tags das imagens quanto no nome do arquivo
+
+        var keyFilter = [];
+        var tagsFilter = [];
+
+        angular.forEach(self.filters.tag, function(tag) {
+          keyFilter.push({
+            name: 'key',
+            op: '==',
+            val: tag,
+          });
+
+          tagsFilter.push({
             name: 'tags',
             op: 'any',
             val: {
               name: 'tag',
               op: '==',
               val: tag,
-            }
-          };
+            },
+          });
         });
 
+        // Pesquisa no nome do arquivo ou nas tags da imagem
         searchParameters.q.filters.push({
-          and: tagsFilter
+          or: [{
+            and: keyFilter,
+          }, {
+            and: tagsFilter,
+          }]
         });
       }
 
