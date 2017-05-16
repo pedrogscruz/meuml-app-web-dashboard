@@ -292,6 +292,8 @@ angular.module('meuml.protected.image')
 
         self.images.result.unshift(response);
         self.images.limit++;
+
+        SellerImageTagSearchService.addTags(self.selectedFilesTags);
       }, function(error) {
         $log.error('Não foi possível enviar a imagem', error);
         file.error = 'Não foi possível enviar a imagem';
@@ -534,6 +536,8 @@ angular.module('meuml.protected.image')
       // Se todas as imagens foram atualizadas então fecha a modal e atualiza as informações na tela
       $q.all(promises).then(function(response) {
         NotificationService.success('Tags atualizadas');
+        SellerImageTagSearchService.addTags(self.tags);
+
         $mdDialog.hide(response);
       }, function(error) {
         NotificationService.error('Não foi possível atualizar as tags. Tente novamente mais ' +
