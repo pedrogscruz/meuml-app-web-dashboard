@@ -220,8 +220,8 @@
           <md-card-content>
             <div layout="row" class="tags-list">
               <div ng-show="image.tags.length" class="tags">
-                <div ng-repeat="imageTag in image.tags | orderBy:'-created_at' track by tag.id" class="gorillascode-animate tag"
-                     md-colors="{background: 'primary'}">
+                <div ng-repeat="imageTag in image.tags | orderBy:'-created_at' track by imageTag.id"
+                     class="gorillascode-animate tag" md-colors="{background: 'primary'}">
                   <a href="" ng-click="imageListCtrl.appendTagToFilters(imageTag.tag)"
                      title="Pesquisar por {{imageTag.tag}}">{{imageTag.tag}}</a>
                 </div>
