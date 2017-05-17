@@ -53,6 +53,16 @@
         </md-button>
       </div>
     </div>
+
+    <div ng-show="imageListCtrl.topImageTags.length" class="tags-cloud">
+      <div class="md-caption">Tags mais usadas</div>
+
+      <div class="tags">
+        <a ng-repeat="imageTag in imageListCtrl.topImageTags" href=""
+           ng-click="imageListCtrl.appendTagToFilters(imageTag.tag)"
+           class="tag" title="Pesquisar por {{imageTag.tag}}">{{imageTag.tag}}</a>
+      </div>
+    </div>
   </div>
 
   <md-card ng-show="imageListCtrl.selectedFiles.length" style="margin: 0 0 48px 0; padding: 16px;">

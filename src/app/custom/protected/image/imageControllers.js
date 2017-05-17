@@ -14,6 +14,9 @@ angular.module('meuml.protected.image')
     // Largura máxima das imagens
     var IMAGE_MAX_WIDTH = 900;
 
+    // Número máximo de tags exibidas na lista de tags mais usadas
+    var MAX_TOP_IMAGE_TAGS = 20;
+
     var imageTags = {
       result: [],
     };
@@ -27,6 +30,9 @@ angular.module('meuml.protected.image')
     self.selectedFilesTags = [];
     self.images = {};
     self.order = $stateParams.order;
+
+    // As tags mais usadas nas imagens
+    self.topImageTags = [];
 
     $controller('PaginationController', {
       $scope: $scope,
@@ -120,7 +126,9 @@ angular.module('meuml.protected.image')
 
       SellerImageTagSearchService.search().then(function(response) {
         $log.debug('Tags listadas');
+
         imageTags = response;
+        self.topImageTags = imageTags.result.slice(0, MAX_TOP_IMAGE_TAGS);
       }, function(error) {
         NotificationService.error('Não foi possível listar as tags', error);
       });
@@ -246,6 +254,7 @@ angular.module('meuml.protected.image')
         resizeIf: function(width) {
           return width > IMAGE_MAX_WIDTH;
         },
+        restoreExif: false,
       }).then(function(response) {
         // Redimensionou a imagem então retorna as dimensões dela
 
@@ -338,6 +347,7 @@ angular.module('meuml.protected.image')
         resizeIf: function(width) {
           return width > IMAGE_MAX_WIDTH;
         },
+        restoreExif: false,
       }).then(function(response) {
         // Redimensionou a imagem então retorna as dimensões dela
 
