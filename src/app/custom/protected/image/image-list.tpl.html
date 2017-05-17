@@ -1,3 +1,30 @@
+<md-toolbar ng-show="imageListCtrl.getSelectedImages().length"
+            class="gorillascode-animate md-toolbar-fixed">
+  <div class="md-toolbar-tools">
+    <md-button ng-click="imageListCtrl.deselectImages()" class="md-icon-button">
+      <md-icon md-font-icon="material-icons" aria-label="Desselecionar imagens">close</md-icon>
+    </md-button>
+
+    <div flex>
+      <span hide-gt-xs>{{imageListCtrl.getSelectedImages().length | number}}</span>
+      <ng-pluralize hide show-gt-xs count="imageListCtrl.getSelectedImages().length"
+                    when="{'0': 'Nenhuma imagem selecionada', 'one': '1 imagem selecionada', 'other': '{{imageListCtrl.getSelectedImages().length | number}} imagens selecionadas'}"></ng-pluralize>
+    </div>
+
+    <md-button ng-click="imageListCtrl.editTags(imageListCtrl.getSelectedImages(), $event)"
+               class="md-icon-button">
+      <md-icon md-font-icon="material-icons" aria-label="Alterar tags">label</md-icon>
+      <md-tooltip>Alterar tags</md-tooltip>
+    </md-button>
+
+    <md-button ng-click="imageListCtrl.deleteImages(imageListCtrl.getSelectedImages(), $event)"
+               class="md-icon-button">
+      <md-icon md-font-icon="material-icons" aria-label="Excluir">delete</md-icon>
+      <md-tooltip>Excluir</md-tooltip>
+    </md-button>
+  </div>
+</md-toolbar>
+
 <div class="gorillascode-content gorillascode-content-no-background"
      ngf-drop
      ngf-allow-dir="true"
@@ -112,39 +139,10 @@
     </div>
   </md-card>
 
-  <div class="gorillascode-results-count"
-       ng-show="imageListCtrl.images.result.length && !imageListCtrl.getSelectedImages().length">
+  <div class="gorillascode-results-count" ng-show="imageListCtrl.images.result.length">
     Exibindo
     <ng-pluralize count="imageListCtrl.images.limit"
                   when="{'0': 'Nenhuma imagem', 'one': '1 imagem', 'other': '{{imageListCtrl.images.limit | number}} imagens'}"></ng-pluralize>
-  </div>
-
-  <div ng-show="imageListCtrl.getSelectedImages().length" layout="row" layout-align="center center">
-    <md-button ng-click="imageListCtrl.deselectImages()" class="md-icon-button">
-      <md-icon md-font-icon="material-icons" aria-label="Desselecionar imagens">close</md-icon>
-    </md-button>
-
-    <div flex class="gorillascode-results-count">
-      <span hide-gt-xs>{{imageListCtrl.getSelectedImages().length | number}}</span>
-      <ng-pluralize hide show-gt-xs count="imageListCtrl.getSelectedImages().length"
-                    when="{'0': 'Nenhuma imagem selecionada', 'one': '1 imagem selecionada', 'other': '{{imageListCtrl.getSelectedImages().length | number}} imagens selecionadas'}"></ng-pluralize>
-    </div>
-
-    <div>
-      <md-button ng-click="imageListCtrl.editTags(imageListCtrl.getSelectedImages(), $event)"
-                 class="md-icon-button">
-        <md-icon md-font-icon="material-icons" aria-label="Alterar tags">label</md-icon>
-        <md-tooltip>Alterar tags</md-tooltip>
-      </md-button>
-    </div>
-
-    <div>
-      <md-button ng-click="imageListCtrl.deleteImages(imageListCtrl.getSelectedImages(), $event)"
-                 class="md-icon-button">
-        <md-icon md-font-icon="material-icons" aria-label="Excluir">delete</md-icon>
-        <md-tooltip>Excluir</md-tooltip>
-      </md-button>
-    </div>
   </div>
 
   <div class="images">
