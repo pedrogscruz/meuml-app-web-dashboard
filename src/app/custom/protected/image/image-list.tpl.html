@@ -139,21 +139,22 @@
     </div>
   </md-card>
 
-  <div class="gorillascode-results-count" ng-show="imageListCtrl.images.result.length">
+  <div ng-show="!imageListCtrl.loading && !imageListCtrl.images.result.length">
+    <div class="gorillascode-no-results">
+      <p class="md-title">Nenhuma imagem</p>
+      <p>Clique no botão <strong>FAZER UPLOAD</strong> ou arraste as imagens aqui</p>
+    </div>
+  </div>
+
+  <div class="gorillascode-animate gorillascode-results-count"
+       ng-show="imageListCtrl.images.result.length">
     Exibindo
     <ng-pluralize count="imageListCtrl.images.limit"
                   when="{'0': 'Nenhuma imagem', 'one': '1 imagem', 'other': '{{imageListCtrl.images.limit | number}} imagens'}"></ng-pluralize>
   </div>
 
   <div class="images">
-    <div ng-show="!imageListCtrl.loading && !imageListCtrl.images.result.length">
-      <div class="gorillascode-no-results">
-        <p class="md-title">Nenhuma imagem</p>
-        <p>Clique no botão <strong>FAZER UPLOAD</strong> ou arraste as imagens aqui</p>
-      </div>
-    </div>
-
-    <div ng-show="imageListCtrl.images.result.length">
+    <div ng-show="imageListCtrl.images.result.length" class="gorillascode-animate">
       <div class="image-wrapper" ng-repeat="image in imageListCtrl.images.result track by image.id"
            class="gorillascode-animate">
         <md-card class="image" ng-class="{ selected: image.selected }">
@@ -228,11 +229,11 @@
           <md-card-content>
             <div layout="row" class="tags-list">
               <div ng-show="image.tags.length" class="tags">
-                <div ng-repeat="imageTag in image.tags | orderBy:'-created_at' track by imageTag.id"
-                     class="gorillascode-animate tag" md-colors="{background: 'primary'}">
-                  <a href="" ng-click="imageListCtrl.appendTagToFilters(imageTag.tag)"
-                     title="Pesquisar por {{imageTag.tag}}">{{imageTag.tag}}</a>
-                </div>
+                <a ng-repeat="imageTag in image.tags | orderBy:'-created_at' track by imageTag.id"
+                   href="" ng-click="imageListCtrl.appendTagToFilters(imageTag.tag)"
+                   class="gorillascode-animate meuml-tag" title="Pesquisar por {{imageTag.tag}}">
+                  {{imageTag.tag}}
+                </a>
               </div>
 
               <div ng-show="!image.tags.length" class="add-button">

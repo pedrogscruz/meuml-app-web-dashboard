@@ -38,6 +38,12 @@
       <p>Imagens</p>
     </md-list-item>
 
+    <md-list-item ui-sref="protected.template.list"
+                  ng-class="{ active: $state.includes('protected.template') }">
+      <md-icon md-font-icon="material-icons" aria-label="Templates">format_align_justify</md-icon>
+      <p>Templates</p>
+    </md-list-item>
+
     <md-divider></md-divider>
 
     <md-list-item ng-href="mailto:contato@meuml.com" target="_blank">
