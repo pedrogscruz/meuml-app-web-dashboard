@@ -82,6 +82,9 @@ module.exports = {
       'vendor/ng-file-upload/ng-file-upload.js',
     ],
     css: [
+      'vendor/angular-loading-bar/build/loading-bar.css',
+      'vendor/angular-material/angular-material.css',
+      'vendor/angular-material-data-table/dist/md-data-table.css',
     ],
     assets: [
     ]
