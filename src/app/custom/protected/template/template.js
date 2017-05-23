@@ -2,6 +2,7 @@ angular.module('meuml.protected.template', [
   'meuml.services.template',
   'meuml.services.template-tag',
   'ui.router',
+  'ui.tinymce',
 ])
 
 .config(['$stateProvider',

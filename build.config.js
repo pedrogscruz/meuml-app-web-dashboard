@@ -77,6 +77,7 @@ module.exports = {
       'vendor/angular-message-format/angular-message-format.js',
       'vendor/angular-resource/angular-resource.js',
       'vendor/angular-sanitize/angular-sanitize.js',
+      'vendor/angular-ui-tinymce/src/tinymce.js',
       'vendor/angular-ui-router/release/angular-ui-router.js',
       'vendor/checklist-model/checklist-model.js',
       'vendor/ng-file-upload/ng-file-upload.js',
