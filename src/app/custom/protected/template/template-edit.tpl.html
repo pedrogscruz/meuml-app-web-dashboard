@@ -10,20 +10,23 @@
       </div>
     </md-input-container>
 
-    <textarea ng-model="templateEditCtrl.template.html_text"
-              ui-tinymce="templateEditCtrl.tinymceOptions"></textarea>
-
-    <md-input-container class="md-block">
+    <md-input-container class="md-block tags">
       <label>Tags</label>
 
       <md-chips ng-model="templateEditCtrl.tags">
         <md-autocomplete md-search-text="searchText"
                          md-items="tag in templateEditCtrl.searchTemplateTag(searchText)"
-                         md-item-text="tag" placeholder="Adicione uma ou mais tags">
-          <span md-highlight-text="searchText">{{tag}}</span>
+                         md-item-text="tag"
+                         placeholder="Adicione uma ou mais tags">
+          <span md-highlight-text="searchText" md-highlight-flags="gi">{{tag}}</span>
         </md-autocomplete>
       </md-chips>
     </md-input-container>
+
+    <div class="wysiwyg-editor">
+      <textarea ng-model="templateEditCtrl.template.html_text"
+                ui-tinymce="templateEditCtrl.tinymceOptions"></textarea>
+    </div>
 
     <div layout="row">
       <md-button ng-show="templateEditCtrl.template.id"

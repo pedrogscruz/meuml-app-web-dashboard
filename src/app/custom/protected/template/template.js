@@ -10,21 +10,21 @@ angular.module('meuml.protected.template', [
     $stateProvider.state('protected.template', {
       url: '/template',
       abstract: true,
-      template: '<ui-view/>'
+      template: '<ui-view/>',
     }).state('protected.template.list', {
       url: '?order&tag',
       controller: 'TemplateListController as templateListCtrl',
       templateUrl: 'custom/protected/template/template-list.tpl.html',
       data: {
-        pageTitle: 'Templates'
+        pageTitle: 'Templates',
       },
       params: {
         order: {
           squash: true,
-          value: '-created_at',
+          value: '-updated_at',
         },
         tag: {
-          array: true
+          array: true,
         },
       },
     }).state('protected.template.edit', {
@@ -32,7 +32,7 @@ angular.module('meuml.protected.template', [
       controller: 'TemplateEditController as templateEditCtrl',
       templateUrl: 'custom/protected/template/template-edit.tpl.html',
       data: {
-        pageTitle: 'Edição do template'
+        pageTitle: 'Edição do template',
       },
       resolve: {
         template: ['$stateParams', 'SellerTemplateService',
@@ -46,7 +46,7 @@ angular.module('meuml.protected.template', [
       controller: 'TemplateEditController as templateEditCtrl',
       templateUrl: 'custom/protected/template/template-edit.tpl.html',
       data: {
-        pageTitle: 'Novo template'
+        pageTitle: 'Novo template',
       },
       resolve: {
         template: [function() {

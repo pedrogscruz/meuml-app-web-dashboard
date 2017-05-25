@@ -107,7 +107,7 @@ angular.module('meuml.protected.template')
         // segundo campo para fazer a ordenação correta
         searchParameters.q.order_by.push({
           field: 'id',
-          direction: 'asc'
+          direction: 'desc'
         });
       }
 
@@ -132,8 +132,10 @@ angular.module('meuml.protected.template')
         return [];
       }
 
-      return templateTags.result.filter(function(tag) {
-        return (tag.indexOf(angular.lowercase(searchText)) > -1);
+      return templateTags.result.filter(function(templateTag) {
+        return (templateTag.tag.indexOf(angular.lowercase(searchText)) > -1);
+      }).map(function(templateTag) {
+        return templateTag.tag;
       });
     };
 
@@ -215,23 +217,72 @@ angular.module('meuml.protected.template')
 
       SellerTemplateTagSearchService.search().then(function(response) {
         $log.debug('Tags listadas');
-
-        templateTags = response.result.map(function(templateTag) {
-          return templateTag.tag;
-        });
+        templateTags = response;
       }, function(error) {
         NotificationService.error('Não foi possível listar as tags', error);
       });
     }
 
     self.save = function() {
-      var template = {
+      var tagsToSave = null;
+
+      // Template existente está sendo editado
+      if (self.template.id) {
+        tagsToSave = {
+          add: [],
+          remove: [],
+        };
+
+        // Busca as tags que foram adicionadas
+        angular.forEach(self.tags, function(tag) {
+          var tagExists = self.template.tags.some(function(templateTag) {
+            return templateTag.tag == tag;
+          });
+
+          if (!tagExists) {
+            tagsToSave.add.push({
+              tag: tag,
+            });
+          }
+        });
+
+        angular.forEach(self.template.tags, function(templateTag) {
+          var tagExists = self.tags.some(function(tag) {
+            return templateTag.tag == tag;
+          });
+
+          if (!tagExists) {
+            tagsToSave.remove.push({
+              id: templateTag.id,
+            });
+          }
+        });
+      } else {
+        // Novo template está sendo criado
+        tagsToSave = self.tags.map(function(templateTag) {
+          return { tag: templateTag };
+        });
+      }
+
+      var templateToSave = {
         html_text: self.template.html_text,
+        id: self.template.id,
         name: self.template.name,
+        tags: tagsToSave,
       };
 
-      SellerTemplateService.save(template).then(function() {
+      SellerTemplateService.save(templateToSave).then(function(response) {
         NotificationService.success('Template salvo');
+
+        angular.extend(self.template, response);
+
+        // Altera a URL para usar a URL de edição do template
+        $state.transitionTo('protected.template.edit', {
+          id: self.template.id,
+        }, {
+          location:'replace',
+          notify: false,
+        });
       }, function(error) {
         NotificationService.error('Não foi possível salvar o template', error);
       });
@@ -261,8 +312,10 @@ angular.module('meuml.protected.template')
         return [];
       }
 
-      return templateTags.filter(function(tag) {
-        return (tag.indexOf(angular.lowercase(searchText)) > -1);
+      return templateTags.result.filter(function(templateTag) {
+        return (templateTag.tag.indexOf(angular.lowercase(searchText)) > -1);
+      }).map(function(templateTag) {
+        return templateTag.tag;
       });
     };
 

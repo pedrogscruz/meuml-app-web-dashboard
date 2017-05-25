@@ -44,19 +44,6 @@ angular.module('meuml.services.template-tag', [
           tags = response;
         }).$promise;
       },
-      addTags: function(newTags) {
-        angular.forEach(newTags, function(newTag) {
-          var tagExists = tags.result.some(function(tag) {
-            return tag == newTag;
-          });
-
-          if (!tagExists) {
-            tags.result.push(newTag);
-          }
-        });
-
-        tags.result.sort();
-      },
     };
 
     return service;

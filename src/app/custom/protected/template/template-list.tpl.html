@@ -18,7 +18,7 @@
                            md-item-text="tag"
                            md-autofocus
                            placeholder="Pesquise por tags ou nome do arquivo">
-            <span md-highlight-text="searchText">{{tag}}</span>
+            <span md-highlight-text="searchText" md-highlight-flags="gi">{{tag}}</span>
           </md-autocomplete>
         </md-chips>
       </div>
@@ -57,7 +57,7 @@
           <tr md-row>
             <th md-column md-order-by="name" class="name">Nome</th>
             <th md-column class="tags">Tags</th>
-            <th md-column md-order-by="created_at">Criação</th>
+            <th md-column md-order-by="updated_at">Última edição</th>
           </tr>
           </thead>
           <tbody md-body>
@@ -70,7 +70,9 @@
                 {{templateTag.tag}}
               </span>
             </td>
-            <td md-cell class="createdAt">{{template.created_at | toUTCDate | date:'short'}}</td>
+            <td md-cell class="createdAt">
+              {{template.updated_at || template.created_at | toUTCDate | date:'short'}}
+            </td>
           </tr>
           </tbody>
         </table>
