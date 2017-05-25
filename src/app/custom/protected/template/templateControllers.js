@@ -195,14 +195,14 @@ angular.module('meuml.protected.template')
     self.tinymceOptions = {
       branding: false,
       elementpath: false,
-      // inline_boundaries: false,
+      height: 500,
       language: 'pt_BR',
       language_url: '/assets/js/tinymce-language-pt_BR.js',
       plugins: [
-        'autoresize advlist autolink link image lists charmap print preview hr anchor pagebreak spellchecker searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking save table contextmenu directionality emoticons template paste textcolor',
+        'advlist autolink link image lists charmap preview hr anchor pagebreak searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking save table contextmenu directionality emoticons template paste textcolor',
       ],
       statusbar: false,
-      toolbar1: 'insertfile undo redo | bold italic strikethrough underline | fontsizeselect | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | l      ink image | table ',
+      toolbar1: 'undo redo | bold italic strikethrough underline | fontsizeselect | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | l      ink image | table ',
       toolbar2: 'template | code | preview | fullscreen | fullpage',
     };
 
