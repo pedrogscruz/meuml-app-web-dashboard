@@ -46,16 +46,16 @@ angular.module('meuml.services.image-tag', [
       },
       addTags: function(newTags) {
         angular.forEach(newTags, function(newTag) {
-          var tagExists = tags.result.some(function(tag) {
-            return tag == newTag;
+          var tagExists = tags.result.some(function(imageTag) {
+            return imageTag.tag == newTag;
           });
 
           if (!tagExists) {
-            tags.result.push(newTag);
+            tags.result.push({
+              tag: newTag,
+            });
           }
         });
-
-        tags.result.sort();
       },
     };
 

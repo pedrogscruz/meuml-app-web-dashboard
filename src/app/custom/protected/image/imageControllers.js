@@ -139,8 +139,10 @@ angular.module('meuml.protected.image')
         return [];
       }
 
-      return imageTags.result.filter(function(tag) {
-        return (tag.indexOf(angular.lowercase(searchText)) > -1);
+      return imageTags.result.filter(function(imageTag) {
+        return (imageTag.tag.indexOf(angular.lowercase(searchText)) > -1);
+      }).map(function(imageTag) {
+        return imageTag.tag;
       });
     };
 
@@ -484,8 +486,10 @@ angular.module('meuml.protected.image')
         return [];
       }
 
-      return imageTags.result.filter(function(tag) {
-        return (tag.indexOf(angular.lowercase(searchText)) > -1);
+      return imageTags.result.filter(function(imageTag) {
+        return (imageTag.tag.indexOf(angular.lowercase(searchText)) > -1);
+      }).map(function(imageTag) {
+        return imageTag.tag;
       });
     };
 
@@ -518,7 +522,7 @@ angular.module('meuml.protected.image')
         // removidas
         if (images.length === 1) {
           angular.forEach(image.tags, function (imageTag) {
-            var tagExists = self.tags.some(function (tag) {
+            var tagExists = self.tags.some(function(tag) {
               return imageTag.tag == tag;
             });
 
