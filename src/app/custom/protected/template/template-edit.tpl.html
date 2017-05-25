@@ -10,16 +10,8 @@
       </div>
     </md-input-container>
 
-    <md-input-container class="md-block">
-      <label>Conteúdo</label>
-      <textarea type="text" ng-model="templateEditCtrl.template.html_text"></textarea>
-
-      <div ng-messages="managerForm.name.$error">
-        <div ng-message="required">Campo obrigatório</div>
-      </div>
-    </md-input-container>
-
-    <textarea ui-tinymce ng-model="templateEditCtrl.template.html_text"></textarea>
+    <textarea ng-model="templateEditCtrl.template.html_text"
+              ui-tinymce="templateEditCtrl.tinymceOptions"></textarea>
 
     <md-input-container class="md-block">
       <label>Tags</label>

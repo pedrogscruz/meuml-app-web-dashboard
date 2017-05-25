@@ -190,6 +190,20 @@ angular.module('meuml.protected.template')
     self.tags = [];
     self.template = template;
 
+    self.tinymceOptions = {
+      branding: false,
+      elementpath: false,
+      // inline_boundaries: false,
+      language: 'pt_BR',
+      language_url: '/assets/js/tinymce-language-pt_BR.js',
+      plugins: [
+        'autoresize advlist autolink link image lists charmap print preview hr anchor pagebreak spellchecker searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking save table contextmenu directionality emoticons template paste textcolor',
+      ],
+      statusbar: false,
+      toolbar1: 'insertfile undo redo | bold italic strikethrough underline | fontsizeselect | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | l      ink image | table ',
+      toolbar2: 'template | code | preview | fullscreen | fullpage',
+    };
+
     if (self.template) {
       self.tags = self.template.tags.map(function(templateTag) {
         return templateTag.tag;
