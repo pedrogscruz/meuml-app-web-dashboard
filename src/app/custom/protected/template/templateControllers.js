@@ -195,15 +195,31 @@ angular.module('meuml.protected.template')
     self.tinymceOptions = {
       branding: false,
       elementpath: false,
+      file_picker_callback: function(callback, value, meta) {
+        // callback('https://quiteja.com.br/static/images/icons/security.png', {alt: 'My alt text'});
+        if (meta.filetype != 'image') {
+          return;
+        }
+
+        $mdDialog.show({
+          // controller: 'TagDialogController as tagDialogCtrl',
+          // fullscreen: $mdMedia('xs'),
+          parent: angular.element(document.body),
+          // targetEvent: ev,
+          templateUrl: 'custom/protected/image/tag-dialog.tpl.html',
+        });
+      },
+      file_picker_types: 'image',
       height: 500,
+      image_dimensions: false,
       language: 'pt_BR',
       language_url: '/assets/js/tinymce-language-pt_BR.js',
       plugins: [
-        'advlist autolink link image lists charmap preview hr anchor pagebreak searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking save table contextmenu directionality emoticons template paste textcolor',
+        'advlist autolink save link image lists charmap preview hr anchor pagebreak searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking table contextmenu directionality emoticons template paste textcolor',
       ],
       statusbar: false,
-      toolbar1: 'undo redo | bold italic strikethrough underline | fontsizeselect | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | l      ink image | table ',
-      toolbar2: 'template | code | preview | fullscreen | fullpage',
+      toolbar1: 'undo redo | bold italic strikethrough underline | fontsizeselect | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | table',
+      toolbar2: 'template | code | preview | fullscreen',
     };
 
     if (self.template) {
