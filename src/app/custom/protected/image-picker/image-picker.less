@@ -1,0 +1,71 @@
+.image-picker-dialog {
+  height: 100%;
+  max-height: 100%;
+  max-width: 100%;
+  width: 100%;
+
+  .images {
+    margin: 0 -8px 0 -8px;
+
+    .image-wrapper {
+      display: inline-block;
+      width: 100%;
+
+      @media (min-width: 600px) {
+        width: 50%;
+      }
+
+      @media (min-width: 1280px) {
+        width: 33.3%;
+      }
+
+      .image {
+        position: relative;
+
+        .image-file {
+          background-color: #000;
+          background-position: center;
+          background-repeat: no-repeat;
+          background-size: cover;
+          cursor: pointer;
+          display: block;
+          height: 100px;
+          overflow: hidden;
+          padding-bottom: 50%;
+          width: 100%;
+        }
+
+        md-card-content {
+          margin-top: -63px;
+
+          .tags-list {
+            .tags {
+              margin-top: 0;
+              overflow: hidden;
+              white-space: nowrap;
+
+              .meuml-tag {
+                background-color: #fff;
+                border: 1px solid #3f51b5;
+                color: #3f51b5;
+                margin-right: 8px;
+              }
+            }
+          }
+        }
+      }
+
+      .image:hover {
+        box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12), 0 3px 5px -1px rgba(0, 0, 0, 0.2);
+      }
+    }
+  }
+}
+
+#mce-modal-block {
+  z-index: 78 !important;
+}
+
+.mce-window {
+  z-index: 79 !important;
+}

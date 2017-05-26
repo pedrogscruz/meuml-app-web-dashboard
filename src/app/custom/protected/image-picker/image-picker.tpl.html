@@ -1,0 +1,44 @@
+<md-dialog aria-label="Selecionar imagem" class="image-picker-dialog">
+  <md-toolbar>
+    <div class="md-toolbar-tools">
+      <md-button ng-click="imagePickerCtrl.close()" class="md-icon-button">
+        <md-icon md-font-icon="material-icons" aria-label="Fechar">close</md-icon>
+      </md-button>
+
+      <h1>Selecionar imagem</h1>
+    </div>
+  </md-toolbar>
+
+  <md-dialog-content class="md-dialog-content">
+    <div ng-show="!imagePickerCtrl.loading && !imagePickerCtrl.images.result.length">
+      <div class="gorillascode-no-results">
+        <p class="md-title">Nenhuma imagem</p>
+      </div>
+    </div>
+
+    <div class="images">
+      <div ng-show="imagePickerCtrl.images.result.length" class="gorillascode-animate">
+        <div class="gorillascode-animate image-wrapper"
+             ng-repeat="image in imagePickerCtrl.images.result track by image.id">
+          <md-card class="image">
+            <div class="image-file" ng-style="{ backgroundImage: 'url(' + image.file.url + ')' }"
+                 ng-click="imagePickerCtrl.selectedImage(image)"
+                 title="Selecionar a imagem"></div>
+
+            <md-card-content>
+              <div layout="row" class="tags-list">
+                <div ng-show="image.tags.length" class="tags">
+                  <span ng-repeat="imageTag in image.tags | orderBy:'-created_at' track by imageTag.id"
+                        class="gorillascode-animate meuml-tag">
+                    {{imageTag.tag}}
+                  </span>
+                </div>
+              </div>
+            </md-card-content>
+          </md-card>
+        </div>
+      </div>
+
+      <gorillascode-pagination gorillascode-controller="imagePickerCtrl"></gorillascode-pagination>
+  </md-dialog-content>
+</md-dialog>

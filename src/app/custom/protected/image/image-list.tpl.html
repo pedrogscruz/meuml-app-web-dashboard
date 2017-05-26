@@ -122,11 +122,11 @@
       <div flex style="margin-right: 16px;">
         <md-chips ng-model="imageListCtrl.selectedFilesTags">
           <md-autocomplete
-              md-search-text="searchText"
-              md-items="tag in imageListCtrl.searchImageTag(searchText)"
-              md-item-text="tag"
-              md-autofocus
-              placeholder="Adicione uma ou mais tags">
+                  md-search-text="searchText"
+                  md-items="tag in imageListCtrl.searchImageTag(searchText)"
+                  md-item-text="tag"
+                  md-autofocus
+                  placeholder="Adicione uma ou mais tags">
             <span md-highlight-text="searchText">{{tag}}</span>
           </md-autocomplete>
         </md-chips>
@@ -155,8 +155,8 @@
 
   <div class="images">
     <div ng-show="imageListCtrl.images.result.length" class="gorillascode-animate">
-      <div class="image-wrapper" ng-repeat="image in imageListCtrl.images.result track by image.id"
-           class="gorillascode-animate">
+      <div class="gorillascode-animate image-wrapper"
+           ng-repeat="image in imageListCtrl.images.result track by image.id">
         <md-card class="image" ng-class="{ selected: image.selected }">
           <div ng-show="image.file.uploading" class="file-upload-progress">
             <md-progress-linear md-mode="determinate"
@@ -197,14 +197,14 @@
 
                   <md-menu-item>
                     <md-button
-                        ngf-select
-                        ngf-allow-dir="false"
-                        ngf-accept="'image/*'"
-                        ngf-change="imageListCtrl.replaceImage(image, $file)"
-                        ngf-drag-over-class="{accept:'acceptClass', reject:'rejectClass'}"
-                        ngf-fix-orientation="true"
-                        ngf-multiple="false"
-                        ngf-pattern="'image/*'">
+                            ngf-select
+                            ngf-allow-dir="false"
+                            ngf-accept="'image/*'"
+                            ngf-change="imageListCtrl.replaceImage(image, $file)"
+                            ngf-drag-over-class="{accept:'acceptClass', reject:'rejectClass'}"
+                            ngf-fix-orientation="true"
+                            ngf-multiple="false"
+                            ngf-pattern="'image/*'">
                       <md-icon md-font-icon="material-icons" aria-label="Substituir">add_a_photo
                       </md-icon>
                       Substituir

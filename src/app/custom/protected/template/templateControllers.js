@@ -180,10 +180,10 @@ angular.module('meuml.protected.template')
 ])
 
 .controller('TemplateEditController', ['$log', '$mdDialog', '$state', 'NotificationService',
-  'SellerTemplateService', 'SellerTemplateTagSearchService', 'template',
+  'SellerTemplateService', 'SellerTemplateTagSearchService', 'ImagePicker', 'template',
 
   function($log, $mdDialog, $state, NotificationService, SellerTemplateService,
-           SellerTemplateTagSearchService, template) {
+           SellerTemplateTagSearchService, ImagePicker, template) {
     var self = this;
 
     // Todas as tags usadas pelo usuário nos templates
@@ -196,17 +196,16 @@ angular.module('meuml.protected.template')
       branding: false,
       elementpath: false,
       file_picker_callback: function(callback, value, meta) {
-        // callback('https://quiteja.com.br/static/images/icons/security.png', {alt: 'My alt text'});
         if (meta.filetype != 'image') {
           return;
         }
 
-        $mdDialog.show({
-          // controller: 'TagDialogController as tagDialogCtrl',
-          // fullscreen: $mdMedia('xs'),
-          parent: angular.element(document.body),
-          // targetEvent: ev,
-          templateUrl: 'custom/protected/image/tag-dialog.tpl.html',
+        ImagePicker.show().then(function(image) {
+          var description = image.tags.map(function(imageTag) {
+            return imageTag.tag;
+          }).join(' ');
+
+          callback(image.url, { alt: description });
         });
       },
       file_picker_types: 'image',
