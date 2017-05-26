@@ -9,7 +9,33 @@
     </div>
   </md-toolbar>
 
-  <md-dialog-content class="md-dialog-content">
+  <md-dialog-content flex class="md-dialog-content" gorillas-scroll-bottom-notifier>
+    <div class="filters">
+      <div flex layout="row" layout-align="center center" class="tags">
+        <div hide show-gt-xs class="icon">
+          <md-button ng-click="imagePickerCtrl.changeFilters()" class="md-icon-button">
+            <md-icon md-font-icon="material-icons" aria-label="Pesquisar">search</md-icon>
+            <md-tooltip>Pesquisar</md-tooltip>
+          </md-button>
+        </div>
+
+        <div flex>
+          <md-chips ng-model="imagePickerCtrl.filters.tag"
+                    md-on-remove="imagePickerCtrl.changeFilters()"
+                    md-on-select="imagePickerCtrl.changeFilters()">
+            <md-autocomplete md-clear-button="true"
+                             md-search-text="searchText"
+                             md-items="tag in imagePickerCtrl.searchImageTag(searchText)"
+                             md-item-text="tag"
+                             md-autofocus
+                             placeholder="Pesquise por tags ou nome do arquivo">
+              <span md-highlight-text="searchText" md-highlight-flags="gi">{{tag}}</span>
+            </md-autocomplete>
+          </md-chips>
+        </div>
+      </div>
+    </div>
+
     <div ng-show="!imagePickerCtrl.loading && !imagePickerCtrl.images.result.length">
       <div class="gorillascode-no-results">
         <p class="md-title">Nenhuma imagem</p>
@@ -17,19 +43,20 @@
     </div>
 
     <div class="images">
-      <div ng-show="imagePickerCtrl.images.result.length" class="gorillascode-animate">
-        <div class="gorillascode-animate image-wrapper"
+      <div ng-show="imagePickerCtrl.images.result.length">
+        <div class="image-wrapper"
              ng-repeat="image in imagePickerCtrl.images.result track by image.id">
           <md-card class="image">
-            <div class="image-file" ng-style="{ backgroundImage: 'url(' + image.file.url + ')' }"
-                 ng-click="imagePickerCtrl.selectedImage(image)"
-                 title="Selecionar a imagem"></div>
+            <div ng-click="imagePickerCtrl.selectedImage(image)" class="image-file"
+                 ng-style="{ backgroundImage: 'url(' + image.file.url + ')' }"
+                 title="{{image.file.original_name}}"></div>
 
             <md-card-content>
               <div layout="row" class="tags-list">
                 <div ng-show="image.tags.length" class="tags">
-                  <span ng-repeat="imageTag in image.tags | orderBy:'-created_at' track by imageTag.id"
-                        class="gorillascode-animate meuml-tag">
+                  <span
+                      ng-repeat="imageTag in image.tags | orderBy:'-created_at' track by imageTag.id"
+                      ng-click="imagePickerCtrl.appendTagToFilters(imageTag.tag)" class="meuml-tag">
                     {{imageTag.tag}}
                   </span>
                 </div>

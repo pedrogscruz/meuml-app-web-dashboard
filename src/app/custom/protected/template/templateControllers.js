@@ -213,11 +213,12 @@ angular.module('meuml.protected.template')
       image_dimensions: false,
       language: 'pt_BR',
       language_url: '/assets/js/tinymce-language-pt_BR.js',
+      menubar: 'edit insert view format table tools',
       plugins: [
         'advlist autolink save link image lists charmap preview hr anchor pagebreak searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking table contextmenu directionality emoticons template paste textcolor',
       ],
       statusbar: false,
-      toolbar1: 'undo redo | bold italic strikethrough underline | fontsizeselect | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | table',
+      toolbar1: 'image | undo redo | bold italic strikethrough underline | fontsizeselect | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link | table',
       toolbar2: 'template | code | preview | fullscreen',
     };
 

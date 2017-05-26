@@ -441,9 +441,9 @@ angular.module('meuml.protected.image')
       $state.go('.', { order: order });
     };
 
-    searchTags();
-
     self.loadMore();
+
+    searchTags();
   }
 ])
 

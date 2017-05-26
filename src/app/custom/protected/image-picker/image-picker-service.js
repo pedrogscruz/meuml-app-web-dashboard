@@ -7,7 +7,6 @@ angular.module('meuml.components.image-picker', [])
         return $mdDialog.show({
           controller: 'ImagePickerController as imagePickerCtrl',
           fullscreen: true,
-          // openFrom: null,
           parent: angular.element(document.body),
           templateUrl: 'custom/protected/image-picker/image-picker.tpl.html',
         });
@@ -18,13 +17,20 @@ angular.module('meuml.components.image-picker', [])
   }
 ])
 
-.controller('ImagePickerController', ['$controller', '$scope', '$mdDialog',
-  'SellerImageSearchService',
+.controller('ImagePickerController', ['$log', '$controller', '$scope', '$mdDialog',
+  'SellerImageSearchService', 'SellerImageTagSearchService',
 
-  function($controller, $scope, $mdDialog, SellerImageSearchService) {
+  function($log, $controller, $scope, $mdDialog, SellerImageSearchService,
+           SellerImageTagSearchService) {
+
     var self = this;
 
+    var imageTags = {
+      result: [],
+    };
+
     self.images = {};
+
     self.filters = {
       tag: [],
     };
@@ -101,6 +107,17 @@ angular.module('meuml.components.image-picker', [])
       return searchParameters;
     }
 
+    function searchTags() {
+      $log.debug('Listando todas as tags');
+
+      SellerImageTagSearchService.search().then(function(response) {
+        $log.debug('Tags listadas');
+        imageTags = response;
+      }, function(error) {
+        NotificationService.error('Não foi possível listar as tags', error);
+      });
+    }
+
     self.selectedImage = function(image) {
       $mdDialog.hide(image);
     };
@@ -109,7 +126,45 @@ angular.module('meuml.components.image-picker', [])
       $mdDialog.cancel();
     };
 
+    self.searchImageTag = function(searchText) {
+      if (!searchText) {
+        return [];
+      }
+
+      return imageTags.result.filter(function(imageTag) {
+        return (imageTag.tag.indexOf(angular.lowercase(searchText)) > -1);
+      }).map(function(imageTag) {
+        return imageTag.tag;
+      });
+    };
+
+    /**
+     * Adiciona a tag junto das tags atuais do filtro de pesquisa e sem seguida faz uma nova
+     * pesquisa.
+     *
+     * @param tag a tag que será adicionada no filtro.
+     */
+    self.appendTagToFilters = function(tag) {
+      if (self.filters.tag.indexOf(tag) != -1) {
+        // Tag já está adicionada
+        return;
+      }
+
+      self.filters.tag.push(tag);
+      self.changeFilters();
+    };
+
+    /**
+     * Limpa a lista de imagens e pesquisa novamente.
+     */
+    self.changeFilters = function() {
+      self.resetPagination();
+      self.loadMore();
+    };
+
     self.loadMore();
+
+    searchTags();
   }
 ])
 
