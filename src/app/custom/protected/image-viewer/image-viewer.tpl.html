@@ -1,0 +1,36 @@
+<md-dialog aria-label="Visualizar imagem" class="image-viewer-dialog"
+           hotkey="{ left: imageViewerCtrl.showPreviousImage, right: imageViewerCtrl.showNextImage }">
+  <div class="toolbar-header-background"></div>
+
+  <md-toolbar class="actions">
+    <div class="md-toolbar-tools">
+      <md-button ng-click="imageViewerCtrl.close()" class="md-icon-button">
+        <md-icon md-font-icon="material-icons" aria-label="Fechar">arrow_back</md-icon>
+      </md-button>
+    </div>
+  </md-toolbar>
+
+  <md-button ng-show="imageViewerCtrl.index > 0" ng-click="imageViewerCtrl.showPreviousImage()"
+             class="md-icon-button navigation-button navigation-button-previous">
+    <md-icon md-font-icon="material-icons" aria-label="Imagem anterior">navigate_before</md-icon>
+  </md-button>
+
+  <md-button ng-show="imageViewerCtrl.index < (imageViewerCtrl.images.length - 1)"
+             ng-click="imageViewerCtrl.showNextImage()"
+             class="md-icon-button navigation-button navigation-button-next">
+    <md-icon md-font-icon="material-icons" aria-label="Próxima imagem">navigate_next</md-icon>
+  </md-button>
+
+  <md-dialog-content flex layout="column">
+    <div flex layout="column" layout-align="center center">
+      <img ng-src="{{imageViewerCtrl.image.file.url}}" class="image" title="{{image.file.name}}">
+    </div>
+
+    <div class="url">
+      <md-input-container class="md-block">
+        <input type="text" ng-model="imageViewerCtrl.image.url" ng-readonly="true"
+               md-select-on-focus aria-label="URL da imagem">
+      </md-input-container>
+    </div>
+  </md-dialog-content>
+</md-dialog>

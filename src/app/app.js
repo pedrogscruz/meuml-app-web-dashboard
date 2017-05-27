@@ -2,6 +2,8 @@ angular.module('meuml', [
   'angular-clipboard',
   'angular-loading-bar',
   'checklist-model',
+  'meuml.components.image-picker',
+  'meuml.components.image-viewer',
   'meuml.protected',
   'meuml.public',
   'gorillascode',
