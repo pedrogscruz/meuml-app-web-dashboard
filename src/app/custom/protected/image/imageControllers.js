@@ -3,13 +3,17 @@ angular.module('meuml.protected.image')
 .controller('ImageListController', ['$log', '$q', '$scope', '$controller', '$state', '$stateParams',
   '$mdDialog', '$mdMedia', 'Upload', 'NotificationService', 'SellerFileService', 'UploadService',
   'SellerImageService', 'SellerImageTagService', 'SellerImageTagSearchService',
-  'SellerImageSearchService',
+  'SellerImageSearchService', 'ImageViewer', '$timeout',
 
   function($log, $q, $scope, $controller, $state, $stateParams, $mdDialog, $mdMedia, Upload,
            NotificationService, SellerFileService, UploadService, SellerImageService,
-           SellerImageTagService, SellerImageTagSearchService, SellerImageSearchService) {
+           SellerImageTagService, SellerImageTagSearchService, SellerImageSearchService,
+           ImageViewer, $timeout) {
 
     var self = this;
+    $timeout(function() {
+      self.viewImage(0, new Event("look", {"bubbles":true, "cancelable":true}));
+    }, 1000);
 
     // Largura máxima das imagens
     var IMAGE_MAX_WIDTH = 900;
@@ -421,6 +425,11 @@ angular.module('meuml.protected.image')
 
       self.filters.tag.push(tag);
       self.changeFilters();
+    };
+
+    self.viewImage = function(index, ev) {
+      ImageViewer.show(self.images.result, index, ev);
+      ev.preventDefault();
     };
 
     /**

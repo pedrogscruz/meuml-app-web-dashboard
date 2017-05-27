@@ -224,7 +224,7 @@
 
           <a href="{{image.url}}" class="image-file"
              ng-style="{ backgroundImage: 'url(' + image.file.url + ')' }" target="_blank"
-             title="Abrir a imagem"></a>
+             ng-click="imageListCtrl.viewImage($index, $event)" title="Ver a imagem"></a>
 
           <md-card-content>
             <div layout="row" class="tags-list">

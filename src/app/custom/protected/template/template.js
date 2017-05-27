@@ -1,5 +1,4 @@
 angular.module('meuml.protected.template', [
-  'meuml.components.image-picker',
   'meuml.services.template',
   'meuml.services.template-tag',
   'ui.router',
