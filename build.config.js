@@ -68,6 +68,7 @@ module.exports = {
       'vendor/angular-animate/angular-animate.js',
       'vendor/angular-clipboard/angular-clipboard.js',
       'vendor/angular-cookies/angular-cookies.js',
+      'vendor/angular-hotkeys/build/hotkeys.js',
       'vendor/angular-i18n/angular-locale_pt-br.js',
       'vendor/angular-loading-bar/build/loading-bar.js',
       'vendor/angular-material/angular-material.js',
