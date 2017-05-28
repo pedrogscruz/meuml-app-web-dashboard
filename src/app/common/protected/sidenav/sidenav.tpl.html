@@ -50,6 +50,12 @@
       <p>Editor HTML</p>
     </md-list-item>
 
+    <md-list-item ui-sref="protected.product-category.list"
+                  ng-class="{ active: $state.includes('protected.product-category') }">
+      <md-icon md-font-icon="material-icons" aria-label="Categorias">label</md-icon>
+      <p>Categorias</p>
+    </md-list-item>
+
     <md-divider></md-divider>
 
     <md-list-item ng-href="mailto:contato@meuml.com" target="_blank">
