@@ -44,6 +44,12 @@
       <p>Templates</p>
     </md-list-item>
 
+    <md-list-item ui-sref="protected.html-editor"
+                  ng-class="{ active: $state.includes('protected.html-editor') }">
+      <md-icon md-font-icon="material-icons" aria-label="Editor HTML">code</md-icon>
+      <p>Editor HTML</p>
+    </md-list-item>
+
     <md-divider></md-divider>
 
     <md-list-item ng-href="mailto:contato@meuml.com" target="_blank">
@@ -52,8 +58,8 @@
     </md-list-item>
 
     <md-list-item
-        href="https://docs.google.com/a/gorillascode.com/forms/d/e/1FAIpQLSfFCfqILJcjhP2ezOU0IwP-7DMtxw_fdz4LkqTARQJl7qxDlA/viewform"
-        target="_blank">
+            href="https://docs.google.com/a/gorillascode.com/forms/d/e/1FAIpQLSfFCfqILJcjhP2ezOU0IwP-7DMtxw_fdz4LkqTARQJl7qxDlA/viewform"
+            target="_blank">
       <md-icon md-font-icon="material-icons" aria-label="Relatar problema">feedback</md-icon>
       <p>Relatar problema</p>
     </md-list-item>
