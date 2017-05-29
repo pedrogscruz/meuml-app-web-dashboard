@@ -35,39 +35,37 @@
                   when="{'0': 'Nenhuma categoria', 'one': '1 categoria', 'other': '{{productCategoryCtrl.productCategories.limit | number}} categorias'}"></ng-pluralize>
   </div>
 
-  <div class="product-categories">
-    <md-card ng-show="productCategoryCtrl.productCategories.result.length"
-             class="gorillascode-animate">
-      <md-table-container class="gorillascode-table-container">
-        <table md-table>
-          <thead md-head md-order="templateListCtrl.order"
-                 md-on-reorder="templateListCtrl.changeOrder">
-          <tr md-row>
-            <th md-column md-order-by="marketplace_code" class="marketplace-code">ID</th>
-            <th md-column class="description">Descrição</th>
-            <th md-column md-order-by="weight" class="weight">Peso</th>
-            <th md-column class="dimension">Dimensão</th>
-          </tr>
-          </thead>
-          <tbody md-body>
-          <tr md-row
-              ng-repeat="productCategory in productCategoryCtrl.productCategories.result track by productCategory.id"
-              class="gorillascode-animate">
-            <td md-cell class="marketplace-code">{{productCategory.marketplace_code}}</td>
-            <td md-cell class="description">{{productCategory.description}}</td>
-            <td md-cell class="weight">{{productCategory.weight | number}}</td>
-            <td md-cell class="dimension">
-              {{productCategory.width | number}}cm
-              {{productCategory.height | number}}cm
-              {{productCategory.depth | number}}cm
-            </td>
-          </tr>
-          </tbody>
-        </table>
-      </md-table-container>
-    </md-card>
+  <md-card ng-show="productCategoryCtrl.productCategories.result.length"
+           class="gorillascode-animate product-categories">
+    <md-table-container class="gorillascode-table-container">
+      <table md-table>
+        <thead md-head md-order="productCategoryCtrl.order"
+               md-on-reorder="productCategoryCtrl.changeOrder">
+        <tr md-row>
+          <th md-column md-order-by="marketplace_code" class="marketplace-code">ID</th>
+          <th md-column class="description">Descrição</th>
+          <th md-column md-order-by="weight" class="weight">Peso</th>
+          <th md-column class="dimension">Dimensão</th>
+        </tr>
+        </thead>
+        <tbody md-body>
+        <tr md-row
+            ng-repeat="productCategory in productCategoryCtrl.productCategories.result track by productCategory.id"
+            class="gorillascode-animate">
+          <td md-cell class="marketplace-code">{{productCategory.marketplace_code}}</td>
+          <td md-cell class="description">{{productCategory.description}}</td>
+          <td md-cell class="weight">{{productCategory.weight | number}}</td>
+          <td md-cell class="dimension">
+            {{productCategory.width | number}}cm
+            {{productCategory.height | number}}cm
+            {{productCategory.depth | number}}cm
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </md-table-container>
+  </md-card>
 
-    <gorillascode-pagination
-            gorillascode-controller="productCategoryCtrl"></gorillascode-pagination>
-  </div>
+  <gorillascode-pagination
+          gorillascode-controller="productCategoryCtrl"></gorillascode-pagination>
 </div>

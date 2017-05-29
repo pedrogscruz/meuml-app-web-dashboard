@@ -58,6 +58,7 @@ angular.module('meuml.protected.template')
           filters: [],
           order_by: [],
         },
+        results_per_page: 20,
       };
 
       if (self.filters.tag && self.filters.tag.length) {
@@ -220,7 +221,9 @@ angular.module('meuml.protected.template')
         'contextmenu directionality emoticons template paste textcolor',
       ],
       statusbar: false,
-      toolbar1: 'undo redo | bold italic strikethrough underline | fontsizeselect | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent',
+      toolbar1: 'undo redo | bold italic strikethrough underline | fontsizeselect | forecolor ' +
+        'backcolor | alignleft aligncenter alignright alignjustify | bullist numlist ' +
+        'outdent indent',
       toolbar2: 'image | link | table | code',
     };
 

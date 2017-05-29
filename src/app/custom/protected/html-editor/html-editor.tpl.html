@@ -1,5 +1,10 @@
 <div class="gorillascode-content">
-  <div class="wysiwyg-editor">
+  <div ng-show="htmlEditorCtrl.loadingTemplates" layout="column" layout-align="center center"
+       class="loading-status">
+    <md-progress-circular md-mode="indeterminate" md-diameter="50"></md-progress-circular>
+  </div>
+
+  <div ng-if="!htmlEditorCtrl.loadingTemplates" class="wysiwyg-editor">
     <textarea ng-model="htmlEditorCtrl.template.html_text"
               ui-tinymce="htmlEditorCtrl.tinymceOptions"></textarea>
   </div>

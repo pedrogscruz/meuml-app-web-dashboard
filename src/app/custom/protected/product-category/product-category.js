@@ -19,7 +19,7 @@ angular.module('meuml.protected.product-category', [
       params: {
         order: {
           squash: true,
-          value: 'name',
+          value: 'description',
         },
         tag: {
           array: true

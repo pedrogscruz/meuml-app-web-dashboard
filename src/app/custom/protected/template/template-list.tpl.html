@@ -48,39 +48,38 @@
                   when="{'0': 'Nenhum template', 'one': '1 template', 'other': '{{templateListCtrl.templates.limit | number}} templates'}"></ng-pluralize>
   </div>
 
-  <div class="templates">
-    <md-card ng-show="templateListCtrl.templates.result.length" class="gorillascode-animate">
-      <md-table-container class="gorillascode-table-container">
-        <table md-table>
-          <thead md-head md-order="templateListCtrl.order"
-                 md-on-reorder="templateListCtrl.changeOrder">
-          <tr md-row>
-            <th md-column md-order-by="name" class="name">Nome</th>
-            <th md-column class="tags">Tags</th>
-            <th md-column md-order-by="updated_at">Última edição</th>
-          </tr>
-          </thead>
-          <tbody md-body>
-          <tr md-row ng-repeat="template in templateListCtrl.templates.result track by template.id"
-              ui-sref="protected.template.edit({ id: template.id })" class="gorillascode-animate">
-            <td md-cell class="name">{{template.name}}</td>
-            <td md-cell class="tags">
+  <md-card ng-show="templateListCtrl.templates.result.length"
+           class="gorillascode-animate templates">
+    <md-table-container class="gorillascode-table-container">
+      <table md-table>
+        <thead md-head md-order="templateListCtrl.order"
+               md-on-reorder="templateListCtrl.changeOrder">
+        <tr md-row>
+          <th md-column md-order-by="name" class="name">Nome</th>
+          <th md-column class="tags">Tags</th>
+          <th md-column md-order-by="updated_at">Última edição</th>
+        </tr>
+        </thead>
+        <tbody md-body>
+        <tr md-row ng-repeat="template in templateListCtrl.templates.result track by template.id"
+            ui-sref="protected.template.edit({ id: template.id })" class="gorillascode-animate">
+          <td md-cell class="name">{{template.name}}</td>
+          <td md-cell class="tags">
               <span ng-repeat="templateTag in template.tags track by templateTag.id"
                     class="meuml-tag">
                 {{templateTag.tag}}
               </span>
-            </td>
-            <td md-cell class="createdAt">
-              {{template.updated_at || template.created_at | toUTCDate | date:'short'}}
-            </td>
-          </tr>
-          </tbody>
-        </table>
-      </md-table-container>
-    </md-card>
+          </td>
+          <td md-cell class="createdAt">
+            {{template.updated_at || template.created_at | toUTCDate | date:'short'}}
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </md-table-container>
+  </md-card>
 
-    <gorillascode-pagination gorillascode-controller="templateListCtrl"></gorillascode-pagination>
-  </div>
+  <gorillascode-pagination gorillascode-controller="templateListCtrl"></gorillascode-pagination>
 </div>
 
 <md-button ui-sref="protected.template.new"

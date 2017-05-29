@@ -42,9 +42,22 @@ angular.module('meuml.protected.product-category')
     function createSearchParameters() {
       var searchParameters = {
         q: {
-          filters: [],
+          filters: [{
+            name: 'weight',
+            op: 'is_not_null',
+          }, {
+            name: 'width',
+            op: 'is_not_null',
+          }, {
+            name: 'height',
+            op: 'is_not_null',
+          }, {
+            name: 'depth',
+            op: 'is_not_null',
+          }],
           order_by: [],
         },
+        results_per_page: 50,
       };
 
       if (self.filters.name) {

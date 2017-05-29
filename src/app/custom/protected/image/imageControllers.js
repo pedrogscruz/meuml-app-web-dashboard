@@ -66,6 +66,7 @@ angular.module('meuml.protected.image')
           filters: [],
           order_by: [],
         },
+        results_per_page: 18,
       };
 
       if (self.filters.tag && self.filters.tag.length) {
@@ -108,14 +109,14 @@ angular.module('meuml.protected.image')
 
         searchParameters.q.order_by.push({
           field: fieldName,
-          direction: fieldDirection
+          direction: fieldDirection,
         });
 
         // Como vários objetos são criados ao mesmo tempo (com o mesmo "created_at") é necessário um
         // segundo campo para fazer a ordenação correta
         searchParameters.q.order_by.push({
           field: 'id',
-          direction: 'asc'
+          direction: 'asc',
         });
       }
 
