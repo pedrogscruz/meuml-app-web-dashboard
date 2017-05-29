@@ -52,7 +52,7 @@ angular.module('meuml.protected.product-category')
             name: 'height',
             op: 'is_not_null',
           }, {
-            name: 'depth',
+            name: 'length',
             op: 'is_not_null',
           }],
           order_by: [],
