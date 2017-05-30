@@ -4,7 +4,7 @@ angular.module('gorillascode.resources.login', [
 
 .factory('Login', ['configuration', 'ResourceFactory',
   function (configuration, ResourceFactory) {
-    return new ResourceFactory(configuration.apiUrl, 'login');
+    return new ResourceFactory(configuration.apiUrl, 'user/_login');
   }]
 )
 
