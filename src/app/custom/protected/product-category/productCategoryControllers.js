@@ -8,7 +8,7 @@ angular.module('meuml.protected.product-category')
 
     // Filtros passados como parâmetros na URL
     self.filters = {
-      name: $stateParams.name,
+      query: $stateParams.q,
     };
 
     self.productCategories = {};
@@ -60,11 +60,17 @@ angular.module('meuml.protected.product-category')
         results_per_page: 50,
       };
 
-      if (self.filters.name) {
+      if (self.filters.query) {
         searchParameters.q.filters.push({
-          name: 'name',
-          op: 'like',
-          val: '%' + self.filters.name + '%',
+          or: [{
+            name: 'description',
+            op: 'like',
+            val: '%' + self.filters.query + '%',
+          }, {
+            name: 'marketplace_code',
+            op: 'like',
+            val: '%' + self.filters.query + '%',
+          }],
         });
       }
 
@@ -93,7 +99,7 @@ angular.module('meuml.protected.product-category')
      */
     self.changeFilters = function() {
       $state.go('.', {
-        name: self.filters.name,
+        q: self.filters.query,
       });
     };
 

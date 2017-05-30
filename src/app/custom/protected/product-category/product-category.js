@@ -10,7 +10,7 @@ angular.module('meuml.protected.product-category', [
       abstract: true,
       template: '<ui-view/>'
     }).state('protected.product-category.list', {
-      url: '?order&name',
+      url: '?order&q',
       controller: 'ProductCategoryController as productCategoryCtrl',
       templateUrl: 'custom/protected/product-category/product-category-list.tpl.html',
       data: {
@@ -20,9 +20,6 @@ angular.module('meuml.protected.product-category', [
         order: {
           squash: true,
           value: 'description',
-        },
-        tag: {
-          array: true
         },
       },
     });

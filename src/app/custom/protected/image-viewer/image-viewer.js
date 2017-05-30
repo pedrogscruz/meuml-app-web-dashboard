@@ -24,8 +24,8 @@ angular.module('meuml.components.image-viewer', [
   }
 ])
 
-.controller('ImageViewerController', ['$mdDialog', 'index', 'images',
-  function($mdDialog, index, images) {
+.controller('ImageViewerController', ['$mdDialog', '$mdSidenav', 'index', 'images',
+  function($mdDialog, $mdSidenav, index, images) {
     var self = this;
 
     self.index = index;
@@ -52,6 +52,10 @@ angular.module('meuml.components.image-viewer', [
 
       self.index--;
       self.image = images[self.index];
+    };
+
+    self.toggleInfo = function() {
+      $mdSidenav('sidenav-image-information').toggle();
     };
   }
 ])

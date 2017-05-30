@@ -1,11 +1,73 @@
 <md-dialog aria-label="Visualizar imagem" class="image-viewer-dialog"
            hotkey="{ left: imageViewerCtrl.showPreviousImage, right: imageViewerCtrl.showNextImage }">
+  <md-sidenav class="md-sidenav-right md-whiteframe-z2"
+              md-component-id="sidenav-image-information"
+              md-is-locked-open="false">
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h1>Informações</h1>
+
+        <div flex></div>
+
+        <md-button ng-click="imageViewerCtrl.toggleInfo()" class="md-icon-button">
+          <md-icon md-font-icon="material-icons" aria-label="Fechar">close</md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-content layout-padding>
+      <div class="details">
+        <div class="title">Detalhes</div>
+
+        <div class="section" layout="row">
+          <div class="icon">
+            <md-icon md-font-icon="material-icons" aria-label="Data">event</md-icon>
+          </div>
+
+          <div class="content">
+            <div class="line-1">
+              {{imageViewerCtrl.image.file.created_at | date:'mediumDate'}}
+            </div>
+
+            <div class="line-2">
+              {{imageViewerCtrl.image.file.created_at | date:'shortTime'}}
+            </div>
+          </div>
+        </div>
+
+        <div class="section" layout="row">
+          <div class="icon">
+            <md-icon md-font-icon="material-icons" aria-label="Detalhes">photo</md-icon>
+          </div>
+
+          <div class="content">
+            <div class="line-1">
+              {{imageViewerCtrl.image.file.original_name}}
+            </div>
+
+            <div class="line-2">
+              <div>
+                {{imageViewerCtrl.image.file.width}} x {{imageViewerCtrl.image.file.height}}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </md-content>
+  </md-sidenav>
+
   <div class="toolbar-header-background"></div>
 
   <md-toolbar class="actions">
     <div class="md-toolbar-tools">
       <md-button ng-click="imageViewerCtrl.close()" class="md-icon-button">
         <md-icon md-font-icon="material-icons" aria-label="Fechar">arrow_back</md-icon>
+      </md-button>
+
+      <div flex></div>
+
+      <md-button ng-click="imageViewerCtrl.toggleInfo()" class="md-icon-button">
+        <md-icon md-font-icon="material-icons" aria-label="Informações">info</md-icon>
+        <md-tooltip>Informações</md-tooltip>
       </md-button>
     </div>
   </md-toolbar>

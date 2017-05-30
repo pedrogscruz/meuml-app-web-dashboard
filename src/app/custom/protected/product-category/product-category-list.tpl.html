@@ -13,7 +13,7 @@
           <div flex>
             <md-input-container md-no-float class="md-block name">
               <label>Pesquise pela categoria</label>
-              <input type="text" ng-model="productCategoryCtrl.filters.name" name="name"
+              <input type="text" ng-model="productCategoryCtrl.filters.query" name="query"
                      maxlength="256">
             </md-input-container>
           </div>
@@ -43,7 +43,7 @@
                md-on-reorder="productCategoryCtrl.changeOrder">
         <tr md-row>
           <th md-column md-order-by="marketplace_code" class="marketplace-code">ID</th>
-          <th md-column class="description">Descrição</th>
+          <th md-column md-order-by="description" class="description">Descrição</th>
           <th md-column md-order-by="weight" class="weight">Peso</th>
           <th md-column class="dimension">Dimensão</th>
         </tr>
@@ -56,9 +56,9 @@
           <td md-cell class="description">{{productCategory.description}}</td>
           <td md-cell class="weight">{{productCategory.weight | number}}</td>
           <td md-cell class="dimension">
+            {{productCategory.length | number}}cm
             {{productCategory.width | number}}cm
             {{productCategory.height | number}}cm
-            {{productCategory.length | number}}cm
           </td>
         </tr>
         </tbody>
