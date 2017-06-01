@@ -1,3 +1,15 @@
+<div class="gorillascode-fixed-toolbar">
+  <md-button  show-gt-xs clipboard ng-click="htmlEditorCtrl.insertTemplate()" class="md-raised">
+    Inserir template
+  </md-button>
+
+  <md-button  show-gt-xs clipboard text="htmlEditorCtrl.template.html_text"
+             on-copied="htmlEditorCtrl.sourceCodeCopied()"
+             on-error="htmlEditorCtrl.sourceCodeCopyError(err)" class="md-raised">
+    Copiar código-fonte
+  </md-button>
+</div>
+
 <div class="gorillascode-content">
   <div ng-show="htmlEditorCtrl.loadingTemplates" layout="column" layout-align="center center"
        class="loading-status">

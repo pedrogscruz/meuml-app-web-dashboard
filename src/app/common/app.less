@@ -52,10 +52,20 @@ hr {
 }
 
 .gorillascode-fixed-toolbar {
+  padding: 4px;
   position: fixed;
   right: 0;
   top: 0;
   width: inherit;
+  z-index: 2;
+
+  @media (orientation: landscape) {
+    padding: 0;
+  }
+
+  @media (min-width: 960px) {
+    padding: 8px;
+  }
 }
 
 .gorillascode-search-box {

@@ -67,6 +67,18 @@ angular.module('meuml.protected.html-editor')
       };
     }
 
+    self.insertTemplate = function() {
+      tinymce.activeEditor.buttons.template.onclick();
+    };
+
+    self.sourceCodeCopied = function() {
+      NotificationService.success('Código-fonte copiado');
+    };
+
+    self.sourceCodeCopyError = function(error) {
+      NotificationService.error('Não foi possível copiar o código-fonte', error);
+    };
+
     // Busca todos os templates
     var templateSearchParameters = {
       q: {
