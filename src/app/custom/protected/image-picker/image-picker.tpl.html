@@ -6,10 +6,32 @@
       </md-button>
 
       <h1>Selecionar imagem</h1>
+
+      <div flex></div>
+
+      <md-button ngf-select
+                 ngf-allow-dir="true"
+                 ngf-accept="'image/*'"
+                 ngf-change="imagePickerCtrl.selectFiles($files)"
+                 ngf-drag-over-class="{accept:'acceptClass', reject:'rejectClass'}"
+                 ngf-fix-orientation="true"
+                 ngf-multiple="true"
+                 ngf-pattern="'image/*'">
+        Fazer upload
+      </md-button>
     </div>
   </md-toolbar>
 
-  <md-dialog-content flex class="md-dialog-content" gorillas-scroll-bottom-notifier>
+  <md-dialog-content flex class="md-dialog-content" gorillas-scroll-bottom-notifier
+                     ngf-drop
+                     ngf-allow-dir="true"
+                     ngf-accept="'image/*'"
+                     ngf-change="imagePickerCtrl.selectFiles($files)"
+                     ngf-drag-over-class="{accept:'acceptClass', reject:'rejectClass'}"
+                     ngf-fix-orientation="true"
+                     ngf-multiple="true"
+                     ngf-pattern="'image/*'">
+
     <div class="filters">
       <div flex layout="row" layout-align="center center" class="tags">
         <div hide show-gt-xs class="icon">
@@ -35,6 +57,55 @@
         </div>
       </div>
     </div>
+
+    <md-card ng-show="imagePickerCtrl.selectedFiles.length"
+             style="margin: 0 0 48px 0; padding: 16px;">
+      <div ng-repeat="file in imagePickerCtrl.selectedFiles" class="gorillascode-animate">
+        <div layout="row" layout-align="center center">
+          <div>
+            <div ngf-thumbnail="file" ngf-as-background="true"
+                 class="upload-thumbnail" style=""></div>
+          </div>
+
+          <div flex style="padding: 8px;">
+            <span ng-bind-html="file.image.url | linky:'_blank'"></span>
+            <span ng-show="file.error">{{file.error}}</span>
+
+            <md-progress-linear ng-show="file.uploadProgress > 0 && file.uploadProgress < 100"
+                                md-mode="determinate"
+                                value="{{file.uploadProgress}}"></md-progress-linear>
+          </div>
+
+          <div>
+            <md-button ng-click="imagePickerCtrl.removeFileFromUpload($index)"
+                       class="md-icon-button">
+              <md-icon md-font-icon="material-icons" aria-label="Excluir">delete</md-icon>
+              <md-tooltip>Excluir</md-tooltip>
+            </md-button>
+          </div>
+        </div>
+      </div>
+
+      <div layout="row">
+        <div flex style="margin-right: 16px;">
+          <md-chips ng-model="imagePickerCtrl.selectedFilesTags">
+            <md-autocomplete
+                md-search-text="searchText"
+                md-items="tag in imagePickerCtrl.searchImageTag(searchText)"
+                md-item-text="tag"
+                md-autofocus
+                placeholder="Adicione uma ou mais tags">
+              <span md-highlight-text="searchText">{{tag}}</span>
+            </md-autocomplete>
+          </md-chips>
+        </div>
+        <div>
+          <md-button ng-click="imagePickerCtrl.startFilesUpload()" class="md-raised md-primary">
+            Enviar
+          </md-button>
+        </div>
+      </div>
+    </md-card>
 
     <div ng-show="!imagePickerCtrl.loading && !imagePickerCtrl.images.result.length">
       <div class="gorillascode-no-results">
