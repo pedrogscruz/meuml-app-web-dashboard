@@ -8,13 +8,19 @@
 
   .md-sidenav-right {
     padding: 0 16px;
+    width: 360px;
+
+    @media (max-width: 600px) {
+      width: 100%;
+      max-width: 100%;
+    }
 
     md-toolbar {
       background-color: transparent;
       color: rgba(0, 0, 0, 0.87);
 
       md-icon {
-        color: rgba(0, 0, 0, 0.87);
+        color: rgba(0, 0, 0, 0.54);
       }
     }
 
@@ -25,11 +31,12 @@
         font-weight: 500;
         font-size: 13px;
         line-height: 20px;
-        padding-bottom: 14px;
+        padding: 14px 16px;
       }
 
       .section {
-        padding: 18px 32px 18px 0;
+        min-height: 36px;
+        padding: 18px 16px;
 
         .icon {
           min-width: 64px;
@@ -49,8 +56,23 @@
             color: rgba(0, 0, 0, 0.54);
             font-size: 13px;
             line-height: 13px;
+
+            .dimension {
+              display: inline-block;
+              margin-right: 15px;
+            }
+
+            .size {
+              display: inline-block;
+            }
           }
         }
+      }
+    }
+
+    .tags {
+      .meuml-tag {
+        margin: 0 16px 16px 0;
       }
     }
   }

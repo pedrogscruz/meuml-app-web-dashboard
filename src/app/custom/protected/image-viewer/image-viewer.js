@@ -37,7 +37,7 @@ angular.module('meuml.components.image-viewer', [
     };
 
     self.showNextImage = function () {
-      if (self.index >= images.length) {
+      if (self.index >= (images.length - 1)) {
         return;
       }
 
