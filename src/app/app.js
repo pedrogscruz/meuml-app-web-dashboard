@@ -53,8 +53,8 @@ angular.module('meuml', [
     };
 
     $mdThemingProvider.theme('default')
-        .primaryPalette('indigo')
-        .accentPalette('pink');
+        .primaryPalette('blue-grey')
+        .accentPalette('indigo');
 
     $mdThemingProvider.enableBrowserColor();
   }
