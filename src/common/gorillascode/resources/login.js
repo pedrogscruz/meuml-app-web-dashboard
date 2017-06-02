@@ -22,7 +22,7 @@ angular.module('gorillascode.resources.login', [
 
 .factory('PasswordChange', ['configuration', 'ResourceFactory',
   function (configuration, ResourceFactory) {
-    return new ResourceFactory(configuration.apiUrl, 'change');
+    return new ResourceFactory(configuration.apiUrl, 'user/_change');
   }]
 )
 
