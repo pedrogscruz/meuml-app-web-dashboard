@@ -21,10 +21,14 @@ angular.module('meuml.services.image-tag', [
   }
 ])
 
-.factory('SellerImageTagSearchService', ['$q', 'SellerImageTagSearch',
-  function($q, SellerImageTagSearch) {
+.factory('SellerImageTagSearchService', ['$rootScope', '$q', 'SellerImageTagSearch',
+  function($rootScope, $q, SellerImageTagSearch) {
     // Cache com as tags das imagens
     var tags = {};
+
+    $rootScope.$on('userLogout', function() {
+      tags = {};
+    });
 
     var service = {
       /**

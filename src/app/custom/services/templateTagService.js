@@ -21,10 +21,14 @@ angular.module('meuml.services.template-tag', [
   }
 ])
 
-.factory('SellerTemplateTagSearchService', ['$q', 'SellerTemplateTagSearch',
-  function($q, SellerTemplateTagSearch) {
+.factory('SellerTemplateTagSearchService', ['$rootScope', '$q', 'SellerTemplateTagSearch',
+  function($rootScope, $q, SellerTemplateTagSearch) {
     // Cache com as tags os templates
     var tags = {};
+
+    $rootScope.$on('userLogout', function() {
+      tags = {};
+    });
 
     var service = {
       /**
