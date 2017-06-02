@@ -30,6 +30,28 @@ angular.module('gorillascode.filters', [
   }
 ])
 
+.filter('fileSize', ['$filter',
+  function($filter) {
+    var numberFilter = $filter('number');
+
+    return function(bytes, precision) {
+      if (isNaN(parseFloat(bytes)) || !isFinite(bytes)) {
+        return '-';
+      }
+
+      if (typeof precision === 'undefined') {
+        precision = 1;
+      }
+
+      var units = ['bytes', 'KB', 'MB', 'GB', 'TB', 'PB'];
+      var number = Math.floor(Math.log(bytes) / Math.log(1024));
+      var numberFormatted = numberFilter(bytes / Math.pow(1024, Math.floor(number)), precision);
+
+      return numberFormatted + ' ' + units[number];
+    };
+  }
+])
+
 .filter('gender', [
   function() {
     return function(value) {

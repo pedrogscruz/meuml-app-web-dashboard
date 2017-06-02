@@ -9,6 +9,7 @@ angular.module('meuml', [
   'gorillascode',
   'gorillascode.components.pagination',
   'gorillascode.directives',
+  'gorillascode.filters',
   'gorillascode.protected',
   'gorillascode.public',
   'gorillascode.services.authentication',
