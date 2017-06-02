@@ -66,7 +66,7 @@ angular.module('meuml.protected.image')
           filters: [],
           order_by: [],
         },
-        results_per_page: 18,
+        results_per_page: 36,
       };
 
       if (self.filters.tag && self.filters.tag.length) {
