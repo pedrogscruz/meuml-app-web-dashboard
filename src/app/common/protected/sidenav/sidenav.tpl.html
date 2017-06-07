@@ -25,6 +25,12 @@
       </div>
     </md-list-item>
 
+    <md-list-item ui-sref="protected.plan.list"
+                  ng-class="{ active: $state.includes('protected.plan') }">
+      <md-icon md-font-icon="material-icons" aria-label="Planos">payment</md-icon>
+      <p>Planos</p>
+    </md-list-item>
+
     <md-divider></md-divider>
 
     <md-list-item ui-sref="protected.home" ng-class="{ active: $state.includes('protected.home') }">
@@ -64,8 +70,8 @@
     </md-list-item>
 
     <md-list-item
-            href="https://docs.google.com/a/gorillascode.com/forms/d/e/1FAIpQLSfFCfqILJcjhP2ezOU0IwP-7DMtxw_fdz4LkqTARQJl7qxDlA/viewform"
-            target="_blank">
+        href="https://docs.google.com/a/gorillascode.com/forms/d/e/1FAIpQLSfFCfqILJcjhP2ezOU0IwP-7DMtxw_fdz4LkqTARQJl7qxDlA/viewform"
+        target="_blank">
       <md-icon md-font-icon="material-icons" aria-label="Relatar problema">feedback</md-icon>
       <p>Relatar problema</p>
     </md-list-item>

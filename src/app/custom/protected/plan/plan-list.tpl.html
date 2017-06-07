@@ -1,0 +1,28 @@
+<div class="gorillascode-content gorillascode-content-no-background">
+  <div ng-show="!planListCtrl.loading && !planListCtrl.plans.result.length">
+    <div class="gorillascode-no-results">
+      <p class="md-title">Nenhum plano</p>
+    </div>
+  </div>
+
+  <div ng-show="planListCtrl.plans.result.length" layout="column" layout-gt-xs="row" class="plans">
+    <md-card ng-repeat="plan in planListCtrl.plans.result track by plan.id" flex class="plan">
+      <md-card-title>
+        <md-card-title-text>
+          <span class="md-headline">{{plan.name}}</span>
+        </md-card-title-text>
+      </md-card-title>
+
+      <md-card-content>
+        <p>{{plan.max_images | number}} imagens</p>
+        <p>{{plan.price | currency:'R$ '}}</p>
+      </md-card-content>
+
+      <md-card-actions layout="column" layout-align="start">
+        <md-button class="md-raised md-accent" ng-click="planListCtrl.subscribe(plan)">
+          Assinar
+        </md-button>
+      </md-card-actions>
+    </md-card>
+  </div>
+</div>
