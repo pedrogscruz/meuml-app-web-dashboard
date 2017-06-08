@@ -1,5 +1,6 @@
 angular.module('meuml.protected.plan', [
   'meuml.services.plan',
+  'meuml.services.subscription',
   'ui.router',
 ])
 

@@ -1,6 +1,7 @@
 angular.module('gorillascode.protected', [
   'gorillascode.change-password',
   'gorillascode.my-account',
+  'meuml.services.plan',
   'ui.router'
 ])
 
@@ -24,6 +25,13 @@ angular.module('gorillascode.protected', [
             });
           }
         ],
+        plan: ['SellerPlanService', 'user', function(SellerPlanService, user) {
+          if (!user.subscription) {
+            return null;
+          }
+
+          return SellerPlanService.get(user.subscription.plan_id);
+        }],
       }
     })
     ;

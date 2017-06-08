@@ -2,12 +2,15 @@ angular.module('meuml.services.plan', [
   'meuml.resources.plan',
 ])
 
-.factory('SellerPlanService', ['SellerPlanSubscribe',
-  function(SellerPlanSubscribe) {
+.factory('SellerPlanService', ['SellerPlan', 'SellerPlanSubscribe',
+  function(SellerPlan, SellerPlanSubscribe) {
     var service = {
+      get: function(id) {
+        return SellerPlan.get({ id: id }).$promise;
+      },
       subscribe: function(plan) {
         return SellerPlanSubscribe.save({ plan_id: plan.id }).$promise;
-      }
+      },
     };
 
     return service;

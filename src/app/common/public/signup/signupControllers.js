@@ -16,15 +16,15 @@ angular.module('gorillascode.signup')
       $log.info('Cadastrando o usuário');
 
       AuthenticationService.createUser(self.user).then(function(response) {
-        if (response.response.errors) {
-          self.waitForSubmit = false;
-        } else {
+        if (!response.response.errors) {
           $log.info('Cadastro finalizado');
           AuthenticationService.login(self.user.email, self.user.password, true);
         }
       }, function (error) {
         NotificationService.error('Não foi possível fazer o cadastro. Tente novamente mais ' +
           'tarde.', error);
+      }).finally(function() {
+        self.waitForSubmit = false;
       });
     };
   }

@@ -12,10 +12,28 @@
       md-card-title {
         background-color: #4caf50;
         color: #fff;
-        text-align: center;
-        margin-bottom: 24px;
+        flex: initial;
         height: 100px;
+        margin-bottom: 24px;
+        text-align: center;
+
+        .name {
+          font-size: 34px;
+        }
+
+        .price {
+          margin-top: 8px;
+
+          .value {
+            font-size: 20px;
+            font-weight: 500;
+          }
+        }
       }
+    }
+
+    md-card-content {
+      flex: 1;
     }
 
     .plan:nth-of-type(2) {
@@ -28,6 +46,10 @@
       md-card-title {
         background-color: #f44336;
       }
+    }
+
+    .plan.current {
+      border: 3px solid #536dfe;
     }
   }
 }

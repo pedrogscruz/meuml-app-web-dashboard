@@ -7,11 +7,7 @@
 </div>
 
 <md-content flex role="navigation">
-  <div ng-show="protectedCtrl.store" class="store-name">
-    {{protectedCtrl.store.trade_name}}
-  </div>
-
-  <md-list>
+  <md-list flex>
     <md-divider></md-divider>
 
     <md-list-item class="md-2-line" ui-sref="protected.my-account"
@@ -23,12 +19,6 @@
         <h3>{{protectedCtrl.user.name.split(' ')[0]}}</h3>
         <p md-truncate>{{protectedCtrl.user.email}}</p>
       </div>
-    </md-list-item>
-
-    <md-list-item ui-sref="protected.plan.list"
-                  ng-class="{ active: $state.includes('protected.plan') }">
-      <md-icon md-font-icon="material-icons" aria-label="Planos">payment</md-icon>
-      <p>Planos</p>
     </md-list-item>
 
     <md-divider></md-divider>
@@ -60,6 +50,23 @@
                   ng-class="{ active: $state.includes('protected.product-category') }">
       <md-icon md-font-icon="material-icons" aria-label="Categorias">list</md-icon>
       <p>Categorias</p>
+    </md-list-item>
+
+    <md-divider></md-divider>
+
+    <md-list-item ng-show="protectedCtrl.user.subscription.plan" ui-sref="protected.plan.list"
+                  ng-class="{ active: $state.includes('protected.plan') }" class="md-3-line">
+      <md-icon md-font-icon="material-icons" aria-label="Planos">star</md-icon>
+
+      <div class="md-list-item-text" layout="column">
+        <h3>
+          Plano <strong>{{protectedCtrl.user.subscription.plan.name}}</strong>
+        </h3>
+
+        <h4>
+          Vence <span am-time-ago="protectedCtrl.user.subscription.end_date | toUTCDate"></span>
+        </h4>
+      </div>
     </md-list-item>
 
     <md-divider></md-divider>
