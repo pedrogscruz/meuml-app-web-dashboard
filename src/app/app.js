@@ -1,6 +1,7 @@
 angular.module('meuml', [
   'angular-clipboard',
   'angular-loading-bar',
+  'angularMoment',
   'checklist-model',
   'meuml.components.image-picker',
   'meuml.components.image-viewer',

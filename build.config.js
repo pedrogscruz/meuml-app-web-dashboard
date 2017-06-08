@@ -81,6 +81,9 @@ module.exports = {
       'vendor/angular-ui-tinymce/src/tinymce.js',
       'vendor/angular-ui-router/release/angular-ui-router.js',
       'vendor/checklist-model/checklist-model.js',
+      'vendor/moment/moment.js',
+      'vendor/moment/locale/pt-br.js',
+      'vendor/angular-moment/angular-moment.js',
       'vendor/ng-file-upload/ng-file-upload.js',
     ],
     css: [
