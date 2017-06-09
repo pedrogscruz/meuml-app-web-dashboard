@@ -1,10 +1,10 @@
 angular.module('meuml.protected.plan')
 
-.controller('PlanListController', ['$log', '$mdDialog', 'NotificationService', 'LocalUserService',
-  'SellerSubscriptionService', 'plans',
+.controller('PlanListController', ['$log', '$state', '$mdDialog', 'NotificationService',
+  'LocalUserService', 'SellerSubscriptionService', 'plans',
 
-  function($log,$mdDialog, NotificationService, LocalUserService, SellerSubscriptionService,
-           plans) {
+  function($log, $state, $mdDialog, NotificationService, LocalUserService,
+           SellerSubscriptionService, plans) {
 
     var self = this;
 
@@ -40,15 +40,31 @@ angular.module('meuml.protected.plan')
       });
     };
 
+    /**
+     * Exibe a tela de pagamento do MercadoPago.
+     */
     self.paySubscription = function() {
       var user = LocalUserService.getUser();
 
-      // Exibe o modal para fazer o pagamento
+      /**
+       * Opções de checkout:
+       * https://www.mercadopago.com.br/developers/pt/related/render-js/#open-modes
+       */
       $MPC.openCheckout({
         url: user.subscription.external_data.init_point,
-        mode: 'modal',
+        mode: 'redirect',
         onreturn: function(data) {
-          console.log(data);
+          $log.info('Modal de pagamento fechado', data);
+
+          if (!data) {
+            return;
+          }
+
+          if (data.status == 'dropout') {
+            return;
+          }
+
+          $state.go('.', {}, { reload: true });
         },
       });
     };

@@ -15,6 +15,19 @@
       </div>
     </md-toolbar>
 
+    <md-toolbar ng-show="protectedCtrl.user.subscription.status == 'CANCELED'" class="md-warn">
+      <div class="md-toolbar-tools">
+        <div flex></div>
+
+        <div class="text-center">
+          Assinatura cancelada
+          <md-button ui-sref="protected.plan.list" class="md-raised">Renovar</md-button>
+        </div>
+
+        <div flex></div>
+      </div>
+    </md-toolbar>
+
     <md-content flex layout="column" gorillas-scroll-bottom-notifier>
       <div md-colors="{background: 'primary'}" class="gorillascode-content-background"></div>
 

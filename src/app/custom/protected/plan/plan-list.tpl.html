@@ -7,7 +7,7 @@
 
   <div ng-show="planListCtrl.plans.result.length" layout="column" layout-gt-xs="row" class="plans">
     <md-card ng-repeat="plan in planListCtrl.plans.result track by plan.id" flex class="plan"
-             ng-class="{ current: protectedCtrl.user.subscription.plan_id == plan.id }">
+             ng-class="{ current: protectedCtrl.user.subscription.plan_id == plan.id && protectedCtrl.user.subscription.status != 'CANCELED' }">
       <md-card-title>
         <md-card-title-text>
           <div class="name">{{plan.name}}</div>
@@ -22,36 +22,53 @@
         <md-list>
           <md-list-item>
             <md-icon md-font-icon="material-icons" aria-label="Imagens">photo_library</md-icon>
-            <p>{{plan.max_images | number}} imagens</p>
+            <p>
+              <strong>{{plan.max_images | number}} imagens</strong>
+            </p>
           </md-list-item>
 
-          <md-list-item ng-show="protectedCtrl.user.subscription.plan_id == plan.id">
+          <md-list-item
+              ng-show="protectedCtrl.user.subscription.plan_id == plan.id && protectedCtrl.user.subscription.status == 'ACTIVE'"
+              class="md-2-line">
             <md-icon md-font-icon="material-icons" aria-label="Data">today</md-icon>
-            <p>
-              Válido até {{protectedCtrl.user.subscription.end_date | date:'mediumDate'}}
-            </p>
+            <div class="md-list-item-text" layout="column">
+              <h3>Vencimento</h3>
+              <h4>{{protectedCtrl.user.subscription.end_date | toUTCDate | date:'mediumDate'}}</h4>
+            </div>
           </md-list-item>
         </md-list>
 
         <div
-            ng-show="protectedCtrl.user.subscription.plan_id == plan.id && protectedCtrl.user.subscription.status == 'PENDING'"
-            layout="row">
-          <div flex>Pendente de pagamento</div>
+            ng-show="protectedCtrl.user.subscription.plan_id == plan.id && protectedCtrl.user.subscription.status == 'PENDING'">
+          <div class="md-caption text-center">Pendente de pagamento</div>
 
-          <md-button ng-click="planListCtrl.paySubscription()" class="md-raised md-accent">
-            Pagar
-          </md-button>
+          <div class="text-center">
+            <md-button ng-click="planListCtrl.paySubscription()" class="md-raised">
+              Pagar
+            </md-button>
+          </div>
         </div>
       </md-card-content>
 
       <md-card-actions layout="column" layout-align="end">
-        <md-button ng-show="plan.price && protectedCtrl.user.subscription.plan_id != plan.id"
-                   ng-click="planListCtrl.subscribe(plan, $event)" class="md-raised md-accent">
+        <md-button
+            ng-show="plan.price && (protectedCtrl.user.subscription.plan_id != plan.id || protectedCtrl.user.subscription.status == 'CANCELED')"
+            ng-click="planListCtrl.subscribe(plan, $event)" class="md-raised md-accent">
           Assinar
         </md-button>
 
-        <md-button ng-show="protectedCtrl.user.subscription.plan_id == plan.id">
+        <md-button
+            ng-show="protectedCtrl.user.subscription.plan_id == plan.id && !protectedCtrl.user.subscription.external_id && protectedCtrl.user.subscription.status != 'CANCELED'">
           Plano atual
+        </md-button>
+
+        <md-button
+            ng-show="protectedCtrl.user.subscription.plan_id == plan.id && protectedCtrl.user.subscription.external_id && protectedCtrl.user.subscription.status != 'CANCELED'"
+            ng-href="https://www.mercadopago.com.br/subscriptions/detail?id={{protectedCtrl.user.subscription.external_id}}"
+            target="_blank">
+          Plano atual
+          <md-icon md-font-icon="material-icons" aria-label="Abrir em nova janela">open_in_new
+          </md-icon>
         </md-button>
       </md-card-actions>
     </md-card>

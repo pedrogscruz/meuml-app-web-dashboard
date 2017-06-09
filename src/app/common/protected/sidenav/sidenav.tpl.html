@@ -23,6 +23,27 @@
 
     <md-divider></md-divider>
 
+    <md-list-item ng-show="protectedCtrl.user.subscription.plan" ui-sref="protected.plan.list"
+                  ng-class="{ active: $state.includes('protected.plan') }" class="md-3-line">
+      <md-icon md-font-icon="material-icons" aria-label="Planos">star</md-icon>
+
+      <div class="md-list-item-text" layout="column">
+        <h3>
+          Plano <strong>{{protectedCtrl.user.subscription.plan.name}}</strong>
+        </h3>
+
+        <h4 ng-show="protectedCtrl.user.subscription.status != 'CANCELED'">
+          Vence <span am-time-ago="protectedCtrl.user.subscription.end_date | toUTCDate"></span>
+        </h4>
+
+        <h4 ng-show="protectedCtrl.user.subscription.status == 'CANCELED'">
+          Assinatura cancelada
+        </h4>
+      </div>
+    </md-list-item>
+
+    <md-divider></md-divider>
+
     <md-list-item ui-sref="protected.home" ng-class="{ active: $state.includes('protected.home') }">
       <md-icon md-font-icon="material-icons" aria-label="Início">home</md-icon>
       <p>Início</p>
@@ -50,23 +71,6 @@
                   ng-class="{ active: $state.includes('protected.product-category') }">
       <md-icon md-font-icon="material-icons" aria-label="Categorias">list</md-icon>
       <p>Categorias</p>
-    </md-list-item>
-
-    <md-divider></md-divider>
-
-    <md-list-item ng-show="protectedCtrl.user.subscription.plan" ui-sref="protected.plan.list"
-                  ng-class="{ active: $state.includes('protected.plan') }" class="md-3-line">
-      <md-icon md-font-icon="material-icons" aria-label="Planos">star</md-icon>
-
-      <div class="md-list-item-text" layout="column">
-        <h3>
-          Plano <strong>{{protectedCtrl.user.subscription.plan.name}}</strong>
-        </h3>
-
-        <h4>
-          Vence <span am-time-ago="protectedCtrl.user.subscription.end_date | toUTCDate"></span>
-        </h4>
-      </div>
     </md-list-item>
 
     <md-divider></md-divider>
