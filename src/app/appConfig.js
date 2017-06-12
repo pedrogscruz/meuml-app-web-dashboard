@@ -7,7 +7,7 @@ angular.module('meuml')
     var configs = {
       development: {
         environment: 'development',
-        hostnames: ['localhost'],
+        hostnames: ['localhost', '127.0.0.1'],
         apiUrl: 'http://localhost:5000/api',
         googleAnalyticsTrackingId: 'UA-93340830-2',
         html5Mode: false,

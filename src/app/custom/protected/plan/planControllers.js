@@ -32,7 +32,12 @@ angular.module('meuml.protected.plan')
           // Atualiza as informações da assinatura do usuário autenticado
           LocalUserService.getUser().subscription = subscription;
 
-          self.paySubscription();
+          // Se a transação não foi aprovada automaticamente então exibe a tela de pagamento
+          if (subscription.external_data.status == 'pending') {
+            self.paySubscription();
+          } else {
+            NotificationService.success('Plano alterado');
+          }
         }, function(error) {
           NotificationService.error('Não foi possível alterar o plano. Tente novamente mais ' +
               'tarde.', error);
@@ -52,7 +57,7 @@ angular.module('meuml.protected.plan')
        */
       $MPC.openCheckout({
         url: user.subscription.external_data.init_point,
-        mode: 'redirect',
+        mode: 'modal',
         onreturn: function(data) {
           $log.info('Modal de pagamento fechado', data);
 

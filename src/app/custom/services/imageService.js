@@ -2,8 +2,13 @@ angular.module('meuml.services.image', [
   'meuml.resources.image'
 ])
 
-.factory('SellerImageService', ['SellerImage',
-  function(SellerImage) {
+.factory('SellerImageService', ['$q', 'SellerImage',
+  function($q, SellerImage) {
+    // Estatísticas das imagens
+    var stats = {
+      count: 0,
+    };
+
     var service = {
       save: function(image) {
         if (image.id) {
@@ -14,6 +19,25 @@ angular.module('meuml.services.image', [
       },
       delete: function(id) {
         return SellerImage.delete({ id: id }).$promise;
+      },
+      getStats: function() {
+        if (stats.count) {
+          return $q.resolve(stats);
+        }
+
+        var deferred = $q.defer();
+
+        SellerImage.query({ results_per_page: 0 }, function(response) {
+          stats.count = response.limit;
+          deferred.resolve(stats);
+        }, function(error) {
+          deferred.reject(error);
+        });
+
+        return stats;
+      },
+      incrementImagesCount: function() {
+        stats.count++;
       },
     };
 
@@ -26,7 +50,7 @@ angular.module('meuml.services.image', [
     var service = {
       search: function(parameters) {
         return SellerImage.query(parameters).$promise;
-      }
+      },
     };
 
     return service;

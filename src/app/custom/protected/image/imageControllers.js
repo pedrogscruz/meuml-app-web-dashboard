@@ -306,6 +306,7 @@ angular.module('meuml.protected.image')
         self.images.result.unshift(response);
         self.images.limit++;
 
+        SellerImageService.incrementImagesCount();
         SellerImageTagSearchService.addTags(self.selectedFilesTags);
       }, function(error) {
         $log.error('Não foi possível enviar a imagem', error);

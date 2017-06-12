@@ -15,7 +15,19 @@
       </div>
     </md-toolbar>
 
-    <md-toolbar ng-show="protectedCtrl.user.subscription.status == 'CANCELED'" class="md-warn">
+    <md-content flex layout="column" gorillas-scroll-bottom-notifier>
+      <div md-colors="{background: 'primary'}" class="gorillascode-content-background"></div>
+
+      <div flex class="main-content" ui-view>
+        <div layout="column" layout-align="center center" flex>
+          <md-progress-circular md-mode="indeterminate" md-diameter="96"></md-progress-circular>
+        </div>
+      </div>
+    </md-content>
+
+    <md-toolbar
+            ng-show="protectedCtrl.user.subscription.status == 'CANCELED' && !$state.includes('protected.plan.list')"
+            class="md-warn">
       <div class="md-toolbar-tools">
         <div flex></div>
 
@@ -27,15 +39,5 @@
         <div flex></div>
       </div>
     </md-toolbar>
-
-    <md-content flex layout="column" gorillas-scroll-bottom-notifier>
-      <div md-colors="{background: 'primary'}" class="gorillascode-content-background"></div>
-
-      <div flex class="main-content" ui-view>
-        <div layout="column" layout-align="center center" flex>
-          <md-progress-circular md-mode="indeterminate" md-diameter="96"></md-progress-circular>
-        </div>
-      </div>
-    </md-content>
   </div>
 </div>

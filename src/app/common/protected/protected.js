@@ -1,6 +1,7 @@
 angular.module('gorillascode.protected', [
   'gorillascode.change-password',
   'gorillascode.my-account',
+  'meuml.services.image',
   'meuml.services.plan',
   'ui.router'
 ])
@@ -31,6 +32,9 @@ angular.module('gorillascode.protected', [
           }
 
           return SellerPlanService.get(user.subscription.plan_id);
+        }],
+        imagesStats: ['SellerImageService', function(SellerImageService) {
+          return SellerImageService.getStats();
         }],
       }
     })

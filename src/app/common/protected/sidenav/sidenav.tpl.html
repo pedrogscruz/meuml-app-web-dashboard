@@ -23,6 +23,41 @@
 
     <md-divider></md-divider>
 
+    <md-list-item ui-sref="protected.home" ng-class="{ active: $state.includes('protected.home') }">
+      <md-icon md-font-icon="material-icons" aria-label="Início">home</md-icon>
+      <p>Início</p>
+    </md-list-item>
+
+    <md-list-item ng-if="protectedCtrl.user.subscription.status != 'CANCELED'"
+                  ui-sref="protected.image.list"
+                  ng-class="{ active: $state.includes('protected.image') }">
+      <md-icon md-font-icon="material-icons" aria-label="Imagens">photo_library</md-icon>
+      <p>Imagens</p>
+    </md-list-item>
+
+    <md-list-item ng-if="protectedCtrl.user.subscription.status != 'CANCELED'"
+                  ui-sref="protected.template.list"
+                  ng-class="{ active: $state.includes('protected.template') }">
+      <md-icon md-font-icon="material-icons" aria-label="Templates">description</md-icon>
+      <p>Templates</p>
+    </md-list-item>
+
+    <md-list-item ng-if="protectedCtrl.user.subscription.status != 'CANCELED'"
+                  ui-sref="protected.html-editor"
+                  ng-class="{ active: $state.includes('protected.html-editor') }">
+      <md-icon md-font-icon="material-icons" aria-label="Editor HTML">code</md-icon>
+      <p>Editor HTML</p>
+    </md-list-item>
+
+    <md-list-item ng-if="protectedCtrl.user.subscription.status != 'CANCELED'"
+                  ui-sref="protected.product-category.list"
+                  ng-class="{ active: $state.includes('protected.product-category') }">
+      <md-icon md-font-icon="material-icons" aria-label="Categorias">list</md-icon>
+      <p>Categorias</p>
+    </md-list-item>
+
+    <md-divider></md-divider>
+
     <md-list-item ng-show="protectedCtrl.user.subscription.plan" ui-sref="protected.plan.list"
                   ng-class="{ active: $state.includes('protected.plan') }" class="md-3-line">
       <md-icon md-font-icon="material-icons" aria-label="Planos">star</md-icon>
@@ -42,36 +77,17 @@
       </div>
     </md-list-item>
 
-    <md-divider></md-divider>
+    <div ng-show="protectedCtrl.user.subscription.status != 'CANCELED'" class="images-count">
+      <div class="title">Imagens usadas</div>
 
-    <md-list-item ui-sref="protected.home" ng-class="{ active: $state.includes('protected.home') }">
-      <md-icon md-font-icon="material-icons" aria-label="Início">home</md-icon>
-      <p>Início</p>
-    </md-list-item>
+      <div class="count">
+        {{protectedCtrl.imagesStats.count | number}} de
+        {{protectedCtrl.user.subscription.plan.max_images | number}}
+      </div>
 
-    <md-list-item ui-sref="protected.image.list"
-                  ng-class="{ active: $state.includes('protected.image') }">
-      <md-icon md-font-icon="material-icons" aria-label="Imagens">photo_library</md-icon>
-      <p>Imagens</p>
-    </md-list-item>
-
-    <md-list-item ui-sref="protected.template.list"
-                  ng-class="{ active: $state.includes('protected.template') }">
-      <md-icon md-font-icon="material-icons" aria-label="Templates">description</md-icon>
-      <p>Templates</p>
-    </md-list-item>
-
-    <md-list-item ui-sref="protected.html-editor"
-                  ng-class="{ active: $state.includes('protected.html-editor') }">
-      <md-icon md-font-icon="material-icons" aria-label="Editor HTML">code</md-icon>
-      <p>Editor HTML</p>
-    </md-list-item>
-
-    <md-list-item ui-sref="protected.product-category.list"
-                  ng-class="{ active: $state.includes('protected.product-category') }">
-      <md-icon md-font-icon="material-icons" aria-label="Categorias">list</md-icon>
-      <p>Categorias</p>
-    </md-list-item>
+      <md-progress-linear md-mode="determinate"
+                          value="{{(protectedCtrl.imagesStats.count * 100) / protectedCtrl.user.subscription.plan.max_images}}"></md-progress-linear>
+    </div>
 
     <md-divider></md-divider>
 
@@ -81,8 +97,8 @@
     </md-list-item>
 
     <md-list-item
-        href="https://docs.google.com/a/gorillascode.com/forms/d/e/1FAIpQLSfFCfqILJcjhP2ezOU0IwP-7DMtxw_fdz4LkqTARQJl7qxDlA/viewform"
-        target="_blank">
+            href="https://docs.google.com/a/gorillascode.com/forms/d/e/1FAIpQLSfFCfqILJcjhP2ezOU0IwP-7DMtxw_fdz4LkqTARQJl7qxDlA/viewform"
+            target="_blank">
       <md-icon md-font-icon="material-icons" aria-label="Relatar problema">feedback</md-icon>
       <p>Relatar problema</p>
     </md-list-item>
