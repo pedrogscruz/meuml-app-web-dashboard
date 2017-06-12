@@ -1,22 +1,36 @@
 angular.module('meuml.protected.plan')
 
-.controller('PlanListController', ['$log', '$state', '$mdDialog', 'NotificationService',
-  'LocalUserService', 'SellerSubscriptionService', 'plans',
+.controller('PlanListController', ['$log', '$state', '$window', '$mdDialog',
+  'NotificationService', 'LocalUserService', 'SellerSubscriptionService', 'SellerImageService',
+  'plans',
 
-  function($log, $state, $mdDialog, NotificationService, LocalUserService,
-           SellerSubscriptionService, plans) {
+  function($log, $state, $window, $mdDialog, NotificationService, LocalUserService,
+           SellerSubscriptionService, SellerImageService, plans) {
 
     var self = this;
+    var user = LocalUserService.getUser();
 
     self.plans = plans;
 
     self.subscribe = function(plan, ev) {
+      var imagesCount = SellerImageService.getStats().count;
       var title = 'Alterar assinatura';
+
+      if (imagesCount > plan.max_images) {
+        var alert = $mdDialog.alert()
+          .title(title)
+          .textContent('Você deve excluir algumas imagens para poder alterar o plano')
+          .targetEvent(ev)
+          .ok('Ok');
+
+        $mdDialog.show(alert);
+
+        return;
+      }
 
       var confirm = $mdDialog.confirm()
         .title(title)
-        // .htmlContent('Ao alterar para o plano <strong>' + plan.name + '</strong>')
-        .ariaLabel(title)
+        .textContent('Você será direcionado para o pagamento no MercadoPago')
         .targetEvent(ev)
         .ok('Continuar')
         .cancel('Cancelar');
@@ -29,13 +43,13 @@ angular.module('meuml.protected.plan')
         SellerSubscriptionService.save(subscriptionToSave).then(function(subscription) {
           $log.info('Plano alterado');
 
-          // Atualiza as informações da assinatura do usuário autenticado
-          LocalUserService.getUser().subscription = subscription;
-
           // Se a transação não foi aprovada automaticamente então exibe a tela de pagamento
           if (subscription.external_data.status == 'pending') {
-            self.paySubscription();
+            self.paySubscription(subscription.external_data.init_point);
           } else {
+            // Atualiza as informações da assinatura do usuário autenticado
+            user.subscription = subscription;
+
             NotificationService.success('Plano alterado');
           }
         }, function(error) {
@@ -48,30 +62,9 @@ angular.module('meuml.protected.plan')
     /**
      * Exibe a tela de pagamento do MercadoPago.
      */
-    self.paySubscription = function() {
-      var user = LocalUserService.getUser();
-
-      /**
-       * Opções de checkout:
-       * https://www.mercadopago.com.br/developers/pt/related/render-js/#open-modes
-       */
-      $MPC.openCheckout({
-        url: user.subscription.external_data.init_point,
-        mode: 'modal',
-        onreturn: function(data) {
-          $log.info('Modal de pagamento fechado', data);
-
-          if (!data) {
-            return;
-          }
-
-          if (data.status == 'dropout') {
-            return;
-          }
-
-          $state.go('.', {}, { reload: true });
-        },
-      });
+    self.paySubscription = function(paymentUrl) {
+      paymentUrl = paymentUrl || user.subscription.external_data.init_point;
+      $window.location = paymentUrl;
     };
   }
 ])

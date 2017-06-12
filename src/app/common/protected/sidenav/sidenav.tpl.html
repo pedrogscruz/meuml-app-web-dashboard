@@ -59,7 +59,7 @@
     <md-divider></md-divider>
 
     <md-list-item ng-show="protectedCtrl.user.subscription.plan" ui-sref="protected.plan.list"
-                  ng-class="{ active: $state.includes('protected.plan') }" class="md-3-line">
+                  ng-class="{ active: $state.includes('protected.plan') }" class="md-2-line">
       <md-icon md-font-icon="material-icons" aria-label="Planos">star</md-icon>
 
       <div class="md-list-item-text" layout="column">
@@ -78,7 +78,7 @@
     </md-list-item>
 
     <div ng-show="protectedCtrl.user.subscription.status != 'CANCELED'" class="images-count">
-      <div class="title">Imagens usadas</div>
+      <div class="title">Imagens hospedadas</div>
 
       <div class="count">
         {{protectedCtrl.imagesStats.count | number}} de
@@ -87,6 +87,16 @@
 
       <md-progress-linear md-mode="determinate"
                           value="{{(protectedCtrl.imagesStats.count * 100) / protectedCtrl.user.subscription.plan.max_images}}"></md-progress-linear>
+
+      <div
+          ng-show="protectedCtrl.imagesStats.count == protectedCtrl.user.subscription.plan.max_images"
+          class="change-plan">
+        <div>
+          <strong>Limite de imagens hospedadas atingido</strong>
+        </div>
+
+        <md-button ui-sref="protected.plan.list" class="md-raised">Alterar plano</md-button>
+      </div>
     </div>
 
     <md-divider></md-divider>
@@ -97,8 +107,8 @@
     </md-list-item>
 
     <md-list-item
-            href="https://docs.google.com/a/gorillascode.com/forms/d/e/1FAIpQLSfFCfqILJcjhP2ezOU0IwP-7DMtxw_fdz4LkqTARQJl7qxDlA/viewform"
-            target="_blank">
+        href="https://docs.google.com/a/gorillascode.com/forms/d/e/1FAIpQLSfFCfqILJcjhP2ezOU0IwP-7DMtxw_fdz4LkqTARQJl7qxDlA/viewform"
+        target="_blank">
       <md-icon md-font-icon="material-icons" aria-label="Relatar problema">feedback</md-icon>
       <p>Relatar problema</p>
     </md-list-item>

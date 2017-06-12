@@ -3,12 +3,12 @@ angular.module('meuml.protected.image')
 .controller('ImageListController', ['$log', '$q', '$scope', '$controller', '$state', '$stateParams',
   '$mdDialog', '$mdMedia', 'Upload', 'NotificationService', 'SellerFileService', 'UploadService',
   'SellerImageService', 'SellerImageTagService', 'SellerImageTagSearchService',
-  'SellerImageSearchService', 'ImageViewer',
+  'SellerImageSearchService', 'ImageViewer', 'LocalUserService',
 
   function($log, $q, $scope, $controller, $state, $stateParams, $mdDialog, $mdMedia, Upload,
            NotificationService, SellerFileService, UploadService, SellerImageService,
            SellerImageTagService, SellerImageTagSearchService, SellerImageSearchService,
-           ImageViewer) {
+           ImageViewer, LocalUserService) {
 
     var self = this;
 
@@ -183,6 +183,8 @@ angular.module('meuml.protected.image')
           var message = (images.length > 1) ? 'Imagens excluídas' : 'Imagem excluída';
           NotificationService.success(message);
 
+          SellerImageService.decrementImagesCount(images.length);
+
           $state.go('.', {}, { reload: true });
         }, function(error) {
           NotificationService.error('Não foi possível excluir as imagens. Tente novamente ' +
@@ -223,6 +225,10 @@ angular.module('meuml.protected.image')
 
     self.selectFiles = function(files) {
       if (files.length === 0) {
+        return;
+      }
+
+      if (!SellerImageService.checkImagesCount(files.length)) {
         return;
       }
 

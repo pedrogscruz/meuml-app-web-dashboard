@@ -160,6 +160,10 @@ angular.module('meuml.components.image-picker', [])
         return;
       }
 
+      if (!SellerImageService.checkImagesCount(files.length)) {
+        return;
+      }
+
       $log.debug(files.length + ' arquivo(s) selecionado(s)');
 
       self.selectedFiles = self.selectedFiles.concat(files);

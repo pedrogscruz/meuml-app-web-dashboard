@@ -9,7 +9,7 @@
     <md-card ng-repeat="plan in planListCtrl.plans.result track by plan.id" flex class="plan"
              ng-class="{ current: protectedCtrl.user.subscription.plan_id == plan.id && protectedCtrl.user.subscription.status != 'CANCELED' }">
       <md-card-title>
-        <md-card-title-text>
+        <md-card-title-text layout="column" layout-align="center center">
           <div class="name">{{plan.name}}</div>
 
           <div ng-show="plan.price" class="price">
@@ -27,14 +27,35 @@
             </p>
           </md-list-item>
 
+          <md-list-item>
+            <md-icon md-font-icon="material-icons" aria-label="Editor de templates">description
+            </md-icon>
+            <p>Editor de templates</p>
+          </md-list-item>
+
+          <md-list-item>
+            <md-icon md-font-icon="material-icons" aria-label="Editor HTML">code</md-icon>
+            <p>Editor HTML</p>
+          </md-list-item>
+
+          <md-list-item>
+            <md-icon md-font-icon="material-icons" aria-label="Categorias do MercadoLivre">list
+            </md-icon>
+            <p>Categorias do MercadoLivre</p>
+          </md-list-item>
+
+          <md-divider
+              ng-show="protectedCtrl.user.subscription.plan_id == plan.id && protectedCtrl.user.subscription.status == 'ACTIVE'"></md-divider>
+
           <md-list-item
-              ng-show="protectedCtrl.user.subscription.plan_id == plan.id && protectedCtrl.user.subscription.status == 'ACTIVE'"
-              class="md-2-line">
+              ng-show="protectedCtrl.user.subscription.plan_id == plan.id && protectedCtrl.user.subscription.status == 'ACTIVE'">
             <md-icon md-font-icon="material-icons" aria-label="Data">today</md-icon>
-            <div class="md-list-item-text" layout="column">
-              <h3>Vencimento</h3>
-              <h4>{{protectedCtrl.user.subscription.end_date | toUTCDate | date:"d 'de' MMMM"}}</h4>
-            </div>
+            <p>
+              <em>
+                Vence em
+                {{protectedCtrl.user.subscription.end_date | toUTCDate | date:"d 'de' MMMM"}}
+              </em>
+            </p>
           </md-list-item>
         </md-list>
 

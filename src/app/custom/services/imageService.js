@@ -2,8 +2,8 @@ angular.module('meuml.services.image', [
   'meuml.resources.image'
 ])
 
-.factory('SellerImageService', ['$q', 'SellerImage',
-  function($q, SellerImage) {
+.factory('SellerImageService', ['$q', '$mdDialog', '$state', 'SellerImage', 'LocalUserService',
+  function($q, $mdDialog, $state, SellerImage, LocalUserService) {
     // Estatísticas das imagens
     var stats = {
       count: 0,
@@ -22,7 +22,7 @@ angular.module('meuml.services.image', [
       },
       getStats: function() {
         if (stats.count) {
-          return $q.resolve(stats);
+          return stats;
         }
 
         var deferred = $q.defer();
@@ -38,6 +38,31 @@ angular.module('meuml.services.image', [
       },
       incrementImagesCount: function() {
         stats.count++;
+      },
+      decrementImagesCount: function(amount) {
+        stats.count -= amount;
+      },
+      checkImagesCount: function(amount) {
+        var currentPlan = LocalUserService.getUser().subscription.plan;
+        var newImagesCount = stats.count + amount;
+
+        if (newImagesCount > currentPlan.max_images) {
+          var confirm = $mdDialog.confirm()
+            .title('Limite de imagens atingido')
+            .htmlContent('O limite de imagens que podem ser hospedadas foi atingido.<br>Você ' +
+                'pode enviar mais imagens excluindo outras imagens ou alterando para outro plano.')
+            .ariaLabel('Limite de imagens atingido')
+            .ok('Alterar o plano')
+            .cancel('Cancelar');
+
+          $mdDialog.show(confirm).then(function() {
+            $state.go('protected.plan.list');
+          });
+
+          return false;
+        }
+
+        return true;
       },
     };
 
