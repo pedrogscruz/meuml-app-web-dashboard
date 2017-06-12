@@ -8,7 +8,7 @@ angular.module('meuml.protected.home', [
       url: '/',
       templateUrl: 'custom/protected/home/home.tpl.html',
       data: {
-        pageTitle: ''
+        pageTitle: 'MeuML.com'
       }
     });
   }

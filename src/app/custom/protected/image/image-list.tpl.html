@@ -1,5 +1,5 @@
 <md-toolbar ng-show="imageListCtrl.getSelectedImages().length"
-            class="gorillascode-animate md-toolbar-fixed">
+            class="md-whiteframe-3dp gorillascode-animate md-toolbar-fixed">
   <div class="md-toolbar-tools">
     <md-button ng-click="imageListCtrl.deselectImages()" class="md-icon-button">
       <md-icon md-font-icon="material-icons" aria-label="Desselecionar imagens">close</md-icon>
@@ -8,7 +8,7 @@
     <div flex>
       <span hide-gt-xs>{{imageListCtrl.getSelectedImages().length | number}}</span>
       <ng-pluralize hide show-gt-xs count="imageListCtrl.getSelectedImages().length"
-                    when="{'0': 'Nenhuma imagem selecionada', 'one': '1 imagem selecionada', 'other': '{{imageListCtrl.getSelectedImages().length | number}} imagens selecionadas'}"></ng-pluralize>
+                    when="{'0': 'Nenhuma selecionada', 'one': '1 selecionada', 'other': '{{imageListCtrl.getSelectedImages().length | number}} selecionadas'}"></ng-pluralize>
     </div>
 
     <md-button ng-click="imageListCtrl.editTags(imageListCtrl.getSelectedImages(), $event)"
@@ -151,7 +151,7 @@
   <div class="gorillascode-animate gorillascode-results-count"
        ng-show="imageListCtrl.images.result.length">
     Exibindo
-    <ng-pluralize count="imageListCtrl.images.limit"
+    <ng-pluralize count="imageListCtrl.images.limit"o
                   when="{'0': 'Nenhuma imagem', 'one': '1 imagem', 'other': '{{imageListCtrl.images.limit | number}} imagens'}"></ng-pluralize>
   </div>
 
