@@ -2,12 +2,18 @@ angular.module('meuml.services.image', [
   'meuml.resources.image'
 ])
 
-.factory('SellerImageService', ['$q', '$mdDialog', '$state', 'SellerImage', 'LocalUserService',
-  function($q, $mdDialog, $state, SellerImage, LocalUserService) {
+.factory('SellerImageService', ['$rootScope', '$q', '$mdDialog', '$state', 'SellerImage',
+  'LocalUserService',
+
+  function($rootScope, $q, $mdDialog, $state, SellerImage, LocalUserService) {
     // Estatísticas das imagens
     var stats = {
       count: 0,
     };
+
+    $rootScope.$on('userLogout', function() {
+      stats.count = 0;
+    });
 
     var service = {
       save: function(image) {

@@ -1,4 +1,6 @@
 <div class="gorillascode-content gorillascode-content-no-background">
+  <p class="md-headline text-center">Escolha o seu plano abaixo e comece a usar agora mesmo!</p>
+
   <div ng-show="!planListCtrl.loading && !planListCtrl.plans.result.length">
     <div class="gorillascode-no-results">
       <p class="md-title">Nenhum plano</p>
@@ -8,13 +10,9 @@
   <div ng-show="planListCtrl.plans.result.length" layout="column" layout-gt-xs="row" class="plans">
     <md-card ng-repeat="plan in planListCtrl.plans.result track by plan.id" flex class="plan"
              ng-class="{ current: protectedCtrl.user.subscription.plan_id == plan.id && protectedCtrl.user.subscription.status != 'CANCELED' }">
-      <md-card-title>
+      <md-card-title md-colors="{background: 'primary'}">
         <md-card-title-text layout="column" layout-align="center center">
           <div class="name">{{plan.name}}</div>
-
-          <div ng-show="plan.price" class="price">
-            R$ <span class="value">{{plan.price | currency:''}}</span>/mês
-          </div>
         </md-card-title-text>
       </md-card-title>
 
@@ -58,6 +56,10 @@
             </p>
           </md-list-item>
         </md-list>
+
+        <div class="price">
+          R$ <span class="value">{{plan.price | currency:''}}</span>/mês
+        </div>
 
         <div
             ng-show="protectedCtrl.user.subscription.plan_id == plan.id && protectedCtrl.user.subscription.status == 'PENDING'">
