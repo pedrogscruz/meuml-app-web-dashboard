@@ -58,16 +58,14 @@
       </div>
     </div>
 
-    <md-card ng-show="imagePickerCtrl.selectedFiles.length"
-             style="margin: 0 0 48px 0; padding: 16px;">
+    <md-card ng-show="imagePickerCtrl.selectedFiles.length" class="selected-files">
       <div ng-repeat="file in imagePickerCtrl.selectedFiles" class="gorillascode-animate">
         <div layout="row" layout-align="center center">
           <div>
-            <div ngf-thumbnail="file" ngf-as-background="true"
-                 class="upload-thumbnail" style=""></div>
+            <div ngf-thumbnail="file" ngf-as-background="true" class="upload-thumbnail"></div>
           </div>
 
-          <div flex style="padding: 8px;">
+          <div flex class="info">
             <span ng-bind-html="file.image.url | linky:'_blank'"></span>
             <span ng-show="file.error">{{file.error}}</span>
 
@@ -87,7 +85,7 @@
       </div>
 
       <div layout="row">
-        <div flex style="margin-right: 16px;">
+        <div flex class="tags">
           <md-chips ng-model="imagePickerCtrl.selectedFilesTags">
             <md-autocomplete
                 md-search-text="searchText"
