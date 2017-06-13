@@ -17,45 +17,14 @@
       </md-card-title>
 
       <md-card-content>
-        <md-list>
-          <md-list-item>
-            <md-icon md-font-icon="material-icons" aria-label="Imagens">photo_library</md-icon>
-            <p>
-              <strong>{{plan.max_images | number}} imagens</strong>
-            </p>
-          </md-list-item>
-
-          <md-list-item>
-            <md-icon md-font-icon="material-icons" aria-label="Editor de templates">description
-            </md-icon>
-            <p>Editor de templates</p>
-          </md-list-item>
-
-          <md-list-item>
-            <md-icon md-font-icon="material-icons" aria-label="Editor HTML">code</md-icon>
-            <p>Editor HTML</p>
-          </md-list-item>
-
-          <md-list-item>
-            <md-icon md-font-icon="material-icons" aria-label="Categorias do MercadoLivre">list
-            </md-icon>
-            <p>Categorias do MercadoLivre</p>
-          </md-list-item>
-
-          <md-divider
-              ng-show="protectedCtrl.user.subscription.plan_id == plan.id && protectedCtrl.user.subscription.status == 'ACTIVE'"></md-divider>
-
-          <md-list-item
-              ng-show="protectedCtrl.user.subscription.plan_id == plan.id && protectedCtrl.user.subscription.status == 'ACTIVE'">
-            <md-icon md-font-icon="material-icons" aria-label="Data">today</md-icon>
-            <p>
-              <em>
-                Vence em
-                {{protectedCtrl.user.subscription.end_date | toUTCDate | date:"d 'de' MMMM"}}
-              </em>
-            </p>
-          </md-list-item>
-        </md-list>
+        <ul class="features">
+          <li class="max-images">
+            <span class="value">{{plan.max_images | number}}</span> imagens
+          </li>
+          <li>Gerenciador de templates</li>
+          <li>Editor HTML</li>
+          <li>Tabela de pesos e dimensões</li>
+        </ul>
 
         <div class="price">
           R$ <span class="value">{{plan.price | currency:''}}</span>/mês
@@ -76,14 +45,8 @@
       <md-card-actions layout="column" layout-align="end">
         <md-button
             ng-show="plan.price && (protectedCtrl.user.subscription.plan_id != plan.id || protectedCtrl.user.subscription.status == 'CANCELED')"
-            ng-click="planListCtrl.subscribe(plan, $event)" class="md-raised md-accent">
+            ng-click="planListCtrl.subscribe(plan, $event)" class="md-raised md-primary signup-button">
           Assinar
-        </md-button>
-
-        <md-button
-            ng-show="protectedCtrl.user.subscription.plan_id == plan.id && !protectedCtrl.user.subscription.external_id && protectedCtrl.user.subscription.status != 'CANCELED'"
-            class="md-no-focus">
-          Plano atual
         </md-button>
 
         <md-button
@@ -94,6 +57,12 @@
           <md-icon md-font-icon="material-icons" aria-label="Abrir em nova janela">open_in_new
           </md-icon>
         </md-button>
+
+        <div class="end-date"
+             ng-show="protectedCtrl.user.subscription.plan_id == plan.id && protectedCtrl.user.subscription.status == 'ACTIVE'">
+          Vencimento:
+          {{protectedCtrl.user.subscription.end_date | toUTCDate | date:"d 'de' MMMM"}}
+        </div>
       </md-card-actions>
     </md-card>
   </div>

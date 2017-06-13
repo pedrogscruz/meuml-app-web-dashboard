@@ -15,8 +15,8 @@ angular.module('gorillascode.services.authentication', [
       getLoggedUser: function() {
         return UserLogged.get().$promise;
       },
-      createUser: function(user, role) {
-        return RegisterUser.save({role: role}, user, function (response) {
+      createUser: function(user, plan) {
+        return RegisterUser.save({plan: plan}, user, function (response) {
           response = response.response;
 
           if (response.errors) {
