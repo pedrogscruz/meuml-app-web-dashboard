@@ -28,7 +28,7 @@ angular.module('gorillascode.protected')
       var isTrial = false;
 
       if (self.user.subscription.end_date_trial) {
-        isTrial = new Datep(self.user.subscription.end_date_trial + 'Z') > new Date();
+        isTrial = new Date(self.user.subscription.end_date_trial + 'Z') > new Date();
       }
 
       self.user.subscription.plan = plan;
