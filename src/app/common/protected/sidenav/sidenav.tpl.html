@@ -28,56 +28,44 @@
       <p>Início</p>
     </md-list-item>
 
-    <md-list-item ng-if="protectedCtrl.user.subscription.status != 'CANCELED'"
-                  ui-sref="protected.image.list"
+    <md-list-item ng-if="protectedCtrl.isVisible.images" ui-sref="protected.image.list"
                   ng-class="{ active: $state.includes('protected.image') }">
       <md-icon md-font-icon="material-icons" aria-label="Imagens">photo_library</md-icon>
       <p>Imagens</p>
     </md-list-item>
 
-    <md-list-item ng-if="protectedCtrl.user.subscription.status != 'CANCELED'"
-                  ui-sref="protected.template.list"
+    <md-list-item ng-if="protectedCtrl.isVisible.templates" ui-sref="protected.template.list"
                   ng-class="{ active: $state.includes('protected.template') }">
       <md-icon md-font-icon="material-icons" aria-label="Templates">description</md-icon>
       <p>Templates</p>
     </md-list-item>
 
-    <md-list-item ng-if="protectedCtrl.user.subscription.status != 'CANCELED'"
-                  ui-sref="protected.html-editor"
+    <md-list-item ng-if="protectedCtrl.isVisible.htmlEditor" ui-sref="protected.html-editor"
                   ng-class="{ active: $state.includes('protected.html-editor') }">
       <md-icon md-font-icon="material-icons" aria-label="Editor HTML">code</md-icon>
       <p>Editor HTML</p>
     </md-list-item>
 
-    <md-list-item ng-if="protectedCtrl.user.subscription.status != 'CANCELED'"
+    <md-list-item ng-if="protectedCtrl.isVisible.productCategory"
                   ui-sref="protected.product-category.list"
                   ng-class="{ active: $state.includes('protected.product-category') }">
       <md-icon md-font-icon="material-icons" aria-label="Categorias">list</md-icon>
       <p>Categorias</p>
     </md-list-item>
 
-    <md-divider></md-divider>
+    <md-divider ng-show="protectedCtrl.isVisible.plan"></md-divider>
 
-    <md-list-item ng-show="protectedCtrl.user.subscription.plan" ui-sref="protected.plan.list"
+    <md-list-item ng-show="protectedCtrl.isVisible.plan" ui-sref="protected.plan.list"
                   ng-class="{ active: $state.includes('protected.plan') }" class="md-2-line">
       <md-icon md-font-icon="material-icons" aria-label="Planos">star</md-icon>
 
       <div class="md-list-item-text" layout="column">
-        <h3>
-          Plano <strong>{{protectedCtrl.user.subscription.plan.name}}</strong>
-        </h3>
-
-        <h4 ng-show="protectedCtrl.user.subscription.status != 'CANCELED'">
-          Vence <span am-time-ago="protectedCtrl.user.subscription.end_date | toUTCDate"></span>
-        </h4>
-
-        <h4 ng-show="protectedCtrl.user.subscription.status == 'CANCELED'">
-          Assinatura cancelada
-        </h4>
+        <h3>Plano <strong>{{protectedCtrl.user.subscription.plan.name}}</strong></h3>
+        <h4>{{protectedCtrl.subcriptionStatus}}</h4>
       </div>
     </md-list-item>
 
-    <div ng-show="protectedCtrl.user.subscription.status != 'CANCELED'" class="images-count">
+    <div ng-show="protectedCtrl.isVisible.imagesCount" class="images-count">
       <div class="title">Imagens hospedadas</div>
 
       <div class="count">

@@ -1,8 +1,9 @@
 angular.module('gorillascode.signup')
 
-.controller('SignupController', ['$log', 'NotificationService', 'AuthenticationService',
+.controller('SignupController', ['$log', '$stateParams', 'NotificationService',
+  'AuthenticationService',
 
-  function ($log, NotificationService, AuthenticationService) {
+  function ($log, $stateParams, NotificationService, AuthenticationService) {
     var self = this;
 
     self.user = {};
@@ -15,7 +16,7 @@ angular.module('gorillascode.signup')
 
       $log.info('Cadastrando o usuário');
 
-      AuthenticationService.createUser(self.user).then(function(response) {
+      AuthenticationService.createUser(self.user, $stateParams.plan).then(function(response) {
         if (!response.response.errors) {
           $log.info('Cadastro finalizado');
           AuthenticationService.login(self.user.email, self.user.password, true);

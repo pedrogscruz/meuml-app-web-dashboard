@@ -25,19 +25,33 @@
       </div>
     </md-content>
 
-    <md-toolbar
-            ng-show="protectedCtrl.user.subscription.status == 'CANCELED' && !$state.includes('protected.plan.list')"
-            class="md-warn">
-      <div class="md-toolbar-tools">
-        <div flex></div>
+    <div ng-show="!$state.includes('protected.plan.list')">
+      <md-toolbar class="md-warn" ng-show="protectedCtrl.user.subscription.status == 'CANCELED'">
+        <div class="md-toolbar-tools">
+          <div flex></div>
 
-        <div class="text-center">
-          Assinatura cancelada
-          <md-button ui-sref="protected.plan.list" class="md-raised">Renovar</md-button>
+          <div ng-show="protectedCtrl.user.subscription.status == 'CANCELED'" class="text-center">
+            Assinatura cancelada
+            <md-button ui-sref="protected.plan.list" class="md-raised">Renovar</md-button>
+          </div>
+
+          <div flex></div>
         </div>
+      </md-toolbar>
 
-        <div flex></div>
-      </div>
-    </md-toolbar>
+      <md-toolbar class="md-warn" ng-show="!protectedCtrl.user.subscription">
+        <div class="md-toolbar-tools">
+          <div flex></div>
+
+          <div class="text-center">
+            <md-button ui-sref="protected.plan.list" class="md-raised">
+              Você deve assinar um plano
+            </md-button>
+          </div>
+
+          <div flex></div>
+        </div>
+      </md-toolbar>
+    </div>
   </div>
 </div>

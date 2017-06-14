@@ -5,7 +5,7 @@ angular.module('gorillascode.signup', [
 .config(['$stateProvider',
   function($stateProvider) {
     $stateProvider.state('public.signup', {
-      url: '/signup?continue',
+      url: '/signup?continue&plan',
       controller: 'SignupController as signupCtrl',
       templateUrl: 'common/public/signup/signup.tpl.html',
       data: {

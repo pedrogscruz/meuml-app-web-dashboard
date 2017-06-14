@@ -1,5 +1,10 @@
 <div class="gorillascode-content gorillascode-content-no-background">
-  <p class="md-headline text-center">Escolha o seu plano abaixo e comece a usar agora mesmo!</p>
+  <div class="header">
+    <p class="md-headline">Escolha o seu plano abaixo e comece a usar agora mesmo!</p>
+    <p class="md-subhead">
+      Para de perder tempo e utilize um serviço de hospedagem de imagens profissional.
+    </p>
+  </div>
 
   <div ng-show="!planListCtrl.loading && !planListCtrl.plans.result.length">
     <div class="gorillascode-no-results">
@@ -8,61 +13,61 @@
   </div>
 
   <div ng-show="planListCtrl.plans.result.length" layout="column" layout-gt-xs="row" class="plans">
-    <md-card ng-repeat="plan in planListCtrl.plans.result track by plan.id" flex class="plan"
-             ng-class="{ current: protectedCtrl.user.subscription.plan_id == plan.id && protectedCtrl.user.subscription.status != 'CANCELED' }">
+    <md-card flex ng-repeat="plan in planListCtrl.plans.result track by plan.id"
+             ng-class="planListCtrl.isCurrentPlan(plan) ? ['current', 'md-whiteframe-z3'] : ''"
+             class="plan">
+      <div ng-show="planListCtrl.isCurrentPlan(plan)"
+           md-colors="{background: 'default-primary-400'}" class="currrent-plan-indicator">
+        Plano atual
+      </div>
+
       <md-card-title md-colors="{background: 'primary'}">
         <md-card-title-text layout="column" layout-align="center center">
-          <div class="name">{{plan.name}}</div>
+          <div class="name">Plano {{plan.name}}</div>
         </md-card-title-text>
       </md-card-title>
 
       <md-card-content>
         <ul class="features">
           <li class="max-images">
-            <span class="value">{{plan.max_images | number}}</span> imagens
+            <div class="value">{{plan.max_images | number}}</div>
+            <div>Imagens hospedadas</div>
           </li>
           <li>Gerenciador de templates</li>
           <li>Editor HTML</li>
           <li>Tabela de pesos e dimensões</li>
         </ul>
-
-        <div class="price">
-          R$ <span class="value">{{plan.price | currency:''}}</span>/mês
-        </div>
-
-        <div
-            ng-show="protectedCtrl.user.subscription.plan_id == plan.id && protectedCtrl.user.subscription.status == 'PENDING'">
-          <div class="md-caption text-center">Pendente de pagamento</div>
-
-          <div class="text-center">
-            <md-button ng-click="planListCtrl.paySubscription()" class="md-raised">
-              Pagar
-            </md-button>
-          </div>
-        </div>
       </md-card-content>
 
-      <md-card-actions layout="column" layout-align="end">
-        <md-button
-            ng-show="plan.price && (protectedCtrl.user.subscription.plan_id != plan.id || protectedCtrl.user.subscription.status == 'CANCELED')"
-            ng-click="planListCtrl.subscribe(plan, $event)" class="md-raised md-primary signup-button">
+      <md-card-actions flex layout="column" layout-align="center">
+        <div layout="column" layout-align="center center" class="payment-info">
+          <div class="price">
+            R$ <span class="value">{{plan.price | currency:''}}</span>/mês
+          </div>
+
+          <div ng-show="planListCtrl.isEndDateVisible(plan)" class="end-date">
+            <a ng-href="{{planListCtrl.getSubscriptionLink(protectedCtrl.user.subscription)}}"
+               target="_blank">
+              Vencimento:
+              {{protectedCtrl.user.subscription.end_date | toUTCDate | date:"d 'de' MMMM"}}
+
+              <md-icon md-font-icon="material-icons" aria-label="Informações">info</md-icon>
+              <md-tooltip>Ver as informações da assinatura no MercadoPago</md-tooltip>
+            </a>
+          </div>
+        </div>
+
+        <md-button ng-show="planListCtrl.isSubscribeButtonVisible(plan)"
+                   ng-click="planListCtrl.subscribe(plan, $event)"
+                   ng-disabled="planListCtrl.changingPlan"
+                   class="md-raised md-primary subscribe-button">
           Assinar
         </md-button>
 
-        <md-button
-            ng-show="protectedCtrl.user.subscription.plan_id == plan.id && protectedCtrl.user.subscription.external_id && protectedCtrl.user.subscription.status != 'CANCELED'"
-            ng-href="https://www.mercadopago.com.br/subscriptions/detail?id={{protectedCtrl.user.subscription.external_id}}"
-            target="_blank">
-          Plano atual
-          <md-icon md-font-icon="material-icons" aria-label="Abrir em nova janela">open_in_new
-          </md-icon>
+        <md-button ng-show="planListCtrl.isPayButtonVisible(plan)"
+                   ng-click="planListCtrl.paySubscription()" class="md-raised pay-button">
+          Pagar
         </md-button>
-
-        <div class="end-date"
-             ng-show="protectedCtrl.user.subscription.plan_id == plan.id && protectedCtrl.user.subscription.status == 'ACTIVE'">
-          Vencimento:
-          {{protectedCtrl.user.subscription.end_date | toUTCDate | date:"d 'de' MMMM"}}
-        </div>
       </md-card-actions>
     </md-card>
   </div>

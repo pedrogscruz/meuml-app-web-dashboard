@@ -49,7 +49,13 @@ angular.module('meuml.services.image', [
         stats.count -= amount;
       },
       checkImagesCount: function(amount) {
-        var currentPlan = LocalUserService.getUser().subscription.plan;
+        var user = LocalUserService.getUser();
+
+        if (!user.subscription) {
+          return false;
+        }
+
+        var currentPlan = user.subscription.plan;
         var newImagesCount = stats.count + amount;
 
         if (newImagesCount > currentPlan.max_images) {
