@@ -18,7 +18,14 @@ angular.module('meuml')
         apiUrl: 'https://api.meuml.staging.gorillascode.com/api',
         googleAnalyticsTrackingId: 'UA-93340830-2',
         html5Mode: true,
-      }
+      },
+      production: {
+        environment: 'production',
+        hostnames: ['app.meuml.com'],
+        apiUrl: 'https://api.meuml.com/api',
+        googleAnalyticsTrackingId: 'UA-93340830-3',
+        html5Mode: true,
+      },
     };
 
     angular.forEach(configs, function(configItem) {

@@ -58,6 +58,10 @@ angular.module('meuml.protected.plan')
     };
 
     self.getSubscriptionLink = function(subscription) {
+      if (!subscription) {
+        return null;
+      }
+
       return 'https://www.mercadopago.com.br/subscriptions/detail?id=' + subscription.external_id;
     };
 
