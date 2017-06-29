@@ -53,6 +53,14 @@
       <p>Categorias</p>
     </md-list-item>
 
+    <md-list-item ng-if="protectedCtrl.isVisible.migration"
+                  ui-sref="protected.migration"
+                  ng-class="{ active: $state.includes('protected.migration') }">
+      <md-icon md-font-icon="material-icons" aria-label="Corretor de anúncios">build</md-icon>
+      <p>Corretor de anúncios</p>
+      <div class="md-secondary new">Novo</div>
+    </md-list-item>
+
     <md-divider ng-show="protectedCtrl.isVisible.plan"></md-divider>
 
     <md-list-item ng-show="protectedCtrl.isVisible.plan" ui-sref="protected.plan.list"

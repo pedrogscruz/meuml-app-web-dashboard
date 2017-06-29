@@ -13,6 +13,7 @@ angular.module('gorillascode.protected')
       htmlEditor: false,
       images: false,
       imagesCount: false,
+      migration: false,
       plan: false,
       productCategory: false,
       templates: false,
@@ -36,6 +37,7 @@ angular.module('gorillascode.protected')
       self.isVisible.htmlEditor = self.user.subscription.status != 'CANCELED';
       self.isVisible.images = self.user.subscription.status != 'CANCELED';
       self.isVisible.imagesCount = self.user.subscription.status != 'CANCELED';
+      self.isVisible.migration = self.user.subscription.status != 'CANCELED';
       self.isVisible.plan = self.user.subscription.status != 'CANCELED';
       self.isVisible.productCategory = self.user.subscription.status != 'CANCELED';
       self.isVisible.templates = self.user.subscription.status != 'CANCELED';

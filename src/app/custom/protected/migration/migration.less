@@ -1,0 +1,59 @@
+.protected-migration {
+  .gorillascode-content-background {
+    display: none;
+  }
+
+  md-card {
+    margin: auto;
+    max-width: 500px;
+
+    md-card-header {
+      background-color: #ffeb3b;
+      text-align: center;
+
+      img {
+        margin: auto;
+        max-width: 300px;
+      }
+    }
+
+    md-card-content {
+      color: rgba(0, 0, 0, 0.54);
+      font-size: 14px;
+    }
+
+    .migration {
+      border-top: 1px solid rgba(0, 0, 0, 0.12);
+      font-size: 14px;
+      padding: 16px;
+
+      .status-started {
+        .title {
+          font-weight: 500;
+        }
+
+        .count {
+          color: rgba(0, 0, 0, 0.54);
+        }
+
+        md-progress-linear {
+          margin-top: 6px;
+        }
+
+        md-progress-linear,
+        md-progress-linear .md-container,
+        md-progress-linear .md-container .md-bar {
+          height: 16px;
+        }
+      }
+
+      .status-finished {
+        color: rgba(0, 0, 0, 0.54);
+      }
+
+      .status-error {
+        color: #f00;
+      }
+    }
+  }
+}

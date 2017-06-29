@@ -61,9 +61,15 @@ angular.module('meuml', [
   }
 ])
 
-.run(['$window', 'configuration', function ($window, configuration) {
+.run(['$log', '$window', 'configuration', function ($log, $window, configuration) {
   // Configuração do Google Analytics
   $window.ga('create', configuration.googleAnalyticsTrackingId, 'auto');
+
+  if (window.MELI) {
+    MELI.init({ client_id: configuration.mercadoLivreAppClientId });
+  } else {
+    $log.error('Não foi possível carregar a API do Mercado Livre');
+  }
 }])
 
 .controller('AppController', ['$rootScope', '$log', '$scope', '$state', '$timeout', '$window',

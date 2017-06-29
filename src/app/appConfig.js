@@ -10,6 +10,7 @@ angular.module('meuml')
         hostnames: ['localhost', '127.0.0.1'],
         apiUrl: 'http://localhost:5000/api',
         googleAnalyticsTrackingId: 'UA-93340830-2',
+        mercadoLivreAppClientId: 1850317556892559,
         html5Mode: false,
       },
       staging: {
@@ -17,6 +18,7 @@ angular.module('meuml')
         hostnames: ['app.meuml.staging.gorillascode.com'],
         apiUrl: 'https://api.meuml.staging.gorillascode.com/api',
         googleAnalyticsTrackingId: 'UA-93340830-2',
+        mercadoLivreAppClientId: 1850317556892559,
         html5Mode: true,
       },
       production: {
@@ -24,6 +26,7 @@ angular.module('meuml')
         hostnames: ['app.meuml.com'],
         apiUrl: 'https://api.meuml.com/api',
         googleAnalyticsTrackingId: 'UA-93340830-3',
+        mercadoLivreAppClientId: 1850317556892559,
         html5Mode: true,
       },
     };

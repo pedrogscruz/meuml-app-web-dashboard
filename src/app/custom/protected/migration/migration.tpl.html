@@ -1,0 +1,69 @@
+<div class="gorillascode-content gorillascode-content-no-background">
+  <md-card>
+    <md-card-header class="md-image-no-fill">
+      <div flex>
+        <img src="/assets/images/logos/mercado-livre.png" title="Mercado Livre">
+      </div>
+    </md-card-header>
+
+    <md-card-content>
+      <p>
+        O corretor de anúncios do Mercado Livre busca todos os anúncios que tenham imagens do
+        <strong>Photobucket</strong> e hospeda elas no <strong>MeuML.com</strong>
+      </p>
+      <p>
+        Em seguida os anúncios são atualizados para usar as suas imagens do
+        <strong>MeuML.com</strong>. Rápido, simples e seguro.
+      </p>
+    </md-card-content>
+
+    <md-card-actions ng-hide="migrationCtrl.lastMigration.status == 'STARTED'" layout="column"
+                     layout-align="center center">
+      <md-button ng-click="migrationCtrl.start('UPDATE_MERCADO_LIVRE_LINKS')"
+                 class="md-raised md-accent">
+        Começar agora
+      </md-button>
+    </md-card-actions>
+
+    <div ng-show="migrationCtrl.lastMigration" class="migration">
+      <div ng-show="migrationCtrl.lastMigration.status == 'STARTED'" class="status-started">
+        <div class="title">Correção em andamento</div>
+
+        <div class="count">
+          {{migrationCtrl.lastMigration.migrated | number}} de
+          {{migrationCtrl.lastMigration.total | number}}
+          <ng-pluralize count="migrationCtrl.lastMigration.migrated"
+                        when="{'0': 'anúncios corrigidos', 'one': 'anúncio corrigido', 'other': 'anúncios corrigidos'}"></ng-pluralize>
+        </div>
+
+        <div layout="row" layout-align="start center">
+          <div flex>
+            <md-progress-linear md-mode="determinate" class="md-accent"
+                                value="{{(migrationCtrl.lastMigration.migrated * 100) / migrationCtrl.lastMigration.total}}"></md-progress-linear>
+          </div>
+
+          <div>
+            <md-button ng-click="migrationCtrl.refreshLastMigration()" class="md-icon-button">
+              <md-icon md-font-icon="material-icons" aria-label="Recarregar">refresh</md-icon>
+              <md-tooltip>Recarregar</md-tooltip>
+            </md-button>
+          </div>
+        </div>
+      </div>
+
+      <div ng-show="migrationCtrl.lastMigration.status == 'FINISHED'" class="status-finished">
+        Última correção feita em {{migrationCtrl.lastMigration.finished_at | date:'short'}} com
+        <ng-pluralize count="migrationCtrl.lastMigration.migrated"
+                      when="{
+                      '0': '0 anúncios corrigidos',
+                      'one': '1 anúncio corrigido',
+                      'other': '{{migrationCtrl.lastMigration.migrated | number}} anúncios corrigidos'}"></ng-pluralize>
+      </div>
+
+      <div ng-show="migrationCtrl.lastMigration.status == 'ERROR'" class="status-error">
+        A última correção iniciada em {{migrationCtrl.lastMigration.created_at | date:'short'}}
+        falhou. Tente novamente mais tarde.
+      </div>
+    </div>
+  </md-card>
+</div>
