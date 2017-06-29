@@ -18,7 +18,7 @@ angular.module('meuml')
         hostnames: ['app.meuml.staging.gorillascode.com'],
         apiUrl: 'https://api.meuml.staging.gorillascode.com/api',
         googleAnalyticsTrackingId: 'UA-93340830-2',
-        mercadoLivreAppClientId: 1850317556892559,
+        mercadoLivreAppClientId: 5325595540134918,
         html5Mode: true,
       },
       production: {
