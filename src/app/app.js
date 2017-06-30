@@ -66,7 +66,12 @@ angular.module('meuml', [
   $window.ga('create', configuration.googleAnalyticsTrackingId, 'auto');
 
   if (window.MELI) {
-    MELI.init({ client_id: configuration.mercadoLivreAppClientId });
+    MELI.init({
+      client_id: configuration.mercadoLivreAppClientId,
+      xauth_protocol: 'https://',
+      xauth_domain: 'secure.mlstatic.com',
+      xd_url: "/org-img/sdk/xd-1.0.4.html",
+    });
   } else {
     $log.error('Não foi possível carregar a API do Mercado Livre');
   }
