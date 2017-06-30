@@ -6,11 +6,11 @@ angular.module('meuml.protected.migration', [
 .config(['$stateProvider',
   function ($stateProvider) {
     $stateProvider.state('protected.migration', {
-      url: '/migration',
+      url: '/tools',
       controller: 'MigrationController as migrationCtrl',
       templateUrl: 'custom/protected/migration/migration.tpl.html',
       data: {
-        pageTitle: 'Corretor de anúncios',
+        pageTitle: 'Ferramentas',
       },
       resolve: {
         lastMigration: ['MigrationSearchService', function (MigrationSearchService) {
