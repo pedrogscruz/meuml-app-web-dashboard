@@ -13,24 +13,8 @@ angular.module('meuml.protected.migration', [
         pageTitle: 'Ferramentas',
       },
       resolve: {
-        lastMigration: ['MigrationSearchService', function (MigrationSearchService) {
-          var parameters = {
-            q: {
-              order_by: [{
-                field: 'created_at',
-                direction: 'desc',
-              }],
-            },
-            results_per_page: 1,
-          };
-
-          return MigrationSearchService.search(parameters).then(function(response) {
-            if (response.result.length) {
-              return response.result[0];
-            }
-
-            return null;
-          });
+        lastMigration: ['MigrationSearchService', function(MigrationSearchService) {
+          return MigrationSearchService.getLastMigration();
         }],
       },
     });

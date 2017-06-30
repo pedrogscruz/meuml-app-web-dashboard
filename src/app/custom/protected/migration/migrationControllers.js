@@ -1,13 +1,18 @@
 angular.module('meuml.protected.migration')
 
-.controller('MigrationController', ['$interval', '$state', 'NotificationService',
+.controller('MigrationController', ['$scope', '$interval', '$state', 'NotificationService',
   'MigrationService', 'MigrationSearchService', 'lastMigration',
 
-  function($interval, $state, NotificationService, MigrationService, MigrationSearchService,
+  function($scope, $interval, $state, NotificationService, MigrationService, MigrationSearchService,
            lastMigration) {
 
     var self = this;
-    var REFRESH_LAST_MIGRATION_INTERVAL = 10000;
+
+    // Timer para verificar o status da última migração
+    var lastMigrationTimer = null;
+
+    // Intervalo de verificação do status da última migração (em milisegundos)
+    var REFRESH_LAST_MIGRATION_INTERVAL = 15000;
 
     self.lastMigration = lastMigration;
 
@@ -38,29 +43,25 @@ angular.module('meuml.protected.migration')
     };
 
     self.refreshLastMigration = function() {
-      var parameters = {
-        q: {
-          order_by: [{
-            field: 'created_at',
-            direction: 'desc',
-          }],
-        },
-        results_per_page: 1,
-      };
-
-      MigrationSearchService.search(parameters).then(function(response) {
-        if (response.result.length) {
-          self.lastMigration = response.result[0];
-        }
+      MigrationSearchService.getLastMigration().then(function(lastMigration) {
+        self.lastMigration = lastMigration;
       }, function(error) {
-          NotificationService.error('Não foi possível atualizar o status da correção. Tente ' +
-              'novamente mais tarde', error);
-        });
+        NotificationService.error('Não foi possível atualizar o status da correção. Tente ' +
+            'novamente mais tarde', error);
+      });
     };
 
     if (self.lastMigration) {
-      $interval(self.refreshLastMigration, REFRESH_LAST_MIGRATION_INTERVAL);
+      lastMigrationTimer = $interval(self.refreshLastMigration, REFRESH_LAST_MIGRATION_INTERVAL);
     }
+
+    $scope.$on('$destroy', function() {
+      // Finaliza o timer
+      if (lastMigrationTimer) {
+        $interval.cancel(lastMigrationTimer);
+        lastMigrationTimer = null;
+      }
+    });
   }
 ])
 
