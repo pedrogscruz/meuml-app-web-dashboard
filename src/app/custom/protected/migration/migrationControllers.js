@@ -22,7 +22,7 @@ angular.module('meuml.protected.migration')
 
         if (!token) {
           NotificationService.error('Não foi possível recuperar o token. Tente novamente mais ' +
-              'tarde');
+              'tarde.');
           return;
         }
 
@@ -37,7 +37,8 @@ angular.module('meuml.protected.migration')
           $state.go('.', {}, { reload: true });
         }, function(error) {
           NotificationService.error('Não foi possível começar a correção. Tente novamente mais ' +
-              'tarde', error);
+              'tarde.', error);
+          $state.go('.', {}, { reload: true });
         });
       });
     };
@@ -48,6 +49,7 @@ angular.module('meuml.protected.migration')
       }, function(error) {
         NotificationService.error('Não foi possível atualizar o status da correção. Tente ' +
             'novamente mais tarde', error);
+        stopMigrationTimer();
       });
     };
 
@@ -55,12 +57,15 @@ angular.module('meuml.protected.migration')
       lastMigrationTimer = $interval(self.refreshLastMigration, REFRESH_LAST_MIGRATION_INTERVAL);
     }
 
-    $scope.$on('$destroy', function() {
-      // Finaliza o timer
+    function stopMigrationTimer() {
       if (lastMigrationTimer) {
         $interval.cancel(lastMigrationTimer);
         lastMigrationTimer = null;
       }
+    }
+
+    $scope.$on('$destroy', function() {
+      stopMigrationTimer();
     });
   }
 ])

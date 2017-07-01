@@ -68,8 +68,10 @@
       </div>
 
       <div ng-show="migrationCtrl.lastMigration.status == 'ERROR'" class="status-error">
-        A última correção iniciada em {{migrationCtrl.lastMigration.created_at | date:'short'}}
-        falhou. Tente novamente mais tarde.
+        Houve uma falha na última correção iniciada em
+        {{migrationCtrl.lastMigration.created_at | toUTCDate | date:'medium'}}
+        <br>
+        Tente novamente mais tarde.
       </div>
     </div>
   </md-card>
