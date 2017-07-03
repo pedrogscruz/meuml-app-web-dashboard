@@ -46,6 +46,10 @@ angular.module('meuml.protected.migration')
     self.refreshLastMigration = function() {
       MigrationSearchService.getLastMigration().then(function(lastMigration) {
         self.lastMigration = lastMigration;
+
+        if (self.lastMigration && self.lastMigration.status == 'ERROR') {
+          stopMigrationTimer();
+        }
       }, function(error) {
         NotificationService.error('Não foi possível atualizar o status da correção. Tente ' +
             'novamente mais tarde', error);
@@ -53,7 +57,7 @@ angular.module('meuml.protected.migration')
       });
     };
 
-    if (self.lastMigration) {
+    if (self.lastMigration && self.lastMigration.status != 'ERROR') {
       lastMigrationTimer = $interval(self.refreshLastMigration, REFRESH_LAST_MIGRATION_INTERVAL);
     }
 
