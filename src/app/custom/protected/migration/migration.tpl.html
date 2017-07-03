@@ -59,7 +59,8 @@
       </div>
 
       <div ng-show="migrationCtrl.lastMigration.status == 'FINISHED'" class="status-finished">
-        Última correção feita em {{migrationCtrl.lastMigration.finished_at | date:'short'}} com
+        Última correção feita em
+        {{migrationCtrl.lastMigration.finished_at | toUTCDate | date:'short'}} com
         <ng-pluralize count="migrationCtrl.lastMigration.migrated"
                       when="{
                       '0': '0 links corrigidos',
