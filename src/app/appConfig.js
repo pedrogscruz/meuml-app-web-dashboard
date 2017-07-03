@@ -26,7 +26,7 @@ angular.module('meuml')
         hostnames: ['app.meuml.com'],
         apiUrl: 'https://api.meuml.com/api',
         googleAnalyticsTrackingId: 'UA-93340830-3',
-        mercadoLivreAppClientId: 1850317556892559,
+        mercadoLivreAppClientId: 3892071146919087,
         html5Mode: true,
       },
     };
