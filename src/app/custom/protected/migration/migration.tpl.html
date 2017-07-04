@@ -1,0 +1,83 @@
+<div class="gorillascode-content gorillascode-content-no-background">
+  <md-card>
+    <md-card-header class="md-image-no-fill">
+      <div flex>
+        <img src="/assets/images/logos/mercado-livre.png" title="Mercado Livre">
+      </div>
+    </md-card-header>
+
+    <md-card-title>
+      <md-card-title-text>
+        <span class="md-title">Corretor de anúncios</span>
+      </md-card-title-text>
+    </md-card-title>
+
+    <md-card-content>
+      <p>
+        O corretor de anúncios busca todos os anúncios que tenham imagens do
+        <strong>Photobucket</strong> e migra elas para o <strong>MeuML.com</strong>
+      </p>
+      <p>
+        Em seguida corrige todos os anúncios no <strong>MercadoLivre</strong>! Rápido, simples e
+        seguro!
+      </p>
+    </md-card-content>
+
+    <md-card-actions ng-hide="migrationCtrl.lastMigration.status == 'STARTED'" layout="column"
+                     layout-align="center center">
+      <md-button ng-click="migrationCtrl.start('UPDATE_MERCADO_LIVRE_LINKS')"
+                 class="md-raised md-accent">
+        Começar agora
+      </md-button>
+    </md-card-actions>
+
+    <div ng-show="migrationCtrl.lastMigration" class="migration">
+      <div ng-show="migrationCtrl.lastMigration.status == 'STARTED'" class="status-started">
+        <div class="title">Correção em andamento</div>
+
+        <div class="count">
+          A correção pode levar alguns minutos. Você receberá um e-mail ao final do processamento.
+        </div>
+
+        <div layout="row" layout-align="start center">
+          <div flex
+               title="{{migrationCtrl.lastMigration.migrated | number}} de {{migrationCtrl.lastMigration.total | number}}">
+            <md-progress-linear md-mode="determinate" class="md-accent"
+                                value="{{(migrationCtrl.lastMigration.migrated * 100) / migrationCtrl.lastMigration.total}}"></md-progress-linear>
+          </div>
+
+          <div>
+            <md-button ng-click="migrationCtrl.refreshLastMigration()" class="md-icon-button">
+              <md-icon md-font-icon="material-icons" aria-label="Recarregar">refresh</md-icon>
+              <md-tooltip>Recarregar</md-tooltip>
+            </md-button>
+          </div>
+        </div>
+      </div>
+
+      <div ng-show="migrationCtrl.lastMigration.status == 'FINISHED'" class="status-finished">
+        <p>
+          O processo de migração finalizou! Porém, as imagens antigas ainda podem aparecer devido ao
+          cache do seu navegador. Por favor, aguarde, que as imagens corrigidas aparecem aos poucos,
+          e pode levar algum tempo até que todas as imagens apareçam normalmente. Caso algumas
+          imagens não funcionem, inicie novamente o processo após 1 dia. Execute o processo no
+          máximo 1 vez por dia, para evitar problemas nos seus anúncios.
+        </p>
+
+        Última correção feita em
+        {{migrationCtrl.lastMigration.finished_at | toUTCDate | date:'short'}} com
+        <ng-pluralize count="migrationCtrl.lastMigration.migrated"
+                      when="{
+                      '0': '0 links corrigidos',
+                      'one': '1 link corrigido',
+                      'other': '{{migrationCtrl.lastMigration.migrated | number}} links corrigidos'}"></ng-pluralize>
+      </div>
+
+      <div ng-show="migrationCtrl.lastMigration.status == 'ERROR'" class="status-error">
+        Houve uma falha na última correção iniciada em
+        {{migrationCtrl.lastMigration.created_at | toUTCDate | date:'short'}}<br>
+        Tente novamente mais tarde.
+      </div>
+    </div>
+  </md-card>
+</div>

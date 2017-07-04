@@ -42,6 +42,20 @@ angular.module('meuml.services.image', [
 
         return stats;
       },
+      resetStats: function() {
+        stats.count = 0;
+
+        var deferred = $q.defer();
+
+        SellerImage.query({ results_per_page: 0 }, function(response) {
+          stats.count = response.limit;
+          deferred.resolve(stats);
+        }, function(error) {
+          deferred.reject(error);
+        });
+
+        return stats;
+      },
       incrementImagesCount: function() {
         stats.count++;
       },

@@ -398,7 +398,7 @@ angular.module('meuml.protected.image')
         $log.debug('Image(' + response.id + ') atualizado para ' + filename);
 
         NotificationService.success('Imagem atualizada');
-        image.file = savedFile;
+        angular.extend(image, response);
       }, function(error) {
         NotificationService.error('Não foi possível enviar a imagem. Tente novamente mais ' +
             'tarde.', error);
