@@ -31,27 +31,41 @@
       </md-button>
     </md-card-actions>
 
-    <div ng-show="migrationCtrl.lastMigration" class="migration">
+    <div ng-show="migrationCtrl.lastMigration" class="migration gorillascode-animate">
       <div ng-show="migrationCtrl.lastMigration.status == 'STARTED'" class="status-started">
         <div class="title">Correção em andamento</div>
 
-        <div class="count">
-          A correção pode levar alguns minutos. Você receberá um e-mail ao final do processamento.
+        <div ng-show="migrationCtrl.lastMigration.total" class="count gorillascode-animate">
+          <div layout="row" layout-align="start center">
+            <div flex>
+              <md-progress-linear md-mode="determinate" class="md-accent"
+                                  value="{{(migrationCtrl.lastMigration.migrated * 100) / migrationCtrl.lastMigration.total}}"></md-progress-linear>
+            </div>
+
+            <div>
+              <md-button ng-click="migrationCtrl.refreshLastMigration()" class="md-icon-button">
+                <md-icon md-font-icon="material-icons" aria-label="Recarregar">refresh</md-icon>
+                <md-tooltip>Recarregar</md-tooltip>
+              </md-button>
+            </div>
+          </div>
+
+          <div ng-show="!migrationCtrl.lastMigration.migrated">
+            <ng-pluralize count="migrationCtrl.lastMigration.total"
+                          when="{'0': '0 anúncios', 'one': '1 anúncio', 'other': '{{migrationCtrl.lastMigration.total | number}} anúncios'}"></ng-pluralize>
+            para corrigir
+          </div>
+
+          <div ng-show="migrationCtrl.lastMigration.migrated">
+            {{migrationCtrl.lastMigration.migrated | number}} de
+            <ng-pluralize count="migrationCtrl.lastMigration.total"
+                          when="{'0': ' 0 anúncios', 'one': '1 anúncio', 'other': '{{migrationCtrl.lastMigration.total | number}} anúncios'}"></ng-pluralize>
+            corrigidos
+          </div>
         </div>
 
-        <div layout="row" layout-align="start center">
-          <div flex
-               title="{{migrationCtrl.lastMigration.migrated | number}} de {{migrationCtrl.lastMigration.total | number}}">
-            <md-progress-linear md-mode="determinate" class="md-accent"
-                                value="{{(migrationCtrl.lastMigration.migrated * 100) / migrationCtrl.lastMigration.total}}"></md-progress-linear>
-          </div>
-
-          <div>
-            <md-button ng-click="migrationCtrl.refreshLastMigration()" class="md-icon-button">
-              <md-icon md-font-icon="material-icons" aria-label="Recarregar">refresh</md-icon>
-              <md-tooltip>Recarregar</md-tooltip>
-            </md-button>
-          </div>
+        <div class="note">
+          A correção pode levar alguns minutos. Você receberá um e-mail ao final do processamento.
         </div>
       </div>
 
@@ -68,9 +82,9 @@
         {{migrationCtrl.lastMigration.finished_at | toUTCDate | date:'short'}} com
         <ng-pluralize count="migrationCtrl.lastMigration.migrated"
                       when="{
-                      '0': '0 links corrigidos',
-                      'one': '1 link corrigido',
-                      'other': '{{migrationCtrl.lastMigration.migrated | number}} links corrigidos'}"></ng-pluralize>
+                      '0': '0 anúncios corrigidos',
+                      'one': '1 anúncio corrigido',
+                      'other': '{{migrationCtrl.lastMigration.migrated | number}} anúncios corrigidos'}"></ng-pluralize>
       </div>
 
       <div ng-show="migrationCtrl.lastMigration.status == 'ERROR'" class="status-error">
