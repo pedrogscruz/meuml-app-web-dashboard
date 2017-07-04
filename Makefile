@@ -1,4 +1,4 @@
-VERSION = 1.1.0
+VERSION = 1.2.0
 CONTAINER_NAME = meuml_app_web
 IMAGE_NAME = meuml/$(CONTAINER_NAME)
 
