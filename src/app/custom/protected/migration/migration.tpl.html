@@ -15,8 +15,7 @@
     <md-card-content>
       <p>
         O corretor de anúncios busca todos os anúncios que tenham imagens do
-        <strong>Photobucket</strong> ou qualquer outra hospedagem e migra elas para o
-        <strong>MeuML.com</strong>
+        <strong>Photobucket</strong> e migra elas para o <strong>MeuML.com</strong>
       </p>
       <p>
         Em seguida corrige todos os anúncios no <strong>MercadoLivre</strong>! Rápido, simples e
@@ -37,10 +36,7 @@
         <div class="title">Correção em andamento</div>
 
         <div class="count">
-          {{migrationCtrl.lastMigration.migrated | number}} de
-          {{migrationCtrl.lastMigration.total | number}}
-          <ng-pluralize count="migrationCtrl.lastMigration.migrated"
-                        when="{'0': 'anúncios corrigidos', 'one': 'anúncio corrigido', 'other': 'anúncios corrigidos'}"></ng-pluralize>
+          A correção pode levar alguns minutos. Você receberá um e-mail ao final do processamento.
         </div>
 
         <div layout="row" layout-align="start center">
@@ -59,6 +55,14 @@
       </div>
 
       <div ng-show="migrationCtrl.lastMigration.status == 'FINISHED'" class="status-finished">
+        <p>
+          O processo de migração finalizou! Porém, as imagens antigas ainda podem aparecer devido ao
+          cache do seu navegador. Por favor, aguarde, que as imagens corrigidas aparecem aos poucos,
+          e pode levar algum tempo até que todas as imagens apareçam normalmente. Caso algumas
+          imagens não funcionem, inicie novamente o processo após 1 dia. Execute o processo no
+          máximo 1 vez por dia, para evitar problemas nos seus anúncios.
+        </p>
+
         Última correção feita em
         {{migrationCtrl.lastMigration.finished_at | toUTCDate | date:'short'}} com
         <ng-pluralize count="migrationCtrl.lastMigration.migrated"

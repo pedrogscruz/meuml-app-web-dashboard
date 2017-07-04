@@ -1,10 +1,10 @@
 angular.module('meuml.protected.migration')
 
 .controller('MigrationController', ['$scope', '$interval', '$state', 'NotificationService',
-  'MigrationService', 'MigrationSearchService', 'lastMigration',
+  'MigrationService', 'MigrationSearchService', 'SellerImageService', 'lastMigration',
 
   function($scope, $interval, $state, NotificationService, MigrationService, MigrationSearchService,
-           lastMigration) {
+           SellerImageService, lastMigration) {
 
     var self = this;
 
@@ -45,15 +45,27 @@ angular.module('meuml.protected.migration')
 
     self.refreshLastMigration = function() {
       MigrationSearchService.getLastMigration().then(function(lastMigration) {
-        self.lastMigration = lastMigration;
+        var migratedChanged = false;
 
-        if (self.lastMigration && self.lastMigration.status == 'ERROR') {
+        if (lastMigration) {
+          migratedChanged = self.lastMigration.migrated != lastMigration.migrated;
+          self.lastMigration = lastMigration;
+        } else {
+          self.lastMigration = null;
+          return;
+        }
+
+        if (self.lastMigration.status == 'ERROR') {
           stopMigrationTimer();
         }
+
+        if (migratedChanged) {
+          SellerImageService.resetStats();
+        }
       }, function(error) {
+        stopMigrationTimer();
         NotificationService.error('Não foi possível atualizar o status da correção. Tente ' +
             'novamente mais tarde', error);
-        stopMigrationTimer();
       });
     };
 
