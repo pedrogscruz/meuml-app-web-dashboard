@@ -27,10 +27,13 @@ angular.module('meuml.services.image-tag', [
     var tags = {};
 
     $rootScope.$on('userLogout', function() {
-      tags = {};
+      service.clear();
     });
 
     var service = {
+      clear: function() {
+        tags = {};
+      },
       /**
        * Faz a pesquisa das 1.0000 tags mais usadas nas imagens e armazena o resultado em cache.
        */

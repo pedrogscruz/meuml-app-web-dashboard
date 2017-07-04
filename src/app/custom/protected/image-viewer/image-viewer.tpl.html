@@ -73,7 +73,8 @@
             </div>
 
             <div class="line-2">
-              <div class="dimension">
+              <div ng-show="imageViewerCtrl.image.file.width && imageViewerCtrl.image.file.height"
+                   class="dimension">
                 {{imageViewerCtrl.image.file.width}} × {{imageViewerCtrl.image.file.height}}
               </div>
 

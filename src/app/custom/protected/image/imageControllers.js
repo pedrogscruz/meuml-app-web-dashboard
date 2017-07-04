@@ -3,12 +3,12 @@ angular.module('meuml.protected.image')
 .controller('ImageListController', ['$log', '$q', '$scope', '$controller', '$state', '$stateParams',
   '$mdDialog', '$mdMedia', 'Upload', 'NotificationService', 'SellerFileService', 'UploadService',
   'SellerImageService', 'SellerImageTagService', 'SellerImageTagSearchService',
-  'SellerImageSearchService', 'ImageViewer', 'LocalUserService',
+  'SellerImageSearchService', 'ImageViewer',
 
   function($log, $q, $scope, $controller, $state, $stateParams, $mdDialog, $mdMedia, Upload,
            NotificationService, SellerFileService, UploadService, SellerImageService,
            SellerImageTagService, SellerImageTagSearchService, SellerImageSearchService,
-           ImageViewer, LocalUserService) {
+           ImageViewer) {
 
     var self = this;
 
@@ -126,6 +126,8 @@ angular.module('meuml.protected.image')
     function searchTags() {
       $log.debug('Listando todas as tags');
 
+      SellerImageTagSearchService.clear();
+
       SellerImageTagSearchService.search().then(function(response) {
         $log.debug('Tags listadas');
 
@@ -220,6 +222,8 @@ angular.module('meuml.protected.image')
             }
           });
         });
+
+        searchTags();
       });
     };
 
@@ -327,6 +331,8 @@ angular.module('meuml.protected.image')
             return;
           }
         }
+
+        searchTags();
       });
     };
 
