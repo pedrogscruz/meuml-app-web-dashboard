@@ -12,7 +12,7 @@ angular.module('meuml.protected.migration')
     var lastMigrationTimer = null;
 
     // Intervalo de verificação do status da última migração (em milisegundos)
-    var REFRESH_LAST_MIGRATION_INTERVAL = 15000;
+    var REFRESH_LAST_MIGRATION_INTERVAL = 30000;
 
     self.lastMigration = lastMigration;
 
