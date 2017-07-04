@@ -40,7 +40,8 @@
         </div>
 
         <div layout="row" layout-align="start center">
-          <div flex>
+          <div flex
+               title="{{migrationCtrl.lastMigration.migrated | number}} de {{migrationCtrl.lastMigration.total | number}}">
             <md-progress-linear md-mode="determinate" class="md-accent"
                                 value="{{(migrationCtrl.lastMigration.migrated * 100) / migrationCtrl.lastMigration.total}}"></md-progress-linear>
           </div>
