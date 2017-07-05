@@ -59,7 +59,7 @@
           <div ng-show="migrationCtrl.lastMigration.migrated">
             {{migrationCtrl.lastMigration.migrated | number}} de
             <ng-pluralize count="migrationCtrl.lastMigration.total"
-                          when="{'0': ' 0 anúncios', 'one': '1 anúncio', 'other': '{{migrationCmitrl.lastMigration.total | number}} anúncios'}"></ng-pluralize>
+                          when="{'0': ' 0 anúncios', 'one': '1 anúncio', 'other': '{{migrationCtrl.lastMigration.total | number}} anúncios'}"></ng-pluralize>
             corrigidos
           </div>
         </div>
