@@ -37,7 +37,7 @@ angular.module('gorillascode.protected')
       self.isVisible.htmlEditor = self.user.subscription.status != 'CANCELED';
       self.isVisible.images = self.user.subscription.status != 'CANCELED';
       self.isVisible.imagesCount = self.user.subscription.status != 'CANCELED';
-      self.isVisible.migration = self.user.subscription.status != 'CANCELED';
+      self.isVisible.migration = self.user.subscription.status == 'ACTIVE';
       self.isVisible.plan = self.user.subscription.status != 'CANCELED';
       self.isVisible.productCategory = self.user.subscription.status != 'CANCELED';
       self.isVisible.templates = self.user.subscription.status != 'CANCELED';
