@@ -23,11 +23,19 @@
       </p>
     </md-card-content>
 
-    <md-card-actions ng-hide="migrationCtrl.lastMigration.status == 'STARTED'" layout="column"
-                     layout-align="center center">
-      <md-button ng-click="migrationCtrl.start('UPDATE_MERCADO_LIVRE_LINKS')"
-                 class="md-raised md-accent">
+    <md-card-actions
+        ng-hide="migrationCtrl.lastMigration.status == 'STARTED' || migrationCtrl.lastMigration.status == 'RESTART'"
+        layout="column" layout-align="center center">
+      <md-button
+          ng-click="migrationCtrl.start('UPDATE_MERCADO_LIVRE_LINKS')" class="md-raised md-accent">
         Começar agora
+      </md-button>
+    </md-card-actions>
+
+    <md-card-actions ng-show="migrationCtrl.lastMigration.status == 'RESTART'" layout="column"
+                     layout-align="center center">
+      <md-button ng-click="migrationCtrl.restart()" class="md-raised md-accent">
+        Continuar agora
       </md-button>
     </md-card-actions>
 
@@ -40,13 +48,6 @@
             <div flex>
               <md-progress-linear md-mode="determinate" class="md-accent"
                                   value="{{(migrationCtrl.lastMigration.migrated * 100) / migrationCtrl.lastMigration.total}}"></md-progress-linear>
-            </div>
-
-            <div>
-              <md-button ng-click="migrationCtrl.refreshLastMigration()" class="md-icon-button">
-                <md-icon md-font-icon="material-icons" aria-label="Recarregar">refresh</md-icon>
-                <md-tooltip>Recarregar</md-tooltip>
-              </md-button>
             </div>
           </div>
 
@@ -91,6 +92,35 @@
         Houve uma falha na última correção iniciada em
         {{migrationCtrl.lastMigration.created_at | toUTCDate | date:'short'}}<br>
         Tente novamente mais tarde.
+      </div>
+
+      <div ng-show="migrationCtrl.lastMigration.status == 'RESTART'" class="status-restart">
+        <div ng-show="migrationCtrl.lastMigration.total" class="count gorillascode-animate">
+          <div layout="row" layout-align="start center">
+            <div flex>
+              <md-progress-linear md-mode="determinate" class="md-accent"
+                                  value="{{(migrationCtrl.lastMigration.migrated * 100) / migrationCtrl.lastMigration.total}}"></md-progress-linear>
+            </div>
+          </div>
+
+          <div ng-show="!migrationCtrl.lastMigration.migrated">
+            <ng-pluralize count="migrationCtrl.lastMigration.total"
+                          when="{'0': '0 anúncios', 'one': '1 anúncio', 'other': '{{migrationCtrl.lastMigration.total | number}} anúncios'}"></ng-pluralize>
+            para corrigir
+          </div>
+
+          <div ng-show="migrationCtrl.lastMigration.migrated">
+            {{migrationCtrl.lastMigration.migrated | number}} de
+            <ng-pluralize count="migrationCtrl.lastMigration.total"
+                          when="{'0': ' 0 anúncios', 'one': '1 anúncio', 'other': '{{migrationCtrl.lastMigration.total | number}} anúncios'}"></ng-pluralize>
+            corrigidos
+          </div>
+        </div>
+
+        <div class="note">
+          Seu processo de correção parou devido a alguma instabilidade no MercadoLivre. Você pode
+          continuar quando quiser!
+        </div>
       </div>
     </div>
   </md-card>

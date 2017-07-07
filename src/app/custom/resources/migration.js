@@ -8,4 +8,10 @@ angular.module('meuml.resources.migration', [
   }]
 )
 
+.factory('MigrationRestart', ['configuration', 'ResourceFactory',
+  function (configuration, ResourceFactory) {
+    return new ResourceFactory(configuration.apiUrl, 'seller/migration/_restart');
+  }]
+)
+
 ;

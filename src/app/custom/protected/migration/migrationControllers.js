@@ -12,7 +12,7 @@ angular.module('meuml.protected.migration')
     var lastMigrationTimer = null;
 
     // Intervalo de verificação do status da última migração (em milisegundos)
-    var REFRESH_LAST_MIGRATION_INTERVAL = 30000;
+    var REFRESH_LAST_MIGRATION_INTERVAL = 10000;
 
     self.lastMigration = lastMigration;
 
@@ -66,6 +66,33 @@ angular.module('meuml.protected.migration')
         stopMigrationTimer();
         NotificationService.error('Não foi possível atualizar o status da correção. Tente ' +
             'novamente mais tarde', error);
+      });
+    };
+
+    self.restart = function() {
+      MELI.login(function() {
+        var token = MELI.getToken();
+
+        if (!token) {
+          NotificationService.error('Não foi possível recuperar o token. Tente novamente mais ' +
+              'tarde.');
+          return;
+        }
+
+        var migration = {
+          data: {
+            access_token: token,
+          },
+          id: self.lastMigration.id,
+        };
+
+        MigrationService.restart(migration).then(function() {
+          $state.go('.', {}, { reload: true });
+        }, function(error) {
+          NotificationService.error('Não foi possível começar a correção. Tente novamente mais ' +
+              'tarde.', error);
+          $state.go('.', {}, { reload: true });
+        });
       });
     };
 

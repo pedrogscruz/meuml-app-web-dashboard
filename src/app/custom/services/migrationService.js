@@ -2,8 +2,8 @@ angular.module('meuml.services.migration', [
   'meuml.resources.migration'
 ])
 
-.factory('MigrationService', ['Migration',
-  function(Migration) {
+.factory('MigrationService', ['Migration', 'MigrationRestart',
+  function(Migration, MigrationRestart) {
     var service = {
       save: function(migration) {
         if (migration.id) {
@@ -11,6 +11,9 @@ angular.module('meuml.services.migration', [
         } else {
           return Migration.save(migration).$promise;
         }
+      },
+      restart: function(migration) {
+        return MigrationRestart.save(migration).$promise;
       },
     };
 

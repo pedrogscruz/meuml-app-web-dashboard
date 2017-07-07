@@ -34,7 +34,8 @@
       font-size: 14px;
       padding: 16px;
 
-      .status-started {
+      .status-started,
+      .status-restart {
         .title {
           font-weight: 500;
         }
@@ -50,13 +51,19 @@
         }
 
         md-progress-linear {
-          margin-top: 6px;
+          margin-top: 6px !important;
+          margin-bottom: 6px !important;
+        }
+      }
+
+      .status-restart {
+        md-progress-linear {
+          margin-top: 6px !important;
+          margin-bottom: 6px !important;
         }
 
-        md-progress-linear,
-        md-progress-linear .md-container,
-        md-progress-linear .md-container .md-bar {
-          height: 16px;
+        .note {
+          color: #f00;
         }
       }
 
