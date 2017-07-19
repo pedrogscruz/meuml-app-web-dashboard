@@ -1,9 +1,9 @@
 angular.module('gorillascode.protected')
 
-.controller('ProtectedController', ['$rootScope', '$state', '$mdSidenav', '$filter', 'moment',
+.controller('ProtectedController', ['$rootScope', '$state', '$mdSidenav', '$filter',
   'AuthenticationService', 'LocalUserService', 'user', 'plan', 'imagesStats',
 
-  function($rootScope, $state, $mdSidenav, $filter, moment, AuthenticationService, LocalUserService,
+  function($rootScope, $state, $mdSidenav, $filter, AuthenticationService, LocalUserService,
            user, plan, imagesStats) {
 
     var self = this;
@@ -42,15 +42,16 @@ angular.module('gorillascode.protected')
       self.isVisible.productCategory = self.user.subscription.status != 'CANCELED';
       self.isVisible.templates = self.user.subscription.status != 'CANCELED';
 
-      if (endDate < new Date()) {
-        self.subcriptionStatus = 'Assinatura vencida';
+      if (self.user.subscription.status == 'ACTIVE') {
+        self.subcriptionStatus = 'Vence em ' +
+            $filter('date')(endDate, "d 'de' MMMM");
       } else if (isTrial) {
         self.subcriptionStatus = 'Gratuito até ' +
             $filter('date')(self.user.subscription.end_date_trial, "d 'de' MMMM");
-      } else if (self.user.subscription.status == 'ACTIVE') {
-        self.subcriptionStatus = 'Vence ' + moment(endDate).fromNow();
       } else if (self.user.subscription.status == 'PENDING') {
         self.subcriptionStatus = 'Pagamento pendente';
+      } else if (endDate < new Date()) {
+        self.subcriptionStatus = 'Assinatura vencida';
       }
     }
 
