@@ -4,6 +4,7 @@ angular.module('meuml.protected', [
   'meuml.protected.image',
   'meuml.protected.image-tag',
   'meuml.protected.migration',
+  'meuml.protected.migration-fix',
   'meuml.protected.plan',
   'meuml.protected.product-category',
   'meuml.protected.template',

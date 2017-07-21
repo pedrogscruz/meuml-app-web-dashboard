@@ -8,6 +8,12 @@ angular.module('meuml.resources.migration', [
   }]
 )
 
+.factory('MigrationFix', ['configuration', 'ResourceFactory',
+  function (configuration, ResourceFactory) {
+    return new ResourceFactory(configuration.apiUrl, 'seller/migration/_fix');
+  }]
+)
+
 .factory('MigrationRestart', ['configuration', 'ResourceFactory',
   function (configuration, ResourceFactory) {
     return new ResourceFactory(configuration.apiUrl, 'seller/migration/_restart');
