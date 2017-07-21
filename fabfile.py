@@ -1,6 +1,6 @@
 from fabric.api import task, run, local
 
-VERSION = '1.8.0'
+VERSION = '1.9.0'
 CONTAINER_NAME = 'meuml_app_web'
 IMAGE_NAME = 'meuml/%s' % CONTAINER_NAME
 
