@@ -9,6 +9,8 @@ angular.module('meuml.protected.migration-fix')
     self.fixStarted = false;
 
     self.fix = function() {
+      self.fixStarted = true;
+
       MELI.login(function() {
         var token = MELI.getToken();
 
@@ -23,8 +25,9 @@ angular.module('meuml.protected.migration-fix')
         };
 
         MigrationService.fix(parameters).then(function() {
-          self.fixStarted = true;
+          // Correção iniciada
         }, function(error) {
+          self.fixStarted = false;
           NotificationService.error('Não foi possível começar a correção. Tente novamente mais ' +
               'tarde.', error);
         });
