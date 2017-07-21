@@ -1,6 +1,6 @@
 from fabric.api import task, run, local
 
-VERSION = '1.6.1'
+VERSION = '1.8.0'
 CONTAINER_NAME = 'meuml_app_web'
 IMAGE_NAME = 'meuml/%s' % CONTAINER_NAME
 
@@ -8,6 +8,11 @@ IMAGE_NAME = 'meuml/%s' % CONTAINER_NAME
 def build():
     local('docker build -t %s:%s --rm .' % (IMAGE_NAME, VERSION))
     local('docker tag %s:%s %s:latest' % (IMAGE_NAME, VERSION, IMAGE_NAME))
+
+@task
+def build_develop():
+    local('docker build -t %s:develop --rm .' % IMAGE_NAME)
+    local('docker tag %s:develop docker.gorillascode.com/%s:develop' % (IMAGE_NAME, IMAGE_NAME))
 
 
 @task
@@ -25,3 +30,10 @@ def push():
     local('docker push docker.gorillascode.com/%s:backup' % IMAGE_NAME)
     local('docker push docker.gorillascode.com/%s:%s' % (IMAGE_NAME, VERSION))
     local('docker push docker.gorillascode.com/%s:latest' % IMAGE_NAME)
+
+
+@task
+def push_develop():
+    build_develop()
+
+    local('docker push docker.gorillascode.com/%s:develop' % IMAGE_NAME)
