@@ -29,8 +29,9 @@ angular.module('meuml.protected.migration')
         var migration = {
           data: {
             access_token: token,
+            providers: Object.values($scope.providers)
           },
-          type: type,
+          type: type
         };
 
         MigrationService.save(migration).then(function() {
