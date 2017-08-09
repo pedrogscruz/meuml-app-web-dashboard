@@ -16,4 +16,17 @@ angular.module('meuml.protected.migration-fix', [
   }
 ])
 
+.config(['$stateProvider',
+  function ($stateProvider) {
+    $stateProvider.state('protected.fix', {
+      url: '/fix',
+      controller: 'FixController as fixCtrl',
+      templateUrl: 'custom/protected/migration-fix/fix.tpl.html',
+      data: {
+        pageTitle: 'Resolver pendências',
+      },
+    });
+  }
+])
+
 ;
