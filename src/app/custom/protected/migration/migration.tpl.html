@@ -15,31 +15,12 @@
     <md-card-content>
       <p>
         O corretor de anúncios busca todos os anúncios que tenham imagens do
-        <strong>Photobucket</strong>, <strong>Imgur</strong> ou <strong>Outros</strong> sites de hospedagem de imagens e migra elas para o <strong>MeuML.com</strong>
+        <strong>Photobucket</strong> e migra elas para o <strong>MeuML.com</strong>
       </p>
-
-      <div ng-hide="migrationCtrl.lastMigration.status == 'STARTED' || migrationCtrl.lastMigration.status == 'RESTART'">
-        <md-checkbox aria-label="photobucket" ng-checked="true" ng-model="providers[0]" ng-true-value="'photobucket'">
-          <img src="http://www.webmarketingpros.com/blog/wp-content/uploads/2013/04/Photobucket_Logo.png" height="25">
-        </md-checkbox>
-        <hr>
-        <br>
-
-        <md-checkbox aria-label="imgur" ng-model="providers[1]" ng-true-value="'imgur'">
-          <img src="http://cdn.embed.ly/providers/logos/imgur.png" height="25">
-        </md-checkbox>
-        <hr>
-        <br>
-
-        <md-checkbox aria-label="others" ng-model="providers[2]" ng-true-value="'others'">
-          Outros (Exceto Mercado Livre)
-        </md-checkbox>
-
-        <p>
-          Em seguida corrige todos os anúncios no <strong>MercadoLivre</strong>! Rápido, simples e
-          seguro!
-        </p>
-      </div>
+      <p>
+        Em seguida corrige todos os anúncios no <strong>MercadoLivre</strong>! Rápido, simples e
+        seguro!
+      </p>
     </md-card-content>
 
     <md-card-actions
