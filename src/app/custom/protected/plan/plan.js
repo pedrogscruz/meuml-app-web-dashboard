@@ -21,6 +21,11 @@ angular.module('meuml.protected.plan', [
         plans: ['SellerPlanSearchService', function(SellerPlanSearchService) {
           var parameters = {
             q: {
+              filters: [{
+                name: 'published',
+                op: '==',
+                val: true,
+              }],
               order_by: [{
                 field: 'price',
                 direction: 'asc',
