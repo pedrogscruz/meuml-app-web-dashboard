@@ -37,39 +37,42 @@ angular.module('meuml.protected.migration-fix')
   }
 ])
 
-.controller('FixController', ['NotificationService', 'MigrationService',
-  function(NotificationService, MigrationService) {
+.controller('FixController', ['$window', '$http', 'NotificationService', 'MigrationService', 'MigrationSearchService', 'LocalUserService',
+  function($window, $http, NotificationService, MigrationService, MigrationSearchService, LocalUserService) {
 
     var self = this;
 
     // Indica se a correção foi iniciada
     self.fixStarted = false;
 
-    self.fix = function() {
-      self.fixStarted = true;
+    self.migrations = {};
 
-      MELI.login(function() {
-        var token = MELI.getToken();
+    var parameters = {
+      q: {
+        filters: [{
+          name: 'status',
+          op: '==',
+          val: 'REQUEST',
+        }],
+      }
+    };
 
-        if (!token) {
-          NotificationService.error('Não foi possível recuperar o token. Tente novamente mais ' +
-              'tarde.');
-          return;
-        }
+    MigrationSearchService.search(parameters).then(function(response) {
+      self.migrations = response;
+      console.log(self.migrations);
+    }, function() {
+      // exibir mensagem de erro
+    });
 
-        var parameters = {
-          access_token: token,
-          type: 'start_fix_s3',
-        };
+    self.fix = function(migration) {
+      $window.mlCallback = function(accessToken, refreshToken) {
+        var authenticationToken = LocalUserService.getAuthenticationToken();
+        $http.get('https://meuml.herokuapp.com/start_fix_s3?access_key=' + accessToken + '&refresh_token=' + refreshToken + '&migration_id=' + migration.id + '&authentication_token=' + authenticationToken);
+      };
 
-        MigrationService.fix(parameters).then(function() {
-          // Correção iniciada
-        }, function(error) {
-          self.fixStarted = false;
-          NotificationService.error('Não foi possível começar a correção. Tente novamente mais ' +
-              'tarde.', error);
-        });
-      });
+      migration.total = 10;
+
+      window.open('https://auth.mercadolivre.com.br/authorization?response_type=code&client_id=2075293406712364', 'juliano', 'outerWidth=600,width=500,innerWidth=400,resizable,scrollbars,status');
     };
   }
 ])

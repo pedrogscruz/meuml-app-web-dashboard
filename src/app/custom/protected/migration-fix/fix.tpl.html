@@ -1,4 +1,4 @@
-<div class="gorillascode-content gorillascode-content text-center" style="max-width: 400px;">
+<div class="gorillascode-content gorillascode-content text-center" style="max-width: 400px;" ng-repeat="migration in fixCtrl.migrations.result">
   <div style="color: rgba(0, 0, 0, 0.54);">
     <p>
       Identificamos a necessidade de uma correção na sua conta do <strong>MeuML.com</strong>.
@@ -8,8 +8,8 @@
     </p>
   </div>
 
-  <md-button ng-click="fixCtrl.fix()" class="md-raised md-accent"
-             ng-disabled="fixCtrl.fixStarted">
-    {{fixCtrl.fixStarted ? 'Correção em andamento' : 'Corrigir agora'}}
+  <md-button ng-click="fixCtrl.fix(migration)" class="md-raised md-accent"
+             ng-disabled="migration.total">
+    {{ migration.total ? 'Correção em andamento' : 'Corrigir agora' }}
   </md-button>
 </div>
