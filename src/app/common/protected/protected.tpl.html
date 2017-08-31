@@ -4,7 +4,8 @@
               md-component-id="sidenav-left" md-is-locked-open="$mdMedia('gt-sm')"></md-sidenav>
 
   <div flex layout="column" class="gorillascode-page gorillascode-page-protected">
-    <div ng-show="!$state.includes('protected.fix')">
+    <div ng-show="!$state.includes('protected.fix') && protectedCtrl.imagesStats.count">
+									
       <md-toolbar class="md-warn">
         <div class="md-toolbar-tools">
           <div flex></div>
