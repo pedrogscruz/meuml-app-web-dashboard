@@ -1,9 +1,9 @@
 angular.module('gorillascode.protected')
 
 .controller('ProtectedController', ['$rootScope', '$state', '$mdSidenav', '$filter',
-  'AuthenticationService', 'LocalUserService', 'user', 'plan', 'imagesStats',
+  'AuthenticationService', 'MigrationSearchService', 'LocalUserService', 'user', 'plan', 'imagesStats',
 
-  function($rootScope, $state, $mdSidenav, $filter, AuthenticationService, LocalUserService,
+  function($rootScope, $state, $mdSidenav, $filter, AuthenticationService, MigrationSearchService, LocalUserService,
            user, plan, imagesStats) {
 
     var self = this;
@@ -23,6 +23,25 @@ angular.module('gorillascode.protected')
     self.subcriptionStatus = null;
     self.user = user;
 
+    self.migrations = {};
+    var params = {
+						q: {
+										filters: [{
+														name: 'status',
+														op: '==',
+														val: 'REQUEST',
+												}],
+						},
+						results_per_page: 0
+		};
+					MigrationSearchService.search(params).then(function(response) {
+									self.migrations = response;
+									console.log(self.migrations);
+								}, function() {
+												// mensagem de erro
+								}
+					);
+
     // Adiciona as informações do plano no objeto com a assinatura
     if (self.user.subscription) {
       var endDate = new Date(self.user.subscription.end_date + 'Z');
@@ -41,6 +60,7 @@ angular.module('gorillascode.protected')
       self.isVisible.plan = self.user.subscription.status != 'CANCELED';
       self.isVisible.productCategory = self.user.subscription.status != 'CANCELED';
       self.isVisible.templates = self.user.subscription.status != 'CANCELED';
+
 
       if (self.user.subscription.status == 'ACTIVE') {
         self.subcriptionStatus = 'Vence em ' +
