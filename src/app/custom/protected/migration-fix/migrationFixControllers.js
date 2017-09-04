@@ -22,7 +22,6 @@ angular.module('meuml.protected.migration-fix')
 
         var parameters = {
           access_token: token,
-          type: 'start_fix',
         };
 
         MigrationService.fix(parameters).then(function() {
