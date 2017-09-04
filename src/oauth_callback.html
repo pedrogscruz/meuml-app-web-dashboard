@@ -16,10 +16,10 @@
           return decodeURIComponent(results[2].replace(/\+/g, " "));
       }
 
-      var accessToken = getParameterByName('refresh_token');
+      var accessToken = getParameterByName('access_token');
       var refreshToken = getParameterByName('refresh_token');
 
-      window.opener.mlCallback(accessToken, refreshToken);
+      window.opener.oauthCallback(accessToken, refreshToken);
       window.close();
     </script>
   </head>

@@ -37,9 +37,10 @@ angular.module('meuml.protected.migration-fix')
   }
 ])
 
-.controller('FixController', ['$window', '$http', 'NotificationService', 'MigrationService', 'MigrationSearchService', 'LocalUserService',
-  function($window, $http, NotificationService, MigrationService, MigrationSearchService, LocalUserService) {
-
+.controller('FixController', ['$window', '$http', 'NotificationService', 'MigrationService',
+  'MigrationSearchService', 'configuration',
+  
+  function($window, $http, NotificationService, MigrationService, MigrationSearchService, configuration) {
     var self = this;
 
     // Indica se a correção foi iniciada
@@ -59,20 +60,26 @@ angular.module('meuml.protected.migration-fix')
 
     MigrationSearchService.search(parameters).then(function(response) {
       self.migrations = response;
-      console.log(self.migrations);
     }, function() {
-      // exibir mensagem de erro
+      NotificationService.error('Não foi possível pesquisar as pendências', error);
     });
 
     self.fix = function(migration) {
-      $window.mlCallback = function(accessToken, refreshToken) {
+      // Função que será chamada quando a pop-up aberta for fechada
+      $window.oauthCallback = function(accessToken, refreshToken) {
         var authenticationToken = LocalUserService.getAuthenticationToken();
         $http.get('https://meuml.herokuapp.com/start_fix_s3?access_key=' + accessToken + '&refresh_token=' + refreshToken + '&migration_id=' + migration.id + '&authentication_token=' + authenticationToken);
       };
+      
+      var authorizeUrl = configuration.apiUrl + '/_oauth/authorize';
+      var height = 510;
+      var width = 830;
+      var left = parseInt((screen.availWidth - width) / 2);
+      var top = parseInt((screen.availHeight - height) / 2);
 
-      migration.total = 10;
-
-      window.open('https://auth.mercadolivre.com.br/authorization?response_type=code&client_id=2075293406712364', 'juliano', 'outerWidth=600,width=500,innerWidth=400,resizable,scrollbars,status');
+      window.open(authorizeUrl, '', 'toolbar=no,status=no,location=yes,menubar=no,resizable=no,' +
+          'scrollbars=no,width=' + width + ',height=' + height + ',left=' + left+ ',top=' + top +
+          'screenX=' + left+ ',screenY=' + top);
     };
   }
 ])
