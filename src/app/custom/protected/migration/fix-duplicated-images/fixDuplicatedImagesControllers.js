@@ -1,6 +1,6 @@
-angular.module('meuml.protected.migration-fix')
+angular.module('meuml.protected.migration-fix-duplicated-images')
 
-.controller('MigrationFixController', ['NotificationService', 'MigrationService',
+.controller('MigrationFixDuplicatedImagesController', ['NotificationService', 'MigrationService',
   function(NotificationService, MigrationService) {
 
     var self = this;

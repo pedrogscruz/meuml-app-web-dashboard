@@ -1,4 +1,4 @@
-angular.module('meuml.protected.migration-fix', [
+angular.module('meuml.protected.migration-fix-duplicated-images', [
   'meuml.services.migration',
   'ui.router',
 ])
@@ -7,8 +7,8 @@ angular.module('meuml.protected.migration-fix', [
   function ($stateProvider) {
     $stateProvider.state('protected.migration-fix', {
       url: '/migration/fix',
-      controller: 'MigrationFixController as migrationFixCtrl',
-      templateUrl: 'custom/protected/migration-fix/migration-fix.tpl.html',
+      controller: 'MigrationFixDuplicatedImagesController as migrationFixCtrl',
+      templateUrl: 'custom/protected/migration/fix-duplicated-images/fix-duplicated-images.tpl.html',
       data: {
         pageTitle: 'Corretor de anúncios',
       },
