@@ -5,7 +5,7 @@ angular.module('meuml.protected.migration-fix-duplicated-images', [
 
 .config(['$stateProvider',
   function ($stateProvider) {
-    $stateProvider.state('protected.migration-fix', {
+    $stateProvider.state('protected.migration-fix-duplicated-images', {
       url: '/migration/fix',
       controller: 'MigrationFixDuplicatedImagesController as migrationFixCtrl',
       templateUrl: 'custom/protected/migration/fix-duplicated-images/fix-duplicated-images.tpl.html',
