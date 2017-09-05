@@ -10,7 +10,7 @@ angular.module('meuml.protected.migration-fix-duplicated-images', [
       controller: 'MigrationFixDuplicatedImagesController as migrationFixCtrl',
       templateUrl: 'custom/protected/migration/fix-duplicated-images/fix-duplicated-images.tpl.html',
       data: {
-        pageTitle: 'Corretor de anúncios',
+        pageTitle: 'Corretor de anúncios de imagens duplicadas',
       },
     });
   }

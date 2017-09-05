@@ -8,9 +8,15 @@ angular.module('meuml.resources.migration', [
   }]
 )
 
-.factory('MigrationFix', ['configuration', 'ResourceFactory',
+.factory('MigrationFixDuplicatedImages', ['configuration', 'ResourceFactory',
   function (configuration, ResourceFactory) {
-    return new ResourceFactory(configuration.apiUrl, 'seller/migration/_fix');
+    return new ResourceFactory(configuration.apiUrl, 'seller/migration/_fix_duplicated_images');
+  }]
+)
+
+.factory('MigrationProcessRequest', ['configuration', 'ResourceFactory',
+  function (configuration, ResourceFactory) {
+    return new ResourceFactory(configuration.apiUrl, 'seller/migration/_process_request');
   }]
 )
 

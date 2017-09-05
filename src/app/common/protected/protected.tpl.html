@@ -4,15 +4,15 @@
               md-component-id="sidenav-left" md-is-locked-open="$mdMedia('gt-sm')"></md-sidenav>
 
   <div flex layout="column" class="gorillascode-page gorillascode-page-protected">
-    <div ng-show="!$state.includes('protected.fix') && protectedCtrl.migrations.limit">
-									
+    <div ng-show="!$state.includes('protected.migration-request') && protectedCtrl.hasRequestedMigrations">
+
       <md-toolbar class="md-warn">
         <div class="md-toolbar-tools">
           <div flex></div>
 
           <div class="text-center">
             Existe uma pendência na sua conta
-            <md-button ui-sref="protected.fix" class="md-raised">Resolver</md-button>
+            <md-button ui-sref="protected.migration-request" class="md-raised">Resolver</md-button>
           </div>
 
           <div flex></div>

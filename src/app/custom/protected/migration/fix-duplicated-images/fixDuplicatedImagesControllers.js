@@ -24,7 +24,7 @@ angular.module('meuml.protected.migration-fix-duplicated-images')
           access_token: token,
         };
 
-        MigrationService.fix(parameters).then(function() {
+        MigrationService.fixDuplicatedImages(parameters).then(function() {
           // Correção iniciada
         }, function(error) {
           self.fixStarted = false;

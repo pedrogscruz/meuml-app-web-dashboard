@@ -1,10 +1,11 @@
 angular.module('gorillascode.protected')
 
 .controller('ProtectedController', ['$rootScope', '$state', '$mdSidenav', '$filter',
-  'AuthenticationService', 'MigrationSearchService', 'LocalUserService', 'user', 'plan', 'imagesStats',
+  'AuthenticationService', 'MigrationSearchService', 'LocalUserService', 'NotificationService',
+  'user', 'plan', 'imagesStats',
 
-  function($rootScope, $state, $mdSidenav, $filter, AuthenticationService, MigrationSearchService, LocalUserService,
-           user, plan, imagesStats) {
+  function($rootScope, $state, $mdSidenav, $filter, AuthenticationService, MigrationSearchService,
+           LocalUserService, NotificationService, user, plan, imagesStats) {
 
     var self = this;
 
@@ -23,24 +24,13 @@ angular.module('gorillascode.protected')
     self.subcriptionStatus = null;
     self.user = user;
 
-    self.migrations = {};
-    var params = {
-						q: {
-										filters: [{
-														name: 'status',
-														op: '==',
-														val: 'REQUEST',
-												}],
-						},
-						results_per_page: 0
-		};
-					MigrationSearchService.search(params).then(function(response) {
-									self.migrations = response;
-									console.log(self.migrations);
-								}, function() {
-												// mensagem de erro
-								}
-					);
+    self.hasRequestedMigrations = false;
+
+    MigrationSearchService.getRequestCount().then(function (count) {
+      self.hasRequestedMigrations = count > 0;
+    }, function(error) {
+      NotificationService.error('Não foi possível listar as pendências para resolver', error);
+    });
 
     // Adiciona as informações do plano no objeto com a assinatura
     if (self.user.subscription) {
