@@ -18,8 +18,8 @@ angular.module('meuml.protected.migration-request', [
             q: {
               filters: [{
                 name: 'status',
-                op: 'in',
-                val: ['REQUEST', 'STARTED'],
+                op: '==',
+                val: 'REQUEST',
               }, {
                 name: 'type',
                 op: '!=',
