@@ -1,4 +1,5 @@
 angular.module('meuml.protected', [
+  'meuml.protected.account',
   'meuml.protected.home',
   'meuml.protected.html-editor',
   'meuml.protected.image',
