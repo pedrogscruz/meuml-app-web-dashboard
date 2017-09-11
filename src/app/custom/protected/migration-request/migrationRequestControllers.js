@@ -1,11 +1,9 @@
 angular.module('meuml.protected.migration-request')
 
 .controller('MigrationRequestController', ['$window', 'NotificationService', 'MigrationService',
-  'OAuthService', 'configuration', 'migrations',
+  'OAuthService', 'migrations',
   
-  function($window, NotificationService, MigrationService, OAuthService, configuration,
-           migrations) {
-
+  function($window, NotificationService, MigrationService, OAuthService, migrations) {
     var self = this;
 
     self.migrations = migrations;
