@@ -14,8 +14,14 @@ angular.module('gorillascode.user', [
         loggedUser = user;
       },
       setAuthenticationToken: function(token) {
+        var expirationDate = new Date();
+        expirationDate.setDate(expirationDate.getDate() + 365);
+
         authenticationToken = token;
-        $cookies.putObject(COOKIE_AUTHENTICATION_TOKEN, authenticationToken);
+
+        $cookies.putObject(COOKIE_AUTHENTICATION_TOKEN, authenticationToken, {
+          expires: expirationDate,
+        });
       },
       getAuthenticationToken: function() {
         return authenticationToken;
