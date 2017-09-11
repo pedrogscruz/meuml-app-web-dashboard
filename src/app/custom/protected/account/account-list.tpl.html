@@ -2,30 +2,37 @@
   <div ng-show="!accountListCtrl.loading && !accountListCtrl.accounts.result.length">
     <div class="gorillascode-no-results">
       <p class="md-title">Nenhuma conta</p>
+      <p>Clique no botão abaixo para adicionar uma conta do Mercado Livre</p>
     </div>
   </div>
 
   <md-card ng-show="accountListCtrl.accounts.result.length" class="accounts">
     <md-list>
       <md-list-item ng-repeat="account in accountListCtrl.accounts.result track by account.id"
-                    class="gorillascode-animate">
+                    class="gorillascode-animate md-2-line">
         <div class="md-avatar"
              ng-style="{ backgroundImage: 'url(' + (account.image.url || '/assets/images/default-avatar.png') + ')' }"></div>
 
-        <p md-truncate>{{account.email}}</p>
+        <div class="md-list-item-text" layout="row">
+          <div flex>
+            <h3 class="name">{{account.name}}</h3>
+            <h4>{{account.external_email}}</h4>
+          </div>
 
-        <md-button ng-show="account.external_data.permalink"
-                   href="{{account.external_data.permalink}}" class="md-secondary md-icon-button"
-                   target="_blank">
-          <md-icon md-font-icon="material-icons" aria-label="Ver perfil">open_in_new</md-icon>
-          <md-tooltip>Ver perfil no Mercado Livre</md-tooltip>
+          <div flex>
+            <h3 class="external-store-name">{{account.external_store_name}}</h3>
+            <h4>{{account.external_name}}</h4>
+          </div>
+        </div>
+
+        <md-button ng-click="accountListCtrl.edit(account, $event)"
+                   class="md-secondary md-raised md-accent">
+          Editar
         </md-button>
 
-        <md-button
-            ng-click="accountListCtrl.delete(account, $index, $event)"
-            class="md-secondary md-icon-button">
-          <md-icon md-font-icon="material-icons" aria-label="Excluir">delete</md-icon>
-          <md-tooltip>Excluir</md-tooltip>
+        <md-button ng-click="accountListCtrl.delete(account, $index, $event)"
+                   class="md-secondary md-raised md-warn">
+          Excluir
         </md-button>
 
         <md-divider ng-show="!$last"></md-divider>
@@ -35,3 +42,9 @@
 
   <gorillascode-pagination gorillascode-controller="accountListCtrl"></gorillascode-pagination>
 </div>
+
+<md-button ng-click="accountListCtrl.new()"
+           class="md-fab md-fab-bottom-right md-fab-fixed">
+  <md-icon md-font-icon="material-icons" aria-label="Adicionar conta">add</md-icon>
+  <md-tooltip md-direction="left">Adicionar conta</md-tooltip>
+</md-button>

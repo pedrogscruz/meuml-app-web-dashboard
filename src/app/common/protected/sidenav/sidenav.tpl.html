@@ -28,6 +28,12 @@
       <p>Início</p>
     </md-list-item>
 
+    <md-list-item ui-sref="protected.account.list"
+                  ng-class="{ active: $state.includes('protected.account') }">
+      <md-icon md-font-icon="material-icons" aria-label="Contas">group</md-icon>
+      <p>Contas</p>
+    </md-list-item>
+
     <md-list-item ng-if="protectedCtrl.isVisible.images" ui-sref="protected.image.list"
                   ng-class="{ active: $state.includes('protected.image') }">
       <md-icon md-font-icon="material-icons" aria-label="Imagens">photo_library</md-icon>

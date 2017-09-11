@@ -1,10 +1,10 @@
 angular.module('meuml.protected.account')
 
 .controller('AccountListController', ['$scope', '$controller', '$mdDialog', 'NotificationService',
-  'SellerAccountService', 'SellerAccountSearchService',
+  'SellerAccountService', 'SellerAccountSearchService', 'OAuthService',
 
   function($scope, $controller, $mdDialog, NotificationService, SellerAccountService,
-           SellerAccountSearchService) {
+           SellerAccountSearchService, OAuthService) {
 
     var self = this;
 
@@ -47,18 +47,70 @@ angular.module('meuml.protected.account')
       };
 
       searchParameters.q.order_by.push({
-        field: 'email',
+        field: 'created_at',
         direction: 'asc',
       });
 
       return searchParameters;
     }
 
+    self.new = function() {
+      OAuthService.getToken(function(response) {
+        var accountName = 'Conta ' + (self.accounts.result.length + 1);
+
+        var account = {
+          access_token: response.accessToken,
+          // TODO pegar a data de expiração do token
+          access_token_expires_at: new Date(),
+          name: accountName,
+          refresh_token: response.refreshToken,
+        };
+
+        SellerAccountService.save(account).then(function(response) {
+          self.accounts.limit++;
+          self.accounts.result.push(response);
+        }, function(error) {
+          NotificationService.error('Não foi possível adicionar a conta. Tente novamente mais ' +
+              'tarde.', error);
+        });
+      });
+    };
+
+    self.edit = function(account, ev) {
+      var prompt = $mdDialog.prompt()
+        .title('Editar nome')
+        .ariaLabel('Editar nome')
+        .initialValue(account.name)
+        .placeholder('Informe o nome')
+        .targetEvent(ev)
+        .ok('Salvar')
+        .cancel('Cancelar');
+
+      $mdDialog.show(prompt).then(function(name) {
+        if (!name) {
+          return;
+        }
+
+        var accountToSave = {
+          id: account.id,
+          name: name,
+        };
+
+        SellerAccountService.save(accountToSave).then(function() {
+          NotificationService.success('Conta atualizada');
+          account.name = name;
+        }, function(error) {
+          NotificationService.error('Não foi possível atualizar a conta. Tente novamente mais ' +
+              'tarde.', error);
+        });
+      });
+    };
+
     self.delete = function(account, index, ev) {
       var prompt = $mdDialog.confirm()
-        .title('Excluir a conta?')
+        .title('Excluir a conta ' + account.name + '?')
         .ariaLabel('Excluir a conta?')
-        .textContent(account.email)
+        .textContent('Todo o histórico dessa conta também será removido')
         .targetEvent(ev)
         .ok('Excluir')
         .cancel('Cancelar');
@@ -66,7 +118,7 @@ angular.module('meuml.protected.account')
       $mdDialog.show(prompt).then(function() {
         SellerAccountService.delete(account.id).then(function() {
           NotificationService.success('Conta excluída');
-          self.accounts.result.splice(index);
+          self.accounts.result.splice(index, 1);
         }, function(error) {
           NotificationService.error('Não foi possível excluir a conta. Tente novamente mais ' +
               'tarde.', error);

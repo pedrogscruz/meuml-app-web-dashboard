@@ -1,5 +1,6 @@
 angular.module('meuml.protected.account', [
   'meuml.services.account',
+  'meuml.services.oauth',
   'ui.router',
 ])
 
