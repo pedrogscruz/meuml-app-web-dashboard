@@ -1,4 +1,4 @@
-<div class="gorillascode-content gorillascode-content-no-background">
+<div class="gorillascode-content gorillascode-content-list gorillascode-content-no-background">
   <div ng-show="!accountListCtrl.loading && !accountListCtrl.accounts.result.length">
     <div class="gorillascode-no-results">
       <p class="md-title">Nenhuma conta</p>
@@ -10,18 +10,19 @@
     <md-list>
       <md-list-item ng-repeat="account in accountListCtrl.accounts.result track by account.id"
                     class="gorillascode-animate md-2-line">
-        <div class="md-avatar"
-             ng-style="{ backgroundImage: 'url(' + (account.image.url || '/assets/images/default-avatar.png') + ')' }"></div>
+        <a class="md-avatar" ng-href="{{account.external_data.permalink}}" target="_blank"
+           ng-style="{ backgroundImage: 'url(' + (account.image.url || '/assets/images/default-avatar.png') + ')' }">
+        </a>
 
-        <div class="md-list-item-text" layout="row">
-          <div flex>
-            <h3 class="name">{{account.name}}</h3>
-            <h4>{{account.external_email}}</h4>
+        <div class="md-list-item-text">
+          <div layout="row">
+            <h3 flex>{{account.name}} - {{account.external_data.nickname}}</h3>
+            <h3 flex ng-show="account.external_store_name">{{account.external_store_name}}</h3>
           </div>
 
-          <div flex>
-            <h3 class="external-store-name">{{account.external_store_name}}</h3>
-            <h4>{{account.external_name}}</h4>
+          <div layout="row">
+            <h4 flex>{{account.external_email}}</h4>
+            <h4 flex>{{account.external_name}}</h4>
           </div>
         </div>
 
@@ -43,8 +44,7 @@
   <gorillascode-pagination gorillascode-controller="accountListCtrl"></gorillascode-pagination>
 </div>
 
-<md-button ng-click="accountListCtrl.new()"
-           class="md-fab md-fab-bottom-right md-fab-fixed">
+<md-button ng-click="accountListCtrl.new()" class="md-fab md-fab-bottom-right md-fab-fixed">
   <md-icon md-font-icon="material-icons" aria-label="Adicionar conta">add</md-icon>
   <md-tooltip md-direction="left">Adicionar conta</md-tooltip>
 </md-button>

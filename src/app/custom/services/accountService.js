@@ -2,8 +2,8 @@ angular.module('meuml.services.account', [
   'meuml.resources.account'
 ])
 
-.factory('SellerAccountService', ['SellerAccount',
-  function(SellerAccount) {
+.factory('SellerAccountService', ['SellerAccount', 'SellerAccountAdd',
+  function(SellerAccount, SellerAccountAdd) {
     var service = {
       get: function(id) {
         return SellerAccount.get({ id: id }).$promise;
@@ -17,6 +17,9 @@ angular.module('meuml.services.account', [
       },
       delete: function(id) {
         return SellerAccount.delete({ id: id }).$promise;
+      },
+      add: function(oauthCode) {
+        return SellerAccountAdd.save({ code: oauthCode }).$promise;
       },
     };
 

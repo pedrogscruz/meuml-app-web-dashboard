@@ -55,20 +55,25 @@ angular.module('meuml.protected.account')
     }
 
     self.new = function() {
-      OAuthService.getToken(function(response) {
-        var accountName = 'Conta ' + (self.accounts.result.length + 1);
+      OAuthService.getCode(function(code) {
+        SellerAccountService.add(code).then(function(response) {
+          var account = null;
 
-        var account = {
-          access_token: response.accessToken,
-          // TODO pegar a data de expiração do token
-          access_token_expires_at: new Date(),
-          name: accountName,
-          refresh_token: response.refreshToken,
-        };
+          angular.forEach(self.accounts.result, function(currentAccount) {
+            if (currentAccount.id == response.id) {
+              account = currentAccount;
+            }
+          });
 
-        SellerAccountService.save(account).then(function(response) {
-          self.accounts.limit++;
-          self.accounts.result.push(response);
+          if (account) {
+            NotificationService.success('Conta atualizada');
+            angular.extend(account, response);
+          } else {
+            NotificationService.success('Conta adicionada');
+
+            self.accounts.limit++;
+            self.accounts.result.push(response);
+          }
         }, function(error) {
           NotificationService.error('Não foi possível adicionar a conta. Tente novamente mais ' +
               'tarde.', error);

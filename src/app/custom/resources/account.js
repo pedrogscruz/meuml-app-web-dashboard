@@ -8,4 +8,10 @@ angular.module('meuml.resources.account', [
   }]
 )
 
+.factory('SellerAccountAdd', ['configuration', 'ResourceFactory',
+  function (configuration, ResourceFactory) {
+    return new ResourceFactory(configuration.apiUrl, 'seller/account/_add');
+  }]
+)
+
 ;

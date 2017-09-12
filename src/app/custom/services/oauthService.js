@@ -1,21 +1,16 @@
 angular.module('meuml.services.oauth', [
-  'meuml.resources.template'
+  'meuml.resources.oauth'
 ])
 
-.factory('OAuthService', ['$window', 'configuration',
-  function($window, configuration) {
+.factory('OAuthService', ['$log', '$window', 'configuration',
+  function($log, $window, configuration) {
     var authorizeUrl = configuration.apiUrl + '/_oauth/authorize';
 
     var service = {
-      getToken: function(callback) {
+      getCode: function(callback) {
         // Função que será chamada quando a pop-up de autorização for fechada
-        $window.oauthCallback = function(accessToken, refreshToken) {
-          var response = {
-            accessToken: accessToken,
-            refreshToken: refreshToken,
-          };
-
-          callback(response);
+        $window.oauthCallback = function(code) {
+          callback(code);
         };
 
         var height = 510;

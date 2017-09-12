@@ -5,14 +5,23 @@
 
   .gorillascode-content {
     max-width: 960px;
+
+    @media (min-width: 600px) {
+      padding: 40px;
+    }
   }
 
   md-card {
     margin: 0;
 
     .md-list-item-text {
-      div:nth-child(2) {
-        padding-left: 16px;
+      h3 {
+        font-weight: 500;
+        padding-right: 8px;
+      }
+
+      h4 {
+        padding-right: 8px;
       }
     }
 
@@ -21,19 +30,9 @@
       background-repeat: no-repeat;
       background-size: cover;
       border: 1px solid #ccc;
+      display: block;
       height: 50px;
       width: 50px;
-    }
-
-    h3.name {
-      font-size: 18px;
-      font-weight: 500;
-      line-height: 18px;
-    }
-
-    h3.external-store-name {
-      font-weight: 500;
-      line-height: 18px;
     }
   }
 }
