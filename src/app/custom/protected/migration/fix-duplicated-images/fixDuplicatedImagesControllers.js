@@ -1,7 +1,9 @@
 angular.module('meuml.protected.migration-fix-duplicated-images')
 
 .controller('MigrationFixDuplicatedImagesController', ['NotificationService', 'MigrationService',
-  function(NotificationService, MigrationService) {
+  'OAuthService', 'SellerAccountService',
+
+  function(NotificationService, MigrationService, OAuthService, SellerAccountService) {
 
     var self = this;
 
@@ -11,24 +13,22 @@ angular.module('meuml.protected.migration-fix-duplicated-images')
     self.fix = function() {
       self.fixStarted = true;
 
-      MELI.login(function() {
-        var token = MELI.getToken();
+      OAuthService.getCode(function(code) {
+        SellerAccountService.add(code).then(function(account) {
+          var parameters = {
+            account_id: account.id,
+          };
 
-        if (!token) {
-          NotificationService.error('Não foi possível recuperar o token. Tente novamente mais ' +
-              'tarde.');
-          return;
-        }
-
-        var parameters = {
-          access_token: token,
-        };
-
-        MigrationService.fixDuplicatedImages(parameters).then(function() {
-          // Correção iniciada
+          MigrationService.fixDuplicatedImages(parameters).then(function() {
+            // Correção iniciada
+          }, function(error) {
+            self.fixStarted = false;
+            NotificationService.error('Não foi possível começar a correção. Tente novamente mais ' +
+                'tarde.', error);
+          });
         }, function(error) {
           self.fixStarted = false;
-          NotificationService.error('Não foi possível começar a correção. Tente novamente mais ' +
+          NotificationService.error('Não foi possível adicionar a conta. Tente novamente mais ' +
               'tarde.', error);
         });
       });
