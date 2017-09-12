@@ -1,7 +1,7 @@
 <div class="gorillascode-content gorillascode-content-no-background">
   <div ng-show="!migrationRequestCtrl.migrations.result.length">
     <div class="gorillascode-no-results">
-      <p class="md-title">Nenhuma pendência</p>
+      <p class="md-title">Nenhuma pendência para resolver</p>
     </div>
   </div>
 
@@ -17,9 +17,8 @@
       </md-card-content>
 
       <md-card-actions class="text-center">
-        <md-button ng-click="migrationRequestCtrl.start(migration)" class="md-raised md-accent"
-                   ng-disabled="migration.status == 'STARTED'">
-          {{ migration.status == 'STARTED' ? 'Correção em andamento...' : 'Corrigir agora' }}
+        <md-button ng-click="migrationRequestCtrl.start(migration)" class="md-raised md-accent">
+          Corrigir agora
         </md-button>
       </md-card-actions>
     </md-card>

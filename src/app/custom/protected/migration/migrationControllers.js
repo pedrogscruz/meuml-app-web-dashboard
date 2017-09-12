@@ -1,10 +1,11 @@
 angular.module('meuml.protected.migration')
 
 .controller('MigrationController', ['$scope', '$interval', '$state', 'NotificationService',
-  'MigrationService', 'MigrationSearchService', 'SellerImageService', 'lastMigration',
+  'MigrationService', 'MigrationSearchService', 'SellerImageService', 'OAuthService',
+  'SellerAccountService', 'lastMigration',
 
   function($scope, $interval, $state, NotificationService, MigrationService, MigrationSearchService,
-           SellerImageService, lastMigration) {
+           SellerImageService, OAuthService, SellerAccountService, lastMigration) {
 
     var self = this;
 
@@ -17,28 +18,25 @@ angular.module('meuml.protected.migration')
     self.lastMigration = lastMigration;
 
     self.start = function(type) {
-      MELI.login(function() {
-        var token = MELI.getToken();
+      OAuthService.getCode(function(code) {
+        SellerAccountService.add(code).then(function(account) {
+          var migration = {
+            data: {
+              account_id: account.id,
+            },
+            type: type,
+          };
 
-        if (!token) {
-          NotificationService.error('Não foi possível recuperar o token. Tente novamente mais ' +
-              'tarde.');
-          return;
-        }
-
-        var migration = {
-          data: {
-            access_token: token,
-          },
-          type: type,
-        };
-
-        MigrationService.save(migration).then(function() {
-          $state.go('.', {}, { reload: true });
+          MigrationService.save(migration).then(function() {
+            $state.go('.', {}, { reload: true });
+          }, function(error) {
+            NotificationService.error('Não foi possível começar a correção. Tente novamente mais ' +
+                'tarde.', error);
+            $state.go('.', {}, { reload: true });
+          });
         }, function(error) {
-          NotificationService.error('Não foi possível começar a correção. Tente novamente mais ' +
+          NotificationService.error('Não foi possível adicionar a conta. Tente novamente mais ' +
               'tarde.', error);
-          $state.go('.', {}, { reload: true });
         });
       });
     };
@@ -70,28 +68,25 @@ angular.module('meuml.protected.migration')
     };
 
     self.restart = function() {
-      MELI.login(function() {
-        var token = MELI.getToken();
+      OAuthService.getCode(function(code) {
+        SellerAccountService.add(code).then(function(account) {
+          var migration = {
+            data: {
+              account_id: account.id,
+            },
+            id: self.lastMigration.id,
+          };
 
-        if (!token) {
-          NotificationService.error('Não foi possível recuperar o token. Tente novamente mais ' +
-              'tarde.');
-          return;
-        }
-
-        var migration = {
-          data: {
-            access_token: token,
-          },
-          id: self.lastMigration.id,
-        };
-
-        MigrationService.restart(migration).then(function() {
-          $state.go('.', {}, { reload: true });
+          MigrationService.restart(migration).then(function() {
+            $state.go('.', {}, { reload: true });
+          }, function(error) {
+            NotificationService.error('Não foi possível começar a correção. Tente novamente mais ' +
+                'tarde.', error);
+            $state.go('.', {}, { reload: true });
+          });
         }, function(error) {
-          NotificationService.error('Não foi possível começar a correção. Tente novamente mais ' +
+          NotificationService.error('Não foi possível adicionar a conta. Tente novamente mais ' +
               'tarde.', error);
-          $state.go('.', {}, { reload: true });
         });
       });
     };

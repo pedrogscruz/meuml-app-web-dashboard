@@ -39,7 +39,7 @@ angular.module('meuml.services.migration', [
         var parameters = {
           q: {
             filters: [{
-              name: 'status',
+              name: 'type',
               op: '==',
               val: 'UPDATE_MERCADO_LIVRE_LINKS',
             }],

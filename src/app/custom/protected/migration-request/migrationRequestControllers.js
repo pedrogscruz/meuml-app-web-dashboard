@@ -1,10 +1,10 @@
 angular.module('meuml.protected.migration-request')
 
-.controller('MigrationRequestController', ['$window', 'NotificationService', 'MigrationService',
-  'OAuthService', 'SellerAccountService', 'migrations',
+.controller('MigrationRequestController', ['$window', '$state', 'NotificationService',
+  'MigrationService', 'OAuthService', 'SellerAccountService', 'migrations',
   
-  function($window, NotificationService, MigrationService, OAuthService, SellerAccountService,
-           migrations) {
+  function($window, $state,  NotificationService, MigrationService, OAuthService,
+           SellerAccountService, migrations) {
 
     var self = this;
 
@@ -19,7 +19,7 @@ angular.module('meuml.protected.migration-request')
           };
 
           MigrationService.processRequest(parameters).then(function(response) {
-            migration.status = response.status;
+            $state.go('.', {}, { reload: true });
           }, function(error) {
             NotificationService.error('Não foi possível começar a correção. Tente novamente mais ' +
                 'tarde.', error);
