@@ -113,7 +113,7 @@ angular.module('meuml.protected.account')
 
     self.delete = function(account, index, ev) {
       var prompt = $mdDialog.confirm()
-        .title('Excluir a conta ' + account.name + '?')
+        .title('Excluir ' + account.name + '?')
         .ariaLabel('Excluir a conta?')
         .textContent('Todo o histórico dessa conta também será removido')
         .targetEvent(ev)
