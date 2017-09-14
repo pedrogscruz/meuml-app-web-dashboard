@@ -8,8 +8,8 @@ angular.module('meuml.services.dashboard', [
       get: function(id) {
         return SellerDashboard.get({ id: id }).$promise;
       },
-      refresh: function() {
-        return SellerDashboardRefresh.save().$promise;
+      refresh: function(parameters) {
+        return SellerDashboardRefresh.save(parameters).$promise;
       },
     };
 

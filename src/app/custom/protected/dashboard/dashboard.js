@@ -12,6 +12,20 @@ angular.module('meuml.protected.dashboard', [
       data: {
         pageTitle: 'Dashboard',
       },
+      resolve: {
+        accounts: ['SellerAccountSearchService', function(SellerAccountSearchService) {
+          var parameters = {
+            q: {
+              order_by: [{
+                field: 'name',
+                direction: 'asc',
+              }],
+            },
+          };
+
+          return SellerAccountSearchService.search(parameters);
+        }],
+      },
     });
   }
 ])

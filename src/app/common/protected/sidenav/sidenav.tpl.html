@@ -28,7 +28,13 @@
       <p>Início</p>
     </md-list-item>
 
-    <md-list-item ng-show="false" ui-sref="protected.account.list"
+    <md-list-item ui-sref="protected.dashboard"
+                  ng-class="{ active: $state.includes('protected.dashboard') }">
+      <md-icon md-font-icon="material-icons" aria-label="Dashboard">dashboard</md-icon>
+      <p>Dashboard</p>
+    </md-list-item>
+
+    <md-list-item ui-sref="protected.account.list"
                   ng-class="{ active: $state.includes('protected.account') }">
       <md-icon md-font-icon="material-icons" aria-label="Contas">group</md-icon>
       <p>Contas</p>
