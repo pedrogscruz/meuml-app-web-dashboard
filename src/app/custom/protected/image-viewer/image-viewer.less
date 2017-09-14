@@ -35,12 +35,16 @@
       }
 
       .section {
+        align-content: center;
+        align-items: center;
+        display: flex;
+        justify-content: flex-start;
+        flex-direction: row;
         min-height: 36px;
         padding: 18px 16px;
 
         .icon {
           min-width: 64px;
-          padding-top: 6px;
         }
 
         .content {
@@ -48,7 +52,6 @@
             color: rgba(0, 0, 0, 0.87);
             font-size: 15px;
             line-height: 15px;
-            margin-bottom: 9px;
             word-break: break-all;
           }
 
@@ -56,6 +59,7 @@
             color: rgba(0, 0, 0, 0.54);
             font-size: 13px;
             line-height: 13px;
+            margin-top: 8px;
 
             .dimension {
               display: inline-block;

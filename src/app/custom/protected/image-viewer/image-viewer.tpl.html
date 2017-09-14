@@ -32,7 +32,7 @@
       <div class="details">
         <div class="title">Detalhes</div>
 
-        <div class="section" layout="row">
+        <div class="section">
           <div class="icon">
             <md-icon md-font-icon="material-icons" aria-label="URL">link</md-icon>
           </div>
@@ -46,7 +46,7 @@
           </div>
         </div>
 
-        <div class="section" layout="row">
+        <div class="section">
           <div class="icon">
             <md-icon md-font-icon="material-icons" aria-label="Data">event</md-icon>
           </div>
@@ -57,12 +57,13 @@
             </div>
 
             <div class="line-2">
+              {{imageViewerCtrl.image.file.created_at | toUTCDate | date:'EEE'}},
               {{imageViewerCtrl.image.file.created_at | toUTCDate | date:'shortTime'}}
             </div>
           </div>
         </div>
 
-        <div class="section" layout="row">
+        <div class="section">
           <div class="icon">
             <md-icon md-font-icon="material-icons" aria-label="Detalhes">photo</md-icon>
           </div>
@@ -79,6 +80,21 @@
               </div>
 
               <div class="size">{{imageViewerCtrl.image.file.size | fileSize}}</div>
+            </div>
+          </div>
+        </div>
+
+        <div ng-show="imageViewerCtrl.image.external_ref" class="section">
+          <div class="icon">
+            <md-icon md-font-icon="material-icons" aria-label="URL">file_download</md-icon>
+          </div>
+
+          <div class="content">
+            <div class="line-1">
+              <a ng-href="{{imageViewerCtrl.image.external_ref}}" target="_blank"
+                 title="Origem da imagem">
+                {{imageViewerCtrl.image.external_ref}}
+              </a>
             </div>
           </div>
         </div>
