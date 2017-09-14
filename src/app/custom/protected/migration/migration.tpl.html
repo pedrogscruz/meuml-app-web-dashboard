@@ -15,19 +15,44 @@
     <md-card-content>
       <p>
         O corretor de anúncios busca todos os anúncios que tenham imagens do
-        <strong>Photobucket</strong> e migra elas para o <strong>MeuML.com</strong>
+        <strong>Photobucket</strong>, <strong>Imgur</strong> ou <strong>outros</strong> sites de
+        hospedagem de imagens e migra elas para o <strong>MeuML.com</strong>
       </p>
+
+      <div
+          ng-hide="migrationCtrl.lastMigration.status == 'STARTED' || migrationCtrl.lastMigration.status == 'RESTART'"
+          class="providers">
+        <md-checkbox aria-label="Photobucket" checklist-model="migrationCtrl.providers"
+                     checklist-value="'photobucket'">
+          <img src="/assets/images/logos/photobucket.png" title="Photobucket">
+        </md-checkbox>
+
+        <md-divider></md-divider>
+
+        <md-checkbox aria-label="Imgur" checklist-model="migrationCtrl.providers"
+                     checklist-value="'imgur'">
+          <img src="/assets/images/logos/imgur.png" title="Imgur">
+        </md-checkbox>
+
+        <md-divider></md-divider>
+
+        <md-checkbox aria-label="Outros" checklist-model="migrationCtrl.providers"
+                     checklist-value="'others'">
+          <strong>Outros</strong> (exceto Mercado Livre)
+        </md-checkbox>
+      </div>
+
       <p>
-        Em seguida corrige todos os anúncios no <strong>MercadoLivre</strong>! Rápido, simples e
-        seguro!
+        Em seguida corrige todos os anúncios no <strong>MercadoLivre</strong>!
+        Rápido, simples e seguro!
       </p>
     </md-card-content>
 
     <md-card-actions
         ng-hide="migrationCtrl.lastMigration.status == 'STARTED' || migrationCtrl.lastMigration.status == 'RESTART'"
         layout="column" layout-align="center center">
-      <md-button
-          ng-click="migrationCtrl.start('UPDATE_MERCADO_LIVRE_LINKS')" class="md-raised md-accent">
+      <md-button ng-click="migrationCtrl.start('UPDATE_MERCADO_LIVRE_LINKS')"
+                 ng-disabled="!migrationCtrl.providers.length" class="md-raised md-accent">
         Começar agora
       </md-button>
     </md-card-actions>

@@ -16,6 +16,9 @@ angular.module('meuml.protected.migration')
     var REFRESH_LAST_MIGRATION_INTERVAL = 60000;
 
     self.lastMigration = lastMigration;
+    self.providers = [
+      'photobucket',
+    ];
 
     self.start = function(type) {
       OAuthService.getCode(function(code) {
@@ -23,6 +26,7 @@ angular.module('meuml.protected.migration')
           var migration = {
             data: {
               account_id: account.id,
+              providers: self.providers,
             },
             type: type,
           };
