@@ -1,4 +1,5 @@
 angular.module('meuml.protected.dashboard', [
+  'chart.js',
   'meuml.services.dashboard',
   'ui.router',
 ])
